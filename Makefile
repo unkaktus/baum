@@ -103,7 +103,7 @@ export
 # --------------------------------------------------------------------------
 # --------------------------------------------------------------------------
 # default target
-bam: .bamauto bamtest
+bam: .bamauto
 	mkdir -p $(EXECDIR);
 	mkdir -p $(PROJECTDIR); 
 	for X in $(libnames); do mkdir -p lib/obj/$$X; done
@@ -140,33 +140,6 @@ $(autofinal): MyConfig
 	fi \
 	done
 
-# build executables for testing
-bamtest:
-	$(MAKE) -C src/test
-
-# copy test suites into standard location
-# note that we remove all old tests first (which may remove other files, too)
-# note that the update option in "cp -u" is therefore redundant 
-testnew: testclean
-	find ./src -name "*_correct" -exec cp -pru {} ./par/test/ \;
-	-rm -rf ./par/test/*_correct/.git
-	cd ./par/test; cp -pu *_correct/*.par .
-
-testclean:
-	find ./par/test/* -not \( \
-	-name .git -o -name Readme.txt \
-	-o -name bamtest -o -name bamcompare -o -name floatdiff \) \
-	-exec rm -rf {} \;
-
-# run test suites
-test:
-	cd par/test; ./bamtest -2 -rt 1e-12 -at 8e-15 *.par
-
-test1:
-	cd par/test; ./bamtest -1 -rt 1e-12 -at 8e-15 *1proc.par
-
-test2:
-	cd par/test; ./bamtest -2 -rt 1e-12 -at 8e-15 *2proc.par
 
 # create tar file
 tar:
@@ -177,7 +150,7 @@ tarbox:
 	cd ..; tar cjf bambox.tbz --exclude lib --exclude exe --exclude par --exclude .git ./bambox
 
 # take a fresh look at things
-clean: #testclean
+clean:
 	-rm -r lib 
 	-rm $(autoinclude)
 	-rm $(autoinitial)
