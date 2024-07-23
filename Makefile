@@ -1,7 +1,6 @@
 # Makefile
 # Bernd Bruegmann, 12/99, 5/02
 # Builds the bam executable based on the file MyConfig
-# See http://www.gnu.org/software/make/manual for the manual of GNU make
 
 # where am I
 UNAME := $(shell uname)
@@ -112,11 +111,6 @@ bam: .bamauto
 # --------------------------------------------------------------------------
 # other targets 
 
-# if there is no MyConfig file, use the example provided in doc
-MyConfig:
-	-if test ! -f MyConfig; then cp doc/MyConfig.example MyConfig; fi 
-
-
 # automatic configuration files
 $(autoinclude): MyConfig
 	echo $(autotext) > $(autoinclude) 
@@ -140,15 +134,6 @@ $(autofinal): MyConfig
 	fi \
 	done
 
-
-# create tar file
-tar:
-	cd ..; tar czf bam.tgz --exclude lib --exclude exe --exclude .git ./bam
-tarbzip:
-	cd ..; tar cjf bam.tbz --exclude lib --exclude exe --exclude .git ./bam
-tarbox:
-	cd ..; tar cjf bambox.tbz --exclude lib --exclude exe --exclude par --exclude .git ./bambox
-
 # take a fresh look at things
 clean:
 	-rm -r lib 
@@ -158,58 +143,3 @@ clean:
 
 # make clean and recompile
 new: clean bam
-
-# remove emacs backup files
-tildeclean:
-	find . -name "*~" -exec rm {} \;
-
-# git 
-git_clone:
-	mkdir -p $(PROJECTDIR)
-	for X in $(projectnames); do mkdir -p $(PROJECTDIR)/$$X; git clone git@git.tpi.uni-jena.de:bamdev/$$X.git $(PROJECTDIR)/$$X; done
-
-git_clone_https:
-	mkdir -p $(PROJECTDIR)
-	for X in $(projectnames); do mkdir -p $(PROJECTDIR)/$$X; git clone https://git.tpi.uni-jena.de/bamdev/$$X.git $(PROJECTDIR)/$$X; done
-
-git_pull:
-	for X in $(projectnames); do if [ -d "$(PROJECTDIR)/$$X" ]; then echo $$X; cd $(PROJECTDIR)/$$X; git pull; fi done
-
-git_clone_bb:
-	mkdir -p $(PROJECTDIR)
-	for X in $(projectnames); do git clone https://bruegmann@git.tpi.uni-jena.de/bamdev/$$X.git $(PROJECTDIR)/$$X; done
-
-branch_BAM23:
-	for X in $(projectnames); do cd $(PROJECTDIR)/$$X; git checkout BAM23; done
-
-
-# svn for projects --- old
-# svn_commit: 	svn_ci
-# svn_checkout: 	svn_co
-# svn_diff: 	svn_di
-# svn_status: 	svn_st
-# svn_stat: 	svn_st
-# svn_update: 	svn_up
-
-# svn_ci:	
-# 	for X in $(projectnames); do svn commit src/projects/$$X; done 
-# svn_cl:	
-# 	for X in $(projectnames); do svn cleanup src/projects/$$X; done 
-# svn_co:
-# 	for X in $(projectnamesnocore); do svn checkout https://svn.tpi.uni-jena.de/numrel/group/bam/14.07/projects/$$X src/projects/$$X; done 
-# svn_co_munich:
-# 	for X in $(projectnamesnocore); do svn checkout https://localhost:10011/numrel/group/bam/12.04/projects/$$X src/projects/$$X; done 
-# svn_di:
-# 	for X in $(projectnames); do svn diff -rHEAD src/projects/$$X; done 
-# svn_st:
-# 	for X in $(projectnames); do svn status src/projects/$$X; done 
-# svn_sts:
-# 	@for X in $(projectnames); do svn status src/projects/$$X | grep -v ?; done
-# svn_up:
-# 	for X in $(projectnames); do svn update src/projects/$$X; done
-
-
-
-
-
-
