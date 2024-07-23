@@ -468,14 +468,6 @@ void insert_level(tG *g, tL *l, int m)
     g->level[g->lmin] = l;
   }
 
-  /* insert at beginning with negative index */
-  //else if (m == g->lmin-1) {
-  //  for (i = g->lmax+1; i >= g->lmin+1; i--)
-  //    g->level[i] = g->level[i-1];
-  //  g->lmin--;
-  //  g->level[g->lmin] = l;
-  //}
-
   /* default */
   else
     errorexit("insert_level: illegal operation");
@@ -488,16 +480,6 @@ void insert_level(tG *g, tL *l, int m)
    currently, push and prepend cannot be mixed
    actually, append and prepend are not finished in insert_level()
 */
-#if 0
-void append_level(tG *g, tL *l)
-{
-  insert_level(g, l, g->lmax+1);
-}
-void prepend_level(tG *g, tL *l)
-{
-  insert_level(g, l, g->lmin-1);
-}
-#endif
 void push_level(tG *g, tL *l)
 {
   insert_level(g, l, 0);

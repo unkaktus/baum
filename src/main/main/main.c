@@ -22,15 +22,12 @@ int main(int argc, char **argv)
   initialize_libraries();
   timer_start(0, "main");
 
-  while (iterate_parameters())
-  {
-    init_output();
-    g = make_grid(1);
-    prdivider(0);
-    initialize_grid(g);
-    evolve_grid(g);
-    finalize_grid(g);
-  }
+  init_output();
+  g = make_grid(1);
+  prdivider(0);
+  initialize_grid(g);
+  evolve_grid(g);
+  finalize_grid(g);
 
   timer_stop(0, "main");
   finalize_libraries();
