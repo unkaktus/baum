@@ -43,7 +43,6 @@ void bampi_openmp_initialize(int *pargc, char ***pargv, int pr)
     if (strcmp((*pargv)[i],"-nt")==0) {
       if (i+1<*pargc) {
         omp_set_num_threads(atoi((*pargv)[i+1]));
-        //omp_set_dynamic(atoi((*pargv)[i+1])+1);
         
         for (j=i; j<*pargc-2; j++)
           (*pargv)[j] = (*pargv)[j+2];
@@ -77,56 +76,6 @@ int bampi_openmp_size()
 {
   if (omp_get_num_threads()>1) return omp_get_num_threads();
   return omp_get_max_threads();
-}
-
-
-void bampi_openmp_test()
-{
-  if (!Getv("bampi_verbose","openmp"))
-    return;
-  
-  printf("testing OPENMP on cpu %d of %d with %d Threads \n",
-         bampi_rank(),bampi_size(),bampi_openmp_size());
-  
-  bampi_openmp_start
-  printf("        OPENMP on cpu %d of %d      Thread %d/%d\n",
-         bampi_rank(),bampi_size(),bampi_openmp_rank(),bampi_openmp_size());
-  
-  int i,j;
-  bampi_openmp_loop
-  for (i=0; i<10000; i++) {
-    j++;
-  }
-  
-  bampi_openmp_stop
-}
-
-/* do a slow test, that prints a lot of info */
-void bampi_openmp_test2()
-{
-//  if (!Getv("bampi_verbose","openmp"))
-//    return;
-  
-  printf("testing OPENMP on cpu %d of %d with %d Threads \n",
-         bampi_rank(),bampi_size(),bampi_openmp_size());
-  bampi_openmp_pr_info();
-
-  bampi_openmp_start
-  long int i,j=0;
-  double x;
-  printf("        OPENMP on cpu %d of %d      Thread %d/%d\n",
-         bampi_rank(),bampi_size(),bampi_openmp_rank(),bampi_openmp_size());
-  bampi_openmp_pr_info();
-
-  bampi_openmp_loop
-  for (i=0; i<100000000000000000; i++) {
-    unsigned long int k;
-    for(k=0; k<100000000000000000; k++) x += pow(log(k+sqrt(j)+i), 3.1);
-    j++;
-  }
-  printf("x=%g\n", x);
-  printf("j=%ld on Thread %d\n", j, bampi_openmp_rank());
-  bampi_openmp_stop
 }
 
 #endif
