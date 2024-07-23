@@ -12,7 +12,7 @@ PROJECTDIR = $(TOP)/src/projects
 CC = # uses e.g. gcc or icc, set in MyConfig
 DFLAGS =
 OFLAGS =
-WARN = -Wno-unused-result # -Wall
+WARN =
 
 INCS = -I$(TOP)/src/main/main
 LIBS = -L$(TOP)/lib
