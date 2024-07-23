@@ -2,13 +2,8 @@
 # Bernd Bruegmann, 12/99, 5/02
 # Builds the bam executable based on the file MyConfig
 
-# where am I
-UNAME := $(shell uname)
 TOP   := $(shell pwd)
-# to shorten the output: about to be removed for non-standard directories
-# TOP   := ../../..
 
-# name the fruit of our labor
 EXEC = bam
 EXECDIR = $(TOP)/exe
 PROJECTDIR = $(TOP)/src/projects
@@ -91,8 +86,7 @@ autotext    = \/\* automatically generated from MyConfig \*\/
 # --------------------------------------------------------------------------
 # some of the above variables are meant to be global, so pass them on
 # to the shell 
-CFLAGS = $(DFLAGS) $(OFLAGS) $(INCS) $(MPIDIRI) $(WARN)
-MFILES = $(shell find $(TOP)/src/math/MathToC -name "*.m") 
+CFLAGS = $(DFLAGS) $(OFLAGS) $(INCS) $(WARN)
 export
 
 # Automatic includes compile before anything else, thus not parallel.
@@ -107,6 +101,7 @@ bam: .bamauto
 	mkdir -p $(PROJECTDIR); 
 	for X in $(libnames); do mkdir -p lib/obj/$$X; done
 	for X in $(libpaths); do $(MAKE) -C $$X; done
+	echo "BAUM war gebaut."
 
 # --------------------------------------------------------------------------
 # other targets 

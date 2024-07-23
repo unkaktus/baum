@@ -22,11 +22,6 @@ LIBDIR  = $(TOP)/lib
 OBJDIR  = $(LIBDIR)/obj/$(NAME)
 OBJSWITHPATH  = $(addprefix $(OBJDIR)/,$(OBJS))
 
-# look for unnecessary .o files inside the library
-DELLIBS  = $(filter-out $(OBJS),$(shell ar t $(LIBDIR)/$(NEWLIB)))
-DELLIBS := $(addprefix $(OBJDIR)/,$(DELLIBS))
-
-
 # main target: build library from object files
 # d: delete files
 # r: replace files
@@ -38,9 +33,6 @@ DELLIBS := $(addprefix $(OBJDIR)/,$(DELLIBS))
 $(LIBDIR)/$(NEWLIB): $(OBJSWITHPATH)
 # only delete files if DELLIBS is not empty
 # on Mac OS 'ar' fails with empty arguments
-ifneq ($(strip $(DELLIBS)),)
-	ar d $@ $(DELLIBS)
-endif
 	ar rucs $@ $(OBJSWITHPATH)
 
 # secondary target: build object files
