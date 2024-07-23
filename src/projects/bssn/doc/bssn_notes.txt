@@ -1,0 +1,141 @@
+Notes on BAM's bssn implementation
+
+Mark Hannam, August 2006.
+------------------------------------
+
+Parameters:
+
+No. 	Name 				Default		Standard choices		
+----------------------------------------------------------------
+1	bssn_densitizedLapse		no		--
+2	bssn_alphaDensityWeight		1.0		--
+
+3	bssn_forceKzero			no		--			
+4	bssn_subtractA			yes		yes			
+5	bssn_normalizedetg		no		yes			
+6  	bssn_register_algcon		no		yes store	 
+
+7 	bssn_lapsepsipower		0		--
+8  	bssn_lapseharmonicf		2		--
+9  	bssn_subtractK0			yes		--
+
+10	bssn_shiftpsipower		0		--
+11	bssn_shiftalphapower		0		0.0
+12	bssn_shiftgammacoeff		0.75		--
+13	bssn_shiftdriver		0		0.05 [2.0 is old standard choice]
+14	bssn_shiftdriver_time		10000.0		--
+15	bssn_shiftdriver_timeweight	0.0		--
+
+16	bssn_shift			constant	gamma0 withGadv withShiftadv [withBadv]
+17	bssn_lapse			constant	1+log withshift
+
+18	bssn_shift_stop_time		-1.0		--
+
+19	bssn_initial_shift		donothing	--
+20	bssn_initial_lapse		donothing	psiBL^(-2)
+
+21	chi_div_floor			-1000
+
+
+Code:
+
+4.	Set A_{ij} -> A_{ij} - (1/3) g_{ij} Tr(A)
+	In bssn_rhs, remove trace from correction to A_{ij} for next step.
+	If algcon used, the also removed after each time step from A_{ij}.
+
+	If Tr(A)=0 on the first time step, and the Tr(dA)=0, then why would we need
+	algcon?
+
+5.	Ensure that det(g) remains unity. 
+	Same as bssn_rhs: set dg -> dg / (det(dg))^(1/3), and do from entire g in
+	algcon. 
+
+6.	bssn_register_algcon. Set the two algebraic constraints (4 & 5) after each
+	time step.
+
+I think there is a problem with setting the algebraic constraints at each time ministep. 
+The trace is given by g^{ij} A_{ij}, but g^{ij} is the inverse of the g_{ij} for this ministep. 
+At the end of one full time step, a series of traces of A_{ij} will have been subtracted, but
+this will not in general be the same as the trace of A_{ij} calculated using the inverse of the 
+final one-full-timestep metric. 
+
+It seems more consistent to at least subtract the trace again at the end of a full timestep, which 
+is what bssn_register_algcon does. 
+
+
+1+log:
+======
+
+Theory:
+ (\partial_t - \beta^i\partial_i) \alpha = -2\alpha K
+
+Code: (bssn_rhs_mov_4.m)
+
+falpha == oploglapse lapseharmonicf + oploglapse2 8/3/(3-alpha) +
+            harmoniclapse alpha
+
+ralpha == oplogwithshift liealpha -
+            falpha alpha (K - subtractK0 K0) psi^lapsepsipower
+
+oploglapse     = 1 if bssn_lapse = 1+log
+oploglapse2    = 1 if bssn_lapse = 1+log2 (whatever that is...)
+oplogwithshift = 1 if bssn_lapse = 1+log
+harmoniclapse  = 1 if bssn_lapse = harmonic
+lapseharmonicf = bssn_lapseharmonicf (default 2)
+ 
+K0 is K_initial, a variable in ADM. Is zero if not using Kerr-Schild.
+subtactK0      = bssn_subtractK0
+lapsepsipower  = bssn_lapsepsipower (default 0)
+
+With
+	lapsepsipower = 0
+        bssn_lapse    = 1+log withshift
+        bssn_lapseharmonicf = 2
+
+get
+
+ralpha == Lie(alpha) - 2 alpha K
+
+This the version of 1+log that we say we are using. 
+
+
+Gamma-driver shift:
+===================
+
+Use
+	gamma0 withGadv withShiftadv withBadv
+
+Code:
+
+betaF    == shiftgammacoeff alpha^shiftalphapower / psi^shiftpsipower
+rB[a]    == evolveshift * ((gamma0factor + gamma2factor betaF) *
+              (rG[a] - withGadv advG[a])
+              - shiftdriver (1.0 + shiftdrivertimeweight * timeweight) B[a] + withBadv advB[a])
+
+rbeta[a] == evolveshift ((gamma2factor + gamma0factor betaF) B[a] + withShiftadv advbeta[a]),
+
+where
+
+shiftgammacoeff = bssn_shiftgammacoeff (default 0.75)
+shiftalphapower = bssn_shiftalphapower (default 0)
+shiftpsipower   = bssn_shiftpsipower (default 0)
+
+For standard choices betaF = 0.75.
+
+evolveshift     = 1 if we are before shift_stop_time (by default we always are)
+gamma{0,2}factor : whether we choose gamma0 or gamma2 
+shiftdriver     = bssn_shiftdriver (\eta parameter)
+shiftdrivertimeweight = bssn_shiftdriver_timeweight (default 0)
+timeweight      = [never used, so will have initialization value of zero.]
+
+
+For standard choices: 
+
+betaF = 0.75
+rB[a] = rG[a] - advG[a] - shiftdriver B[a] + advB[a]
+rbeta[a] == 0.75 B[a] + advbeta[a]
+
+
+This is the version of gamma-driver we say we are using. 
+
+

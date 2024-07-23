@@ -1,0 +1,23 @@
+# geobssn.par
+# BB 6/02
+# 
+# basic test for bssn
+
+
+physics = adm bssn punctures
+
+iterations = 5
+
+1doutiter = 1
+1doutput = gxx Kxx alpha betax bssn_gxx bssn_K psi dpsiopsix ddpsiopsixx                                      bssn_Gx  bssn_Axx bssn_phi
+
+nxyz = 10
+dxyz = 0.4
+grid = box
+
+bhmass1 = 1
+
+bssn_initial_lapse = one
+bssn_initial_shift = zero
+
+

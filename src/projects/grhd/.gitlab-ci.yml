@@ -1,0 +1,10 @@
+# BAM integration tests
+stages:
+  - build
+
+# Trigger a pipeline in the main BAM
+build-and-test:
+  stage: build
+  trigger:
+    project: bamdev/BAM
+    branch: BAM23

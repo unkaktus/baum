@@ -1,0 +1,26 @@
+
+	Web resources for 3D EOS tabls
+
+	# Hempel
+
+	http://phys-merger.physik.unibas.ch/~hempel/eos.html
+
+	# Lattimer-Swesty 
+
+	http://www.astro.sunysb.edu/dswesty/lseos.html
+
+	# C.Ott 
+
+	http://www.stellarcollapse.org/
+	http://www.stellarcollapse.org/equationofstate
+
+	# G. Shen 
+
+	http://cecelia.physics.indiana.edu/gang_shen_eos/
+
+	# H.Shen 
+	
+	http://user.numazu-ct.ac.jp/~sumi/eos/
+	http://www.rcnp.osaka-u.ac.jp/~shen/
+	http://physics.nankai.edu.cn/grzy/shenhong/EOS/index.html
+

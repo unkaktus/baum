@@ -1,0 +1,42 @@
+# WT 24.7.2003
+# Test puncture Sequence
+# compute lapse such that M_ADM=M_Kalphapsi
+
+
+physics = adm punctures multigrid
+
+grid = box bitant
+nx   = 18
+ny   = 18
+nz   = 18
+dxyz = 0.5
+
+mg_verbose		= yes
+mg_size_nmin		= 4
+mg_vcycle_nmax		= 1000
+mg_exact_nmin		= 10
+mg_exact_nmax           = 100
+
+punctures_solver  = multigrid
+punctures_persist = yes
+punctures_itmax   = 1000
+punctures_tolerance = 1e-5
+
+punctures_boundary = robin
+
+punctures_MK_eq_MADM_Sequence = yes
+punctures_Sequence_D1 = 3
+punctures_Sequence_D2 = 3.5
+punctures_Sequence_PointNumber = 2
+
+punctures_mass = yes
+
+bhmass1 =  0.5
+bhmass2 =  0.5
+
+iterations = 0
+
+1doutiter = 1
+1doutput = gxx Kxx alpha punctures_u punctures_v 
+1doutputall = yes
+1doutinterpolate = yes

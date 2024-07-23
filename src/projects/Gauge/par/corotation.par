@@ -1,0 +1,48 @@
+# corotation.par
+# BB 10/03
+# Test corotation shift
+
+physics = adm bssn punctures multigrid Gauge
+
+grid = box quadrant
+nxyz = 34
+dxyz = 0.5
+
+mg_verbose		= some
+mg_size_nmin		= 4
+mg_vcycle_nmax		= 1000
+mg_exact_nmin		= 10
+mg_exact_nmax		= 100
+
+punctures_solver  = multigrid
+punctures_persist = yes
+punctures_itmax   = 1000
+punctures_tolerance = 1e-5
+
+punctures_boundary = robin
+
+# Cook-Baumgarte ISCO
+bhmass1 =  0.45
+bhy1	=  1.1515
+bhpx1	= -0.335
+
+bhmass2 =  0.45
+bhy2	= -1.1515
+bhpx2	=  0.335
+
+
+Gauge = corotation
+corotation_omega = 0.1
+corotation_scale = 0.5
+corotation_attenuate    = yes      # no, rational, (exponential)
+corotation_attenuate_a  = 1
+corotation_attenuate_b  = 0.1
+corotation_attenuate_c  = 2
+
+
+iterations = 0
+
+1doutiter = 1
+1doutput = gxx Kxx punctures_u betax betarotx psi
+1doutputall = yes
+1doutinterpolate = yes

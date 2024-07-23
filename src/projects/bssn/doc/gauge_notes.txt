@@ -1,0 +1,104 @@
+Notes on BAM's bssn_rhs_movpunc_N.m implementation
+
+mth 04/2010.
+===============================================================================
+
+note:   * this version is now standart,
+        * bssn_rhs_movpunc_6.m is backup
+        * older versions are moved to bssn/attic/.
+
+
+
+Parameters: (under construction)
+===========
+
+order_centered
+order_advection
+advection_lopsided
+advection_lopsided6
+advection_lopsided8
+advection_lopsided10
+order_dissipation
+dissipation_factor 
+bssn_forceKzero         yes,no
+bssn_subtractA          yes
+bssn_normalizedetg", "yes");
+bssn_lapse  constant,1+log,1+log2,withshift,harmonic");
+bssn_subtractK0", "yes");
+bssn_densitizedLapse", "no");
+bssn_densitizedLapse", "1+log_withoutShift");
+bssn_alphaDensityWeight");
+bssn_shift", "gamma0,gamma2,withGadv,withShiftadv,withBadv");
+bssn_shift_stop_time");
+const double evolveshift     = Cal( (level->time>=shift_st)*(shift_st>=0), 0.0, 1.0);
+bssn_lapsepsipower");
+bssn_lapseharmonicf");
+bssn_shiftpsipower");
+bssn_shiftalphapower");
+bssn_shiftgammacoeff");
+bssn_shiftdriver");
+bssn_shiftdriver_time");
+bssn_shiftdriver_timeweight");
+chi_div_floor");
+bssn_moving_punctures_type", "chi,phi");
+bssn_chi_psipower
+
+
+
+
+
+
+
+
+
+
+
+
+
+examples:
+=========
+
+1) dookie gauge:
+
+    ralpha  = beta^i*alpha,i - alpha*muL*K
+    rbeta^i = muS*Gamma^i - eta beta^i + beta^j*beta^i,j
+    rB^i    = 0
+
+-------------------------------------------------------------------------------
+bssn_lapse              = 1+log withshift
+#bssn_lapseharmonicf     = 2    #muL
+bssn_subtractK0         = no
+
+bssn_initial_shift      = zero
+bssn_shift              = withoutB withShiftadv
+bssn_shiftdriver        = 1.43  #eta
+bssn_shiftgammacoeff    = 1.0   #muS
+-------------------------------------------------------------------------------
+
+
+2) normal 2BH run (without eta)
+
+    ralpha  = beta^i*alpha,i - 2*alpha^2*K
+    rbeta^i = 3/4 B^i
+    rB^i    = beta^j*B^i,j + Gamma^i,t - eta B^i
+
+-------------------------------------------------------------------------------
+bssn_lapse              = 1+log withshift
+
+bssn_initial_shift      = zero
+bssn_shift              = gamma0 withGadv withBadv withShiftadv
+bssn_shiftalphapower    = 0.0
+bssn_shiftdriver        = 0.8   #eta
+-------------------------------------------------------------------------------
+
+
+3) normal 2BH run (with eta)
+
+
+
+
+
+
+
+
+

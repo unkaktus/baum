@@ -1,0 +1,236 @@
+# collapsing TOV /ideal/poly star for bssn and Z4
+# mth 2012 
+#############################################################################
+
+physics = adm bssn Gauge matter BBIDdataReader ADM_mass AHmod
+
+
+############################################################################
+# Checkpointing
+
+#checkpoint                  = no
+#checkpoint_dt               = 100.0 
+#checkpoint_variables        = all
+
+
+############################################################################
+# basic setup
+
+
+finaltime                   = 20
+
+order_centered              = 4
+order_advection             = 4
+advection_lopsided6         = 2
+advection_lopsided          = 1 
+
+bampi_nghosts               = 6
+order_RP                    = 4
+amr_nbuffer                 = 6
+
+amr_lmax                    = 7
+nxyz                        = 40
+#amr_move_lcube              = 0
+#amr_move_nxyz               = 60
+
+dxyz                        = 2.0
+amr_bo_dxmax                = 3.0
+
+amr                         = newfmr bo
+amr_fmr                     = nestedboxes
+grid                        = box octant
+
+interpolate_RP_boxtobox     = yes N
+stdout_verbose              = dtdxdiss
+
+
+
+
+############################################################################
+# initial data
+
+initial_file = .../src/projects/matter/id/modelA0.64.ini
+
+perturb_star                = yes
+perturb_star_l              = 0
+perturb_star_m              = 0
+perturb_star_n              = 0
+perturb_star_lambda         = 0.1
+perturb_star_modus          = v
+
+
+############################################################################
+# hydro
+
+matter_EOS                  = poly
+EOS_K                       = 123.64890  # 0.0332278/2.68727e-04
+EOS_Gamma                   = 2.
+
+use_atmosphere              = ColdStatic
+atm_factor                  = 100.
+atm_level                   = 1e-10
+NewtonRaphsonTR             = 1e-10
+NewtonRaphsonNR             = 10
+
+matter_rhs                  = fluxes         # fluxes fd
+hrsc_nghosts                = 3
+reconstruction              = WENOZ
+TVD_limiter                 = MC2               # MM2 MC2
+numerical_flux              = LLF               # LLF HLL
+
+vmax                        = 0.999 #0.99999
+Wlor_critical_value         = 1e5   #316.23
+
+use_1order_REC_after_REC    = no
+use_mask                    = yes
+
+matter_interpolate_order    = 4
+matter_interpolate_scheme   = WENO
+
+excision                    = yes
+excision_r_factor           = 0.3
+excision_modus              = ATM
+
+
+
+#############################################################################
+# moving punctures
+
+adm_conformal               = no
+Z4d_moving_punctures        = yes
+Z4d_moving_punctures_type   = chi
+Z4d_chi_div_floor           = 0.00001
+bssn_moving_punctures       = yes
+bssn_moving_punctures_type  = chi
+chi_div_floor               = 0.00001
+
+
+#############################################################################
+# evolution
+
+punctures_lapse             = psiBL^(-2)
+
+evolution_method            = rk
+evolution_method_rk         = rk3
+dtfac                       = 0.25
+
+Z4d_register_algcon     = yes store
+Z4d_normalizedetg       = yes
+Z4d_subtractA           = yes
+bssn_register_algcon    = yes store
+bssn_normalizedetg      = yes
+bssn_subtractA          = yes
+
+order_dissipation       = 6
+dissipation_factor      = 2.0
+
+Z4d_initial_shift       = zero
+Z4d_lapse               = 1+log withshift
+Z4d_shift               = gamma0 withGadv withBadv withShiftadv
+Z4d_shiftalphapower     = 0.0
+Z4d_shiftdriver         = 2.0
+Z4d_kappa1		= 0.02
+Z4d_kappa2		= 0.02
+
+bssn_initial_shift      = zero
+bssn_lapse              = 1+log withshift
+#bssn_lapseharmonicf     = 4
+bssn_shift              = gamma0 withGadv withBadv withShiftadv
+bssn_shiftalphapower    = 0.0
+bssn_shiftdriver        = 1.43
+bssn_shiftgammacoeff    = 1.0
+
+
+#############################################################################
+# boundary
+
+boundary                = radiative centered
+
+
+############################################################################
+# gauge
+
+Gauge                   = moving_puncture
+
+
+
+
+
+#############################################################################
+# output
+
+0douttime        = 0.125 
+0doutput         = rho matter_p matter_rho   ham momx matter_D
+0doutputpt       = yes
+
+1douttime        = 0.125
+1doutput         = alpha betax gxx bssn_chi bssn_gxx bssn_K bssn_phi bssn_Axx  detg ham momx   rho Sx SSxx   matter_rho matter_p matter_D matter_tau matter_Sx matter_vx  matter_epsl  Z4d_Theta matter_v2
+1doutinterpolate = no
+1doutputall      = yes
+
+2douttime        = 0.125 
+2doutputxy       = matter_rho matter_vx matter_Sx matter_v2 matter_epsl matter_p
+2doutputxz       = matter_rho matter_vx matter_Sx matter_v2
+2doutputall      = yes
+2dformat         = vtk binary float
+2doutinterpolate = yes
+
+#3douttime        = 0.125
+3doutput	 = alpha betax gxx matter_vx matter_Sx
+3doutputall      = yes
+3dformat	 = vtk binary float
+
+
+#############################################################################
+# ADM Mass
+
+ADM_mass_ncircles = 101
+ADM_mass_npoints  = 80
+ADM_mass_lmin     = 0
+ADM_mass_lmax     = 7
+ADM_mass_r        = 20 30 40 50 60
+
+
+###########################################################################
+# AH finder
+
+AHmod_verbose     = yes
+AHmod_time        = 0.5
+
+AHmod_ntheta      = 30
+AHmod_nphi        = 60
+AHmod_LMAX        = 10
+AHmod_interpolation_order = 4
+
+AHmod_output      = yes
+AHmod_output_xyt  = yes
+AHmod_output_lm   = no
+
+AHmod_nhorizons   = 1
+AHmod_searchMTS   = 0  0.0  20.0
+AHmod_uselast     = yes
+
+AHmod_flow_iter   = 500
+AHmod_mass_tol    = 1.0e-04
+AHmod_hmean_tol   = 100.0
+
+AHmod_initial_guess_expand = 1.0
+AHmod_UseOptimalLevel = no
+AHmod_box_savety_factor = 1.2
+
+AHmod_surface0_WaitUntilClosePunctures = no
+AHmod_merger_distance = 0.1
+
+AHmod_surface0_centerx = 0.0
+AHmod_surface0_centery = 0.0
+AHmod_surface0_centerz = 0.0
+AHmod_initial_radius   = 1.0
+
+
+
+
+
+
+
+
+

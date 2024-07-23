@@ -1,0 +1,31 @@
+Comments on boundary conditions used in z4:
+-------------------------------------------
+
+In utility/boundary/boundary.c there is a func set_boundary which is
+called by evolve_rhs if the function pointer rhs_boundary==NULL, otherwise
+it calls rhs_boundary .
+
+In projects/z4/z4.c in func z4_startup we call
+set_rhs_func_register("geometry_bound", set_boundary);
+which sets rhs_boundary=set_boundary so it's not NULL!
+Thus evolve_rhs calls rhs_boundary=set_boundary.
+
+If the par
+boundary = background
+set_boundary calls:
+    boundary_fkt_ptr(unew,upre, c, ucur);
+    set_boundary_extrapolate_shells(level, unew);
+The function pointer boundary_fkt_ptr is set by a call to boundary_register.
+Extraploation seems to happen after the BCs are set.
+
+Now z4_startup calls stuff like:
+boundary_register(z4_boundary_shell);
+[or boundary_register(z4_boundary);]
+so that it sets boundary_fkt_ptr=z4_boundary_shell
+
+So evolve_rhs calls: 
+  rhs_boundary => set_boundary => boundary_fkt_ptr => z4_boundary_shell 
+  set_boundary_extrapolate_shells
+
+This seems to work, but why is the logic in here so convoluted? Who came up
+with this???

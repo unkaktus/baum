@@ -1,0 +1,278 @@
+(************** Content-type: application/mathematica **************
+                     CreatedBy='Mathematica 5.0'
+
+                    Mathematica-Compatible Notebook
+
+This notebook can be used with any Mathematica-compatible
+application, such as Mathematica, MathReader or Publicon. The data
+for the notebook starts with the line containing stars above.
+
+To get the notebook into a Mathematica-compatible application, do
+one of the following:
+
+* Save the data starting with the line of stars above into a file
+  with a name ending in .nb, then open the file inside the
+  application;
+
+* Copy the data starting with the line of stars above to the
+  clipboard, then use the Paste menu command inside the application.
+
+Data for notebooks contains only printable 7-bit ASCII and can be
+sent directly in email or through ftp in text mode.  Newlines can be
+CR, LF or CRLF (Unix, Macintosh or MS-DOS style).
+
+NOTE: If you modify the data for this notebook not in a Mathematica-
+compatible application, you must delete the line below containing
+the word CacheID, otherwise Mathematica-compatible applications may
+try to use invalid cache data.
+
+For more information on notebooks and Mathematica-compatible 
+applications, contact Wolfram Research:
+  web: http://www.wolfram.com
+  email: info@wolfram.com
+  phone: +1-217-398-0700 (U.S.)
+
+Notebook reader applications are available free of charge from 
+Wolfram Research.
+*******************************************************************)
+
+(*CacheID: 232*)
+
+
+(*NotebookFileLineBreakTest
+NotebookFileLineBreakTest*)
+(*NotebookOptionsPosition[      6770,        202]*)
+(*NotebookOutlinePosition[      7402,        224]*)
+(*  CellTagsIndexPosition[      7358,        220]*)
+(*WindowFrame->Normal*)
+
+
+
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[{
+    \(p\  = \ 
+      d\  + \ a1\ x\  + \ a2\ x^2\  + \ b1\ y\  + \ b2\ y^2\  + \ 
+        c11\ x\ y\), "\[IndentingNewLine]", 
+    \(eq1\  = \ D[p, x]\  \[Equal] \ 0\ \), "\[IndentingNewLine]", 
+    \(eq2\  = \ D[p, y]\  \[Equal] \ 0\), "\[IndentingNewLine]", 
+    \(Simplify[Solve[{eq1, eq2}, \ {x, \ y}]]\)}], "Input"],
+
+Cell[BoxData[
+    \(d + a1\ x + a2\ x\^2 + b1\ y + c11\ x\ y + b2\ y\^2\)], "Output"],
+
+Cell[BoxData[
+    \(a1 + 2\ a2\ x + c11\ y \[Equal] 0\)], "Output"],
+
+Cell[BoxData[
+    \(b1 + c11\ x + 2\ b2\ y \[Equal] 0\)], "Output"],
+
+Cell[BoxData[
+    \({{x \[Rule] \(2\ a1\ b2 - b1\ c11\)\/\(\(-4\)\ a2\ b2 + c11\^2\), 
+        y \[Rule] \(2\ a2\ b1 - a1\ c11\)\/\(\(-4\)\ a2\ b2 + c11\^2\)}}\)], \
+"Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(Clear[a, b, c, d, a1, a2, b1, b2, c11]\), "\[IndentingNewLine]", 
+    \(p\  = \ 
+      a\ x^2\  + \ \((b + c)\)\ x\ y\  + \ 
+        d\ y^2\ \), "\[IndentingNewLine]", 
+    \(eq1\  = \ D[p, x]\  \[Equal] \ 0\ \), "\[IndentingNewLine]", 
+    \(eq2\  = \ D[p, y]\  \[Equal] \ 0\), "\[IndentingNewLine]", 
+    \(Simplify[Solve[{eq1, eq2}, \ {x, \ y}]]\)}], "Input"],
+
+Cell[BoxData[
+    \(a\ x\^2 + \((b + c)\)\ x\ y + d\ y\^2\)], "Output"],
+
+Cell[BoxData[
+    \(2\ a\ x + \((b + c)\)\ y \[Equal] 0\)], "Output"],
+
+Cell[BoxData[
+    \(\((b + c)\)\ x + 2\ d\ y \[Equal] 0\)], "Output"],
+
+Cell[BoxData[
+    \({{x \[Rule] 0, y \[Rule] 0}}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(Clear[a, b, c]\), "\[IndentingNewLine]", 
+    \(A = {{a, b}, {b, c}}\), "\[IndentingNewLine]", 
+    \(l\  = Simplify[Eigenvalues[A]]\), "\[IndentingNewLine]", 
+    \(v\  = Simplify[Eigenvectors[A]]\), "\[IndentingNewLine]", 
+    \(Simplify[l[\([1]\)] + l[\([2]\)]]\)}], "Input"],
+
+Cell[BoxData[
+    \({{a, b}, {b, c}}\)], "Output"],
+
+Cell[BoxData[
+    \({1\/2\ \((a + c - \@\(a\^2 + 4\ b\^2 - 2\ a\ c + c\^2\))\), 
+      1\/2\ \((a + c + \@\(a\^2 + 4\ b\^2 - 2\ a\ c + c\^2\))\)}\)], "Output"],
+
+Cell[BoxData[
+    \({{\(-\(\(\(-a\) + 
+                c + \@\(a\^2 + 4\ b\^2 - 2\ a\ c + c\^2\)\)\/\(2\ b\)\)\), 
+        1}, {\(a - c + \@\(a\^2 + 4\ b\^2 - 2\ a\ c + c\^2\)\)\/\(2\ b\), 
+        1}}\)], "Output"],
+
+Cell[BoxData[
+    \(a + c\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(f\  = \ 
+      a \((x - x0)\)^2\  + \ 2  b \((x - x0)\) \((y - y0)\)\  + 
+        c \((y - y0)\)^2\  + \ d\), "\[IndentingNewLine]", 
+    \(f\  = Expand[f]\), "\[IndentingNewLine]", 
+    \(\(g\  = \ 
+        f\  - a\ x\ x\  - \ c\ y\ y\  - 
+          2  b\ x\ y;\)\), "\[IndentingNewLine]", 
+    \(h\  = 
+      Expand[\ g\  - \ y\ Coefficient[g, y]\  - \ 
+          x\ Coefficient[g, x]]\)}], "Input"],
+
+Cell[BoxData[
+    \(d + a\ \((x - x0)\)\^2 + 2\ b\ \((x - x0)\)\ \((y - y0)\) + 
+      c\ \((y - y0)\)\^2\)], "Output"],
+
+Cell[BoxData[
+    \(d + a\ x\^2 - 2\ a\ x\ x0 + a\ x0\^2 + 2\ b\ x\ y - 2\ b\ x0\ y + 
+      c\ y\^2 - 2\ b\ x\ y0 + 2\ b\ x0\ y0 - 2\ c\ y\ y0 + 
+      c\ y0\^2\)], "Output"],
+
+Cell[BoxData[
+    \(d + a\ x0\^2 + 2\ b\ x0\ y0 + c\ y0\^2\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(eqn\  = {a20\  \[Equal] \ 
+          a, \[IndentingNewLine]\ \ \ \ \ \ \ \ \ \ a02\  \[Equal] \ 
+          c, \[IndentingNewLine]\ \ \ \ \ \ \ \ \ \ a11\  \[Equal] \ 
+          2  b, \ \[IndentingNewLine]\ \ \ \ \ \ \ \ \ \ a10\  \[Equal] \
+\(-2\) a\ x0 - 
+            2\ b\ y0, \[IndentingNewLine]\ \ \ \ \ \ \ \ \ \ a01\  \[Equal] \
+\(-2\) b\ x0 - 
+            2  c\ y0, \[IndentingNewLine]\ \ \ \ \ \ \ \ \ \ a00\  \[Equal] \ 
+          d + a\ x0^2\  + \ c\ y0^2\  + \ 
+            2  b\ x0\ y0}\ \ \), "\[IndentingNewLine]", 
+    \(Solve[eqn, {a, b, c, d, x0, y0}]\)}], "Input"],
+
+Cell[BoxData[
+    \({a20 \[Equal] a, a02 \[Equal] c, a11 \[Equal] 2\ b, 
+      a10 \[Equal] \(-2\)\ a\ x0 - 2\ b\ y0, 
+      a01 \[Equal] \(-2\)\ b\ x0 - 2\ c\ y0, 
+      a00 \[Equal] d + a\ x0\^2 + 2\ b\ x0\ y0 + c\ y0\^2}\)], "Output"],
+
+Cell[BoxData[
+    \({{d \[Rule] \(\(-a02\)\ a10\^2 + a01\ a10\ a11 - a00\ a11\^2 - a01\^2\ \
+a20 + 4\ a00\ a02\ a20\)\/\(\(-a11\^2\) + 4\ a02\ a20\), a \[Rule] a20, 
+        c \[Rule] a02, b \[Rule] a11\/2, 
+        y0 \[Rule] \(a10\ a11 - 2\ a01\ a20\)\/\(\(-a11\^2\) + 4\ a02\ a20\), 
+        x0 \[Rule] \(\(-2\)\ a02\ a10 + a01\ a11\)\/\(\(-a11\^2\) + 4\ a02\ \
+a20\)}}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(Clear[x, y]\), "\[IndentingNewLine]", 
+    \(f\  = \ \(-\ Exp[\(-x^2\)\  - \ y^2]\)\), "\[IndentingNewLine]", 
+    \(g\  = \ \(-0.9998\)\  + \ 0.9754  x^2\  + \ 
+        0.9754  y^2\[IndentingNewLine] (*\ 
+      Plot3D[f - g, {x, \(-3\), 3}, {y, \(-3\), 
+          3}]\ *) \), "\[IndentingNewLine]", 
+    \(\(y\  = \ x;\)\), "\[IndentingNewLine]", 
+    \(Plot[{f - g}, {x, \(-0.5\), 0.5}]\)}], "Input"],
+
+Cell[BoxData[
+    \(\(-\[ExponentialE]\^\(\(-x\^2\) - y\^2\)\)\)], "Output"],
+
+Cell[BoxData[
+    \(\(-0.9998`\) + 0.9754`\ x\^2 + 0.9754`\ y\^2\)], "Output"]
+}, Open  ]]
+},
+FrontEndVersion->"5.0 for X",
+ScreenRectangle->{{0, 1600}, {0, 1200}},
+WindowSize->{963, 767},
+WindowMargins->{{Automatic, 242}, {Automatic, 148}}
+]
+
+(*******************************************************************
+Cached data follows.  If you edit this Notebook file directly, not
+using Mathematica, you must remove the line containing CacheID at
+the top of  the file.  The cache data will then be recreated when
+you save this file from within Mathematica.
+*******************************************************************)
+
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+
+(*NotebookFileOutline
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[1776, 53, 335, 6, 75, "Input"],
+Cell[2114, 61, 85, 1, 29, "Output"],
+Cell[2202, 64, 67, 1, 27, "Output"],
+Cell[2272, 67, 67, 1, 27, "Output"],
+Cell[2342, 70, 175, 3, 45, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[2554, 78, 383, 7, 91, "Input"],
+Cell[2940, 87, 71, 1, 29, "Output"],
+Cell[3014, 90, 69, 1, 27, "Output"],
+Cell[3086, 93, 69, 1, 27, "Output"],
+Cell[3158, 96, 62, 1, 27, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[3257, 102, 299, 5, 91, "Input"],
+Cell[3559, 109, 50, 1, 27, "Output"],
+Cell[3612, 112, 159, 2, 44, "Output"],
+Cell[3774, 116, 215, 4, 51, "Output"],
+Cell[3992, 122, 39, 1, 27, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[4068, 128, 422, 10, 75, "Input"],
+Cell[4493, 140, 119, 2, 29, "Output"],
+Cell[4615, 144, 175, 3, 29, "Output"],
+Cell[4793, 149, 72, 1, 29, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[4902, 155, 603, 11, 123, "Input"],
+Cell[5508, 168, 237, 4, 29, "Output"],
+Cell[5748, 174, 386, 6, 85, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[6171, 185, 423, 8, 107, "Input"],
+Cell[6597, 195, 76, 1, 32, "Output"],
+Cell[6676, 198, 78, 1, 29, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+
+
+(*******************************************************************
+End of Mathematica Notebook file.
+*******************************************************************)
+

@@ -1,0 +1,193 @@
+#6th order evo single BH
+#
+ physics = adm bssn
+ 
+############################################################################
+# Checkpointing
+ 
+# checkpoint           = yes
+# checkpoint_dt        = 10.0
+# checkpoint_variables = all
+ 
+############################################################################
+# basic setup
+ 
+ order_centered          = 4
+ order_advection         = 4
+ advection_lopsided6     = 2
+ advection_lopsided      = 1
+ 
+ bampi_timer_on          = yes
+ bampi_lowlatency        = yes
+ bampi_nghosts           = 6
+ order_RP                = 6
+ order_RP_shells         = 6
+ amr_nbuffer             = 6
+
+ boundary_N_extrapolate  = 4
+ boundary_order_extrapolate = 6
+ boundary_order_finitediff = 2
+ 
+ 
+ evolution_method       = rk
+ evolution_method_rk    = rk4
+ 
+#evolve_store_rhs   = yes
+ 
+# rk4 allows a larger time step
+ dtfac = 0.25
+ 
+# storage_verbose = yes
+#############################################################################
+# moving punctures
+ 
+ adm_conformal                   = no
+ bssn_moving_punctures           = yes
+ bssn_moving_punctures_type      = chi
+ chi_div_floor                   = 0.00001
+ 
+ amr_lmax                = 4
+ nxyz                    = 40 # 96 
+# amr_move_lcube          = 0 
+# amr_move_nxyz           = 80 
+ amr_shells_nr           = 80
+ amr_shells_nphi         = 20
+ 
+ dxyz                    = 1.0	
+ amr_bo_dxmax            = 0.5
+ 
+ amr                     = newfmr  bo # onedt # move
+ amr_fmr                 = nestedboxes
+ grid                    = box shells bitant #quadrant #bitant
+ 
+ 
+#############################################################################
+# output
+ 
+ finaltime = 100
+ 
+# 0douttime        = 0.125
+# 0doutiter        = 1
+ 0doutput         = ham
+ 0doutputmax      = bssn_chi
+ 0doutputmaxpos   = bssn_chi
+ 
+ 1douttime        = 0.125
+# 1doutiter        = 1
+# 1doutput         = alpha betax betadotx bssn_gxx bssn_Axx bssn_Gx bssn_chi bssn_K z4_Theta ham  rpsi4 ipsi4 
+ 1doutinterpolate = yes
+ 1doutputall      = yes
+ 
+# 2douttime        = 0.125
+# 2doutiter        = 1
+ 2doutputxy       = alpha rpsi4 ipsi4
+ 2doutinterpolate = yes
+ 2doutputall      = yes
+ 2dformat         = vtk text float
+ 
+# 3douttime        = 0.125
+# 3doutiter        = 1
+ 3doutput         = ham alpha bssn_Gx
+ 3doutputall      = yes
+ 3dformat	  = vtk text float
+ 
+
+#############################################################################
+# initial data
+ 
+mass1 = 1.
+#adm_data = Minkowski
+adm_data = puncture
+punctures_solver = none
+punctures_boundary = none
+
+#shells_RP = no
+
+#############################################################################
+# evolution
+  
+z4_register_algcon     = yes store
+z4_normalizedetg       = yes
+z4_subtractA           = yes
+bssn_register_algcon    = yes store
+bssn_normalizedetg      = yes
+bssn_subtractA          = yes
+punctures_lapse         = psiBL^(-2)
+ 
+order_dissipation       = 6
+dissipation_factor      = 0.5
+ 
+bssn_initial_shift      = zero
+bssn_lapse              = 1+log  withshift
+bssn_shift              = gamma0 withGadv withBadv withShiftadv
+bssn_shiftalphapower    = 0.0
+bssn_shiftdriver        = 2.0 
+ 
+#z4_initial_lapse       = onepluswave
+z4_initial_shift       = zero
+z4_lapse               = 1+log withshift
+z4_shift               = gamma0 withGadv withBadv withShiftadv
+z4_shiftalphapower     = 0.0
+z4_shiftdriver         = 2.0
+
+
+z4_kappa1		= 0.0
+z4_kappa2		= 0.0
+
+#z4_shift_use_B = yes
+# z4_zeroThetaRHS = yes
+
+ 
+#############################################################################
+# moving punctures
+
+adm_conformal               = no
+z4_moving_punctures        = yes
+z4_moving_punctures_type   = chi
+z4_chi_div_floor           = 0.00001
+bssn_moving_punctures       = yes
+bssn_moving_punctures_type  = chi
+chi_div_floor               = 0.00001
+
+
+
+ 
+ 
+ 
+ 
+#############################################################################
+# boundary
+ 
+ boundary                = radiative centered
+ 
+############################################################################
+# gauge
+ 
+ Gauge                   = moving_puncture
+
+
+
+############################################################################
+# invariants  
+ ntheta          = 47
+ nphi            = 46
+ invariants_order         = 4
+ invariants_compute_modes = yes
+ invariants_modes_r       = 5 7 10 20 40 60
+ invariants_modes_lmin    = 0
+ invariants_modes_lmax    = 4
+ invariants_energy_r      = 5 7 10 20 40 60
+ gauss_codacci_mainardi   = standard
+
+
+
+
+
+
+
+
+
+
+
+
+

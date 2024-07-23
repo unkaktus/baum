@@ -1,0 +1,494 @@
+% notes.tex
+% notes on bam/src/projects/Invariants
+% BB, JG, SH, US 3/2006
+
+\documentclass[12pt]{article}
+
+\voffset=-2.5cm
+\hoffset=-1.0cm
+\textheight=24.5cm
+\textwidth=15cm
+
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\bea}{\begin{eqnarray}}
+\newcommand{\eea}{\end{eqnarray}}
+\newcommand{\mysec}[1]{\bigskip\noindent{\bf #1}\smallskip}
+
+
+\begin{document}
+
+\begin{center}
+{\large\bf Notes on Curvature Invariants in BAM}
+\end{center}
+\bigskip
+\bigskip
+\bigskip
+
+
+
+\mysec{Definition of $\psi_4$}
+
+The Weyl scalars $\psi_i$, $i = 0$ through $4$, are defined by
+contraction of the Weyl tensor $C_{abcd}$ with a specific combination
+of vectors forming a null tetrad $\{l^a,n^a,m^a,\bar{m}^a\}$. Here we
+consider
+%
+\begin{equation}
+        \psi_4 = C_{abcd} n^a \bar{m}^b n^c \bar{m}^d .
+\end{equation}
+%
+Note: This definitions presents us with the first of a number of
+sign ambiguities. Fiske et.\,al\,\cite{Fiske2005},
+for example, define $\psi_4$ as the negative of this expression.
+As a matter of fact, the negative version is currently implemented
+in the {\sc Bam} code.
+
+As the Riemann tensor itself is subject to sign conventions, we
+explicitly give our definition
+%
+\begin{equation}
+  R^\alpha{}_{\beta \gamma \delta} = \partial_\gamma
+        \Gamma^\alpha_{\beta \delta} - \partial_{\delta}
+        \Gamma^\alpha_{\beta \gamma} + \Gamma^\alpha_{\gamma \mu}
+        \Gamma^{\mu}_{\beta \delta} - \Gamma^\alpha_{\delta \mu}
+        \Gamma^\mu_{\beta \gamma}.
+\end{equation}
+%
+Note: As seems to be the practice in other vacuum codes, too, we
+use the Riemann tensor and not the Weyl tensor as they are identical
+if the Einstein equations (Ricci equal to zero) are satisfied.  
+
+Note: This expression can be computed for any tetrad, but $\psi_4$ is
+defined using a special tetrad to obtain standard
+properties. (``principal null directions''?)
+
+Note: Explain ``outgoing radiation property''.
+
+
+
+\mysec{The tetrad}
+
+Various definitions are in use for $\{l^a,n^a,m^a,\bar{m}^a\}$. The
+vectors $l^a$ and $n^a$ are real while for convenience $m^a$ is chosen
+to be complex with its complex conjugate denoted by $\bar{m}^a$. The
+defining properties of a standard null tetrad are that (i) the vectors
+are null, (ii) a specific normalization is assumed. Following
+Chandrasekhar \cite{Chandrasekhar1983}:
+%
+\begin{eqnarray}
+        && l^a l_a = n^a n_a = m^a m_a = \bar{m}^a\bar{m}_a = 0 \\
+        && l^a n_a =-1,\quad m^a \bar{m}_a = 1,
+        \quad \mbox{all other pairings 0} .
+\end{eqnarray}
+%
+
+Note: This definition depends on the metric. In the far field of an
+asymptotically flat space time we can use the following standard null
+tetrad of Minkowski space:
+%
+\begin{eqnarray}
+        l^a &=& \frac{1}{\sqrt{2}} (t^a + r^a), \\
+        n^a &=& \frac{1}{\sqrt{2}} (t^a - r^a), \\
+        m^a &=& \frac{1}{\sqrt{2}} (\theta^a + i \phi^a), \\
+  \bar{m}^a &=& \frac{1}{\sqrt{2}} (\theta^a - i \phi^a),
+\end{eqnarray}
+%
+where $\{t^a,r^a,\theta^a,\phi^a\}$ are the standard unit vectors of
+Minkowski space in spherical coordinates. In particular,
+$\{r^a,\theta^a,\phi^a\}$ is right-handed. In Cartesian coordinates,
+%
+\begin{eqnarray}
+        t^a &=& (1,0,0,0), \\
+        r^a &=& \frac{1}{r} (0,x,y,z), \\
+        \theta^a &=& \frac{1}{\rho r} (0, x z, y z, - \rho^2), \\
+        \phi^a &=& \frac{1}{\rho} (0, -y, x, 0),
+\end{eqnarray}
+%
+where $\rho=\sqrt{x^2+y^2}$ and $r=\sqrt{x^2+y^2+z^2}$.
+
+Note: If the metric is not flat, one should really compute something
+like principal null directions of that metric, but typically one just
+starts with the flat space tetrad and performs a Gram-Schmidt
+orthonormalization. Commonly one begins this procedure with the $\phi^a$
+vector. In summary, this procedure leads to the following operations
+%
+\begin{eqnarray}
+  \phi^a   &\rightarrow& \frac{\phi^a}{\sqrt{\langle \phi,\phi\rangle}}, \\
+  r^a      &\rightarrow& r^a - \langle r, \phi \rangle \phi^a, \\
+  r^a      &\rightarrow& \frac{r^a}{\sqrt{\langle r,r\rangle}}, \\
+  \theta^a &\rightarrow& \theta^a - \langle \theta, \phi \rangle \phi^a
+                                  - \langle \theta, r \rangle r^a, \\
+  \theta^a &\rightarrow& \frac{\theta^a}{\sqrt{\langle \theta, \theta
+                         \rangle}},
+\end{eqnarray}
+%
+where we have introduced the notation $\langle u, v \rangle = g_{ab}u^a v^b$.
+
+
+
+
+\mysec{Symmetry properties of $\psi_4$}
+
+$\psi_4$ is not a tensor but a ``pseudo-scalar''. The reason is that
+although the Weyl tensor is a tensor, the definition of the tetrad
+introduces non-tensor quantities. To be precise (is
+this actually a complete characterization?), $\psi_4$ is a
+pseudo-scalar with spin-weight $-2$. This spin-weight refers to
+spatial rotations in the tetrad basis. (This should be spelled out!
+What is the defining equation?)
+
+The non-tensor property of $\psi_4$ has several consequences. If one
+performs a mode decomposition of $\psi_4$, the appropriate basis
+functions are not the usual spherical harmonics but the (far less well
+known) spin-weighted spherical harmonics, see below.
+
+Another issue of relevance in a numerical code is that $\psi_4$ does
+not behave like a scalar under reflections and rotations of the
+coordinates. Therefore certain symmetry boundary conditions have
+to be modified, for example at the boundary of the numerical domain,
+but also in the evaluation of integrals.
+
+
+
+\mysec{Transformation of $\psi_4$ under reflections}
+
+Notation: In a given chart on a manifold, a tensor $T$ transforms
+under a diffeomorphism $f: p \rightarrow p' = f(p)$ as
+\beq
+        T'(p') = (J T)(p),
+\eeq
+where $p$ is a point, $f$ a function mapping points to points, $J$ 
+the Jacobian of $f$, and $J T$ denotes the transformation of the
+contravariant indices of $T$ by the matrix $J$ and covariant indices
+by $J^{-1}$. A tensor is {\em symmetric} under this
+transformation if for any point $q$
+\beq
+        T'(q) = T(q).
+\eeq
+
+Reflection: In Cartesian coordinates the reflection e.g.\ at the $z=0$ plane
+is defined by
+\bea
+         p'&\equiv& (t',x',y',z') = (t,x,y,-z), \\
+        {J^{a}}_b &\equiv& 
+        \frac{\partial x'^{a}}{\partial x^b} = \mbox{diag}(1,1,1,-1).
+\eea
+In words, under reflections the components of a tensor pick up a minus
+sign for each occurrence of a $z$-index, with immediate generalization
+to reflections at the other coordinate planes.
+
+For a vector $v^a$ that is symmetric under a given reflection, we have
+\beq
+ Jv^a(p) = v^a(p'), \quad \mbox{or equivalently}\quad Jv^a(p') = v^a(p). 
+\eeq
+While $t^a$ and $r^a$ transform like vectors, the components of
+$\theta^a$ and $\phi^a$ in Cartesian coordinates transform as follows
+under reflections:
+\beq
+\begin{tabular}{c|ccc}
+           & $x\rightarrow -x$ & $y\rightarrow -y$ & $z\rightarrow -z$
+\\ \hline
+$J\theta^a(p')$ & $+\theta^a(p)$ &   $+\theta^a(p)$ &  $ - \theta^a(p)$ 
+\\
+$J\phi^a(p')$ & $-\phi^a(p)$ &   $-\phi^a(p)$ &  $ + \phi^a(p)$ 
+\end{tabular}
+\eeq
+This implies that e.g.\ for the $z$-reflection
+\bea
+        J\bar{m}^a(p') &=& 
+                 (J\theta^a(p') - i J\phi^a(p'))/\sqrt{2}
+\\
+             &=& (-\theta^a(p) - i \phi^a(p))/\sqrt{2}
+\\
+                       &=& - m^a(p),
+\\
+        \bar{m}^a(p') &=& - Jm^a(p),
+\eea
+that is, $\bar{m}^a$ is transformed into $m^a$ with a sign change and
+vice versa, so $\bar{m}^a$ neither transforms as a vector nor as a
+pseudo-vector with a sign flip.
+
+We can now address the question how $\psi_4$ transforms under
+reflections. By definition
+\beq
+        \psi_4(p) = C_{abcd} n^a \bar{m}^b n^c \bar{m}^d (p).
+\eeq
+Note that the pseudo-vector pieces are contained in 
+\beq
+        \bar{m}^a \bar{m}^b = (\theta^a\theta^b - \phi^a\phi^b)/2
+                             - i (\theta^a\phi^b + \phi^a\theta^b)/2.
+\eeq
+This product has the property that for each of the $x$-, $y$-, or
+$z$-reflections 
+\bea
+  \mbox{Re}(\bar{m}^a\bar{m}^b)(p') &=& + \mbox{Re}(J\bar{m}^aJ\bar{m}^b)(p),
+\\
+  \mbox{Im}(\bar{m}^a\bar{m}^b)(p') &=& - \mbox{Im}(J\bar{m}^aJ\bar{m}^b)(p).
+\eea
+In general, $\psi_4$ does not possess any symmetries even if the tetrad
+has certain symmetries, since in general the Weyl tensor is asymmetric. 
+Its transformation law is $C'(p') = J^{-1} C(p)$. Assuming
+reflection symmetry, however, we have $C(p') = J^{-1} C(p)$. Together
+with the reflection symmetries established above for the explicit
+tetrad in flat space, we find
+\bea
+        \psi_4(p') &=& C_{abcd} n^a \bar{m}^b n^c \bar{m}^d (p')
+\\
+        &=& (J^{-1}C)_{abcd} (J n)^a (J n)^c 
+            (\mbox{Re}(J\bar{m}^bJ\bar{m}^d) - 
+            i\mbox{Im}(J\bar{m}^bJ\bar{m}^d))(p)
+\\
+        &=& C_{abcd} n^a n^c 
+            (\mbox{Re}(\bar{m}^b\bar{m}^d) 
+          - i\mbox{Im}(\bar{m}^b\bar{m}^d))(p).
+\eea
+In summary, assuming reflection symmetry of the Weyl tensor and using
+the standard flat space null tetrad,
+\bea
+        \psi_4(p') &=& \overline{\psi_4(p)},
+\\
+        \mbox{Re}\psi_4(p') &=& +\mbox{Re}\psi_4(p),
+\\
+        \mbox{Im}\psi_4(p') &=& -\mbox{Im}\psi_4(p).
+\eea
+The real part of $\psi_4$ transforms as a scalar under all
+three reflections, while the imaginary part of $\psi_4$ transforms as
+a pseudo-scalar with a sign change.
+
+Note: This argument has to be reexamined for any other tetrad that one
+may want to use. Conceivably, the above symmetry property will not
+hold if the tetrad is orthonormalized using a non-flat metric. Even if
+the metric is reflection symmetric, orthonormalization introduces
+linear combinations of the $\theta^a$ and $\phi^a$ vectors that may
+not transform simply with an overall sign change in the imaginary
+part. (CHECK: this actually does not seem the case, awaits explicit
+formula for orthonormalization.)
+
+
+
+
+\mysec{Spin-weighted Spherical Harmonics}
+
+Collect all relevant formulas here. The Mathematica notebook Ylm.nb in
+bam/src/math contains the derivation using Wigner d-functions and also
+using ladder operators. For example,
+%
+\begin{eqnarray}
+  {}_{-2}Y_{2-2} &=& \sqrt{\frac{5}{64\pi}}
+                     (1 - \cos{\theta})^2 e^{-2i\phi},  \\
+  {}_{-2}Y_{2-1} &=& -\sqrt{\frac{5}{16\pi}}
+                     \sin\theta (1-\cos\theta) e^{-i\phi}, \\
+  {}_{-2}Y_{20} &=& \sqrt{\frac{15}{32\pi}} \sin^2{\theta}, \\
+  {}_{-2}Y_{21} &=& -\sqrt{\frac{5}{16\pi}}
+                    \sin\theta (1+\cos \theta) e^{i\phi} \\
+  {}_{-2}Y_{22} &=& \sqrt{\frac{5}{64\pi}}
+                    (1 + \cos{\theta})^2 e^{2i\phi},
+\end{eqnarray}
+%
+Note that $(1 + \cos{\theta})^2 = 4 \cos^4(\theta/2)$ and
+$(1 - \cos{\theta})^2 = 4 \sin^4(\theta/2)$.
+
+
+
+\mysec{Computing the mode decomposition of $\psi_4$}
+
+Since $\psi_4$ is of spin-weight $-2$, its modes are defined with
+respect to the spin-weighted spherical harmonics so that the result
+is a scalar (check, is this really what happens?). We denote the modes
+by
+\beq
+        \psi_4^{lm} = (\mbox{}_{-2}Y_{lm}, \psi_4).
+\eeq
+The scalar product is defined for two complex functions $f(\theta,\phi)$ and
+$g(\theta,\phi)$ by
+\beq
+        (f,g) = \int_0^\pi d\theta \sin\theta \int_0^{2\pi} d\phi 
+                \,\, \overline{f(\theta,\phi)} g(\theta,\phi).
+\eeq
+
+Reflection symmetries: Suppose only the upper half space is available
+because the underlying metric data is reflection symmetric (bitant
+symmetry). A $z$-reflection corresponds to
+\beq
+        \theta' = \pi-\theta, \quad \phi' = \phi,
+\eeq
+and 
+\beq
+        \mbox{}_{-2}Y_{22}(p') = \overline{\mbox{}_{-2}Y_{2-2}(p)}.
+\eeq
+As apparent from its definition, $\mbox{}_{-2}Y_{22}$ is asymmetric
+as a function of $\theta$, being largest in the upper half space,
+while $\mbox{}_{-2}Y_{2-2}$ is largest in the lower half space.
+
+To compute $(\mbox{}_{-2}Y_{22}, \psi_4)$ we can split the integral
+for an arbitrary function $h(\theta)$ according to
+\beq
+        \int_0^\pi d\theta \sin(\theta) h(\theta) =
+        \int_0^{\pi/2} d\theta \sin(\theta) [h(\theta) +
+        h(\pi-\theta)],
+\eeq
+since
+\beq
+        \int_{\pi/2}^{\pi} d\theta \sin\theta h(\theta) = 
+        \int_{\pi/2}^0 d\theta' \sin(\pi-\theta') h(\pi-\theta') =
+        \int_0^{\pi/2} d\theta \sin(\theta) h(\pi-\theta). 
+\eeq
+(Check signs). For example,
+\beq
+   (\mbox{}_{-2}Y_{22}, \psi_4) = 
+   (\mbox{}_{-2}Y_{22}, \psi_4)_{\theta\in[0,\pi/2]} +
+   \overline{(\mbox{}_{-2}Y_{2-2},\psi_4)}_{\theta\in[0,\pi/2]}.
+\eeq
+
+
+\mysec{ADM momenta}
+
+The notion of the energy and momentum associated with a localized area or
+a particular object represents a highly non-trivial problem
+in general relativity.
+The situation is less complicated if we talk about the total energy or
+momentum associated with a spacetime described by the two fundamental
+forms $\gamma{ij}$ and $K_{ij}$. Provided the fundamental forms satisfy
+certain assymptotic requirements, the total energy and momentum
+of the spacetime are finite and well-defined and can be obtained from
+integrals over 2-spheres evaluated in the limit of infinite radii
+(see, e.\,g.\,\cite{York1979}). These integrals are commonly referred
+to as {\em ADM quantities} in the literature. For the ADM mass and linear
+momentum we use the definition given in Wald \cite{Wald1984}:
+%
+\begin{eqnarray}
+  E_{\rm ADM} &=& \frac{1}{16\pi} \lim_{r\rightarrow \infty} \int
+     \left( \partial_m \gamma_{mn} - \partial_n \gamma_{mm} \right)
+     N^n dA, \label{eqn:ADMenergy} \\
+  P_n &=& \frac{1}{8\pi} \lim_{r\rightarrow \infty} \int \left(
+     K_{mn} N^m - K^m{}_m N_n \right) dA. \label{eq: ADMP}
+\end{eqnarray}
+%
+Here we assume summation over repeated indices (including pairs of
+downstairs indices) and
+$N^n$ represents the unit normal associated with the area element $dA$.
+Similarly, we calculate the ADM angular momentum from
+%
+\begin{equation}
+  J_a = \frac{1}{8\pi} \epsilon_{am}{}^n \int x^m A^l{}_n N_ldA,
+\end{equation}
+%
+(see, e.\,g.\, , \cite{Yo2002}). Note that the last equation can be
+rewritten as
+%
+\begin{equation}
+  J_i = \frac{1}{8\pi} \epsilon_{am}{}^n \int x^m
+     \left(K^l{}_n - \frac{1}{3} K \delta^l{}_n \right) N_ldA
+      = \frac{1}{8\pi} \epsilon_{am}{}^n \int x^m K^l{}_n N_ldA,
+      \label{eq: ADMJ}
+\end{equation}
+%
+since the radially outgoing vector $N_l \sim x_l$.
+
+Eqs.\,(\ref{eq: ADMP}), (\ref{eq: ADMJ}) can be expressed together in a
+single equation in terms of the Killing vectors associated with the
+momenta \cite{York1979}. Note that the term involving the trace of the 
+extrinsic curvature $K$ is missing in Eq.\,(11) in \cite{Bowen1980},
+presumably because they are explicitly dealing with maximally sliced
+($K = 0$) solutions. 
+
+
+\mysec{The ADM energy for conformally decomposed metrics}
+
+[This is possibly superfluous detail, but this seemed the best place 
+for it --- Mark Hannam.]
+
+In practice we conformally decompose the spatial metric as 
+%
+\begin{equation}
+\gamma_{ij} = \psi^4 \tilde{\gamma}_{ij}.
+\end{equation}
+%
+In this case it is possible to write the ADM energy (\ref{eqn:ADMenergy}) in
+a much simpler form. Explictly, using the definition in \cite{York1979} (which 
+reduces to Eq.\,(\ref{eqn:ADMenergy}) in the flat-space limit at spatial
+infinity), the energy is now 
+%
+\begin{eqnarray}
+E_{\rm ADM} & = & \frac{1}{16\pi} \lim_{r\rightarrow \infty} \int
+\sqrt{\gamma} \gamma^{ij} \gamma^{kl} 
+(\nabla_l \gamma_{jk} - \nabla_j \gamma_{kl} ) N_i dA \\
+& = & - \frac{1}{2\pi} \lim_{r\rightarrow \infty} \int
+      \psi \sqrt{\tilde{\gamma}} \tilde{\nabla}^i \psi N_i dA + \nonumber \\
+& & \frac{1}{16\pi} \lim_{r\rightarrow \infty} \int \psi^2
+\sqrt{\tilde{\gamma}} \tilde{\gamma}^{ij} \tilde{\gamma}^{kl} 
+(\tilde{\nabla}_l \tilde{\gamma}_{jk} - \tilde{\nabla}_j \tilde{\gamma}_{kl} ) N_i dA.
+\label{eqn:ADMenergy_conf}
+\end{eqnarray}
+%
+The covariant derivative $\nabla_i$ is with respect to the physical spatial metric 
+$\gamma_{ij}$ and $\tilde{\nabla}_i$ is with respect to the conformal metric 
+$\tilde{\gamma}_{ij}$. In the limit $r \rightarrow \infty$, the
+conformal factor is unity. In addition, if 
+$\tilde{\gamma}_{ij} = O(r^{-2})$ then the second
+integral will not contribute. 
+
+York \cite{York1979} and O'Murchadha and York \cite{omurch74} discuss
+this situation. In section 9.4 of \cite{York1979} York describes a 
+``quasi-isotropic'' gauge condition that reduces to precisely the requirement 
+that we want: $\tilde{\gamma}_{ij, k} = O(r^{-3})$. Conformally flat 
+Bowen-York data trivially satisfy this requirement, but it is also 
+satisfied for other possible data sets, for example the conformal metric 
+of Kerr in quasi-isotropic coordinates. 
+
+More importantly, York notes that if we evolve with a minimal distortion shift, 
+then this condition is preserved in an evolution. This can be seen also
+for the gamma-driver shift conditions. The right-hand side of the metric evolution 
+equation involves the extrinsic curvature and derivatives of the shift vector.
+At large radii both fall off as $1/r^2$, and so if 
+$\delta_{ij} - \tilde{\gamma}_{ij} = O(r^{-2})$ on the initial slice, it will
+remain $O(r^{-2})$ in an evolution. 
+
+%O'Murchadha and York go into more detail, although they do not mention the
+%``quasi-isotropic'' gauge. In the sections around 
+%Eq.\,(18) in \cite{omurch74} they show that we need only the first 
+%term in (\ref{eqn:ADMenergy_conf}) if our space is asymptotically conformally
+%flat, presumably approacing conformal flatness at the rate described above ---
+%the conformal metric used in BSSN evolutions of Kerr-Schild data, for example,
+%do not satisfy this requirement. Our initial data is conformally flat everywhere, 
+%and since  deviations from conformal flatness propogate at finite speed (we hope!),
+%the space will always be asymptotically conformally flat. 
+
+Keeping only the first term in Eq.\,(\ref{eqn:ADMenergy_conf}), the ADM energy is 
+ simply 
+%
+\begin{equation}
+E_{\rm ADM} = - \frac{1}{2\pi} \int_{\infty}
+ \partial_i \psi N_i dA, \label{eqn:ADMenergy_simple}
+\end{equation}
+%
+where we have used the fact that at spatial infinity 
+$\tilde{\gamma} \rightarrow 1$, and the covariant derivative of 
+the scalar $\psi$ can be written as a partial derivative. Note
+also that the conformal factor $\psi$ can be replaced in 
+Eq.\,(\ref{eqn:ADMenergy_simple}) by the BSSN variable $\phi$ 
+--- in the $r \rightarrow \infty$ limit the two expressions will be 
+equivalent. This is what is done in the BAM implementation in the 
+ADM\_mass project, where ``ADM\_mass'' denotes the mass from 
+Eq.\,(\ref{eqn:ADMenergy}), and ``ADM\_mass (b)'' denotes the
+mass from Eq.\,(\ref{eqn:ADMenergy_simple}).
+
+In practice we evaluate this integral at some finite radius, which
+will introduce an error. It remains to be seen how this integral
+converges with increasing radius as compared with (\ref{eqn:ADMenergy}). 
+
+Note also that (\ref{eqn:ADMenergy_simple}) may be easily converted
+via Gauss's theorem into a volume integral. If we do this, we should
+think twice before replacing the Laplacian of $\psi$ with the
+rest of the Hamiltonian constraint --- the constraints are not strictly
+satisfied in a numerical evolution! Of course, we hope that they converge
+to zero, and having thought twice we might decide that it is Ok to use
+them after all. 
+
+\bibliographystyle{plain}
+\bibliography{references.bib}
+
+
+\end{document}
+ 

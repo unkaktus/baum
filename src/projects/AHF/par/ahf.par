@@ -1,0 +1,130 @@
+# ahf.par
+# JG 3/2007
+# BB 11/2007
+# 
+# basic test of apparent horizon finder AHF
+
+physics = adm bssn multigrid punctures Gauge AHF
+
+
+############################################################################
+# grid
+
+amr_lmax 		= 6
+nxyz  			= 32 #40  ##64 #80
+
+dxyz  			= 2.5 #2.0
+amr_bo_dxmax		= 2.0
+
+amr 			= bo newfmr move
+amr_fmr  		= nestedboxes
+grid  			= box
+
+order_centered		= 4
+order_advection		= 4
+advection_lopsided      = 1
+bampi_nghosts 		= 4
+order_RP		= 6 
+amr_nbuffer 	   	= 6
+
+
+#############################################################################
+# moving punctures
+
+adm_conformal 			= no
+bssn_moving_punctures 		= yes
+bssn_moving_punctures_type 	= chi
+chi_div_floor                   = 0.00001
+Gauge 				= moving_puncture
+
+
+#############################################################################
+# output
+
+finaltime 	 = 10  # 1.25 # 10
+
+0douttime	 = 0.625 #0.5
+0doutput	 = ham ADM_mass
+0doutputmax	 = bssn_phi
+0doutputmaxpos   = bssn_phi
+
+1douttime 	 = 0.625 #0.5
+1doutput 	 = alpha betax betay bssn_chi ham Kxx gxx
+1doutinterpolate = yes
+1doutputall	 = yes
+
+
+#############################################################################
+# initial data
+
+bhmass1 =  1.0
+bhx1    =  3.1
+bhy1    =  3.2
+bhz1    =  3.3
+bhsx1   = +0.05
+bhsy1   = +0.10
+bhsz1   = +0.15
+
+bhmass2 =  1.0
+bhx2    = -3.1
+bhy2    = -3.2
+bhz2    = -3.3
+bhsx2   = +0.05
+bhsy2   = +0.10
+bhsz2   = +0.15
+
+punctures_solver  	= multigrid
+punctures_persist 	= no
+punctures_itmax   	= 100
+punctures_tolerance 	= 1e-2
+punctures_boundary 	= robin
+
+mg_verbose		= yes      # no, some, yes
+mg_size_nmin		= 14
+mg_vcycle_nmax		= 50       # 200
+mg_exact_nmin		= 50       # 200
+mg_exact_nmax		= 200      # 500
+
+
+#############################################################################
+# evolution
+
+evolution_method       	= rk
+evolution_method_rk    	= rk4
+bssn_register_algcon   	= yes store
+bssn_normalizedetg     	= yes
+bssn_subtractA         	= yes
+order_dissipation  	= 6
+dissipation_factor 	= 0.5
+dtfac 			= 0.5
+
+punctures_lapse		= psiBL^(-2)
+bssn_initial_shift 	= zero
+bssn_lapse		= 1+log withshift
+bssn_shift		= gamma0 withGadv withBadv withShiftadv
+bssn_shiftalphapower    = 0.0
+bssn_shiftdriver        = 2.0
+boundary 		= radiative
+
+
+##########################################################################
+# AH finder
+
+ahf_verbose	= yes
+
+ahf_ntheta      = 50
+ahf_nphi        = 50
+
+ahf_nhorizons   = 2
+ahf_common      = no
+
+ahf_flow_iter   = 500
+ahf_mass_tol    = 1.0e-04
+ahf_hmean_tol   = 100.0
+
+ahf_time        = 0.625
+
+ahf_output      = yes
+ahf_output_xyt	= yes
+
+

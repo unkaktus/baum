@@ -1,0 +1,150 @@
+physics = adm bssn multigrid punctures Gauge Invariants ADM_mass AHmod
+
+
+############################################################################
+# basic setup
+
+order_centered          = 4
+order_advection         = 4
+advection_lopsided      = 1
+
+bampi_nghosts           = 4
+order_RP                = 6
+
+amr_nbuffer             = 6
+evolution_method        = rk 
+evolution_method_rk     = rk4
+
+# --------------------------------------------------------------------------
+# moving punctures
+
+adm_conformal 			= no
+bssn_moving_punctures 		= yes
+bssn_moving_punctures_type 	= phi
+
+amr_lmax 		= 8 
+nxyz  			= 34          # = m*2^n + 2 for multigrid
+dxyz  			= 8.0
+amr_bo_dxmax		= 4.0 
+
+amr 			= bo newfmr move
+amr_fmr  		= nestedboxes
+grid  			= box full 
+
+
+bhmass1 = 1.0
+bhsz1   = 0.5
+
+#---------------------------------------------------------------------------
+# output
+
+finaltime = 20
+
+0douttime	 = 1.0
+0doutput	 = ham
+0doutputmax	 = bssn_phi
+0doutputmaxpos   = bssn_phi
+
+1douttime 	 = 1.0
+1doutput 	 = alpha betax bssn_phi rpsi4 ipsi4 ADM_mass
+1doutinterpolate = yes
+1doutputall	 = yes
+
+2doutputr        = sphere_data
+
+invariants_compute_modes = yes
+invariants_modes_r 	 = 50 60 70 80 90
+invariants_modes_lmin 	 = 0 
+invariants_modes_lmax 	 = 5
+
+ntheta = 101
+nphi = 100
+
+ADM_mass_modes_r       = 50 60 70 80 90 
+ADM_mass_modes_lmin    = 0
+ADM_mass_modes_lmax    = 4
+ADM_mass_ncircles      = 51
+ADM_mass_npoints       = 40
+
+invariants_energy_r    = 50 60 70 80 90 
+
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# initial data
+
+punctures_solver  	= multigrid
+punctures_persist 	= no
+punctures_itmax   	= 100
+punctures_tolerance 	= 1e-5
+punctures_boundary 	= robin
+
+mg_verbose		= yes       # no, some, yes
+mg_size_nmin		= 14
+mg_vcycle_nmax		= 20
+mg_exact_nmin		= 150
+mg_exact_nmax		= 500
+
+
+#===========================================================================
+# evolution
+
+punctures_lapse		= psiBL^(-2)
+bssn_initial_shift 	= zero
+
+bssn_lapse		= 1+log withshift
+
+bssn_shift		= gamma0
+bssn_shiftalphapower    = 0.0
+bssn_shiftdriver        = 2.0
+
+
+#***************************************************************************
+# boundary
+
+boundary 		= radiative
+
+
+############################################################################
+# gauge
+
+Gauge 			= moving_puncture
+
+#########################################################################
+# AH finder
+
+AHmod_verbose     = yes
+AHmod_time        = 0.5
+
+AHmod_ntheta      = 30
+AHmod_nphi        = 60
+AHmod_LMAX        = 10
+AHmod_interpolation_order = 4
+
+AHmod_output      = yes
+AHmod_output_xyt  = yes
+AHmod_output_lm   = no
+
+AHmod_nhorizons   = 1
+AHmod_searchMTS   = 1  0.0  20.0  0
+AHmod_uselast     = yes
+
+AHmod_flow_iter   = 500
+AHmod_mass_tol    = 1.0e-04
+AHmod_hmean_tol   = 100.0
+
+AHmod_initial_guess_expand = 1.0
+AHmod_UseOptimalLevel = no
+AHmod_box_savety_factor = 1.2
+
+AHmod_initial_radius = 1.0
+
+
+
+
+
+
+
+
+
+
+
+

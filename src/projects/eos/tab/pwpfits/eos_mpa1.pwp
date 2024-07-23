@@ -1,0 +1,25 @@
+# MPA1 fit
+#
+# units: everything must be entered in g/cm^3
+# e.g.
+#     K0/c^2 = 3.99873692 1e-8 ( (g/cm^3) )^1-GAMMA0
+#
+# the format of this file is 
+#
+#   # comments
+#   5 rows: size, log10(P_1), log10(rho_1), K_0, Gamma_0
+#   # rho gam (i=1...EOS_PWP_N)
+#   EOS_PWP_N cols: rho_i Gamma_i 
+#
+# note: rho[0] is recomputed atomatically by the code
+#
+EOS_PWP_N      = 3
+EOS_PWP_LG10P1 = 13.54135859
+EOS_PWP_LG10R1 = 14.7
+EOS_PWP_K0     = 3.99873692e-8
+EOS_PWP_GAMMA0 = 1.35692395
+# rho gam
+0.000000000000000e+00 3.446
+5.011872336272715e+14 3.572
+1.000000000000000e+15 2.887
+

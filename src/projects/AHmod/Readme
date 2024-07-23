@@ -1,0 +1,159 @@
+AHmod: Apparent Horizon Finder modified and modularized
+=======================================================
+NL 2/2009, based on AHF (based on AHfinder)
+
+AHmod writes partly into the same files as AHF,
+better do not use them in the same run.
+
+To compile:
+----------
+
+In MyConfig:
+
+add the line (BB: after projects/Gauge !) 
+
+projects += src/projects/AHmod
+
+then: make new
+
+
+
+In .par file:
+
+Add 'AHmod' to physics
+
+
+To do:
+-----
+
+-definition of horizon mass:
+    -> with spins?
+-implement computation of the killing equation for the spin finder
+ or maybe other method see e.g. arXiv:0906.1228
+
+
+Example parameter files
+=======================
+In AHmod/par there are several .par files for typical runs.
+They should provide a good sense of how to use the AHmod_ parameters.
+The runs are not intended to have good physics, they are quite
+short and have low resolution.
+
+Note that some need initial data files, their paths have to
+be set correctly inside the par file.
+
+
+Explanation of Parameters
+=========================
+
+AHmod_verbose,  yes/no
+  Write information about finding a MOTS to standard output
+
+
+AHmod_ntheta, AHmod_nphi,  around ntheta=30-100, nphi=2*ntheta
+  The number of grid points at which the expansion will be computed.
+  The surface itself is represented as spherical harmonics.
+
+  
+AHmod_flow_iter,  around 200-2000
+  limits the total amount of cycles of the flow
+  
+AHmod_mass_tol,   around 10^-3 - 10^-5
+  The standard stopping criterion. If the difference in mass
+  at successive steps does not change much the flow has converged.
+  
+AHmod_hmean_tol,  around 100
+  Error check. The mean expansion should not exceed this value,
+  otherwise probably something is wrong.
+  
+AHmod_time
+  Should be a multiple of the smallest time step, compare other output times.  
+  
+AHmod_LMAX,   around 10-15
+  Highest mode of spherical expansion of surface.
+  
+AHmod_uselast,   yes/no
+  Whether the values of a surface should be stored such
+  that at later times it can be used as initial guess.
+  
+AHmod_initial_guess_expand,    typically 1.0
+  Shrinks or expands the initial guess.
+  It was meant to be used for the intermediate surface, it should
+  be search from below whereas the common MOTS should be search from outside.
+
+AHmod_initial_radius,  typically 0.5 - 1.2
+  If no other data (puncture mass or last surface) is available 
+  this value is taken to be the standard first guess for the spherical surface.
+  
+AHmod_nhorizons
+  Number of MOTSs that will be searched.
+
+AHmod_searchMTS
+  A string that defines around which punctures, and at which time
+  a MOTS is searched for.
+  The data is arranged as follows (one line string):
+  n1 ts1 te1 num11 num12 ... num1n1   n2 ts2 te2 num21 num22 ... num2n2  ...
+  where
+  n_:  number of punctures that this surfaces should surround
+  ts_: time to search this MOTS (start)
+  te_: time to search this MOTS (end)
+  num_i: the (id-)number of each puncture that should be surrounded by that surface.
+         Counting starts at 0
+
+AHmod_interpolation_order,  around 4
+  Order of the interpolation of metric data to the surface points.
+
+  
+AHmod_output,   yes/no
+  This is the typical output of the points in vtk format
+  One file per time slice.
+  
+AHmod_output_xyt,   yes/no
+  Output only in x-y-plane (lin. interpolated if ntheta is even).
+  Everything is in one file (time is third coordinate)
+  
+AHmod_output_lm,  yes/no
+  Simple output of the spherical harmonics coefficients.
+  This is mainly for debugging (does any graphics program
+  know weighted spherical harmonics?).  
+
+
+AHmod_merger_distance,    0.3-2.0
+  Another exit criterion. Do not search for any MOTS if the
+  black holes are far apart. Critical distance given by AHmod_merger_distance.
+  Distance is coordinate distance between punctures.
+
+AHmod_box_savety_factor,  1.1-1.5
+  The spherical part of the initial guess surface is increased by this factor.
+  The resulting sphere has then to fit into the box.
+  
+AHmod_UseOptimalLevel,  yes/no
+  If yes, the program tries to deduce the optimal level from the first guess.
+  Only for this level the search starts.
+  If no, all surfaces are tried in all levels (starting from the finest) until 
+  the specific surface was found.
+  The information whether it was already found is stored in the static array AHmod_found[]
+  
+
+AHmod_surface0_centerx
+AHmod_surface0_centery
+AHmod_surface0_centerz  
+  If no puncture is available, use these as center.
+  These variables also exist for other surfaces, replace surface0 by surface1, etc.
+  
+AHmod_surface0_WaitUntilClosePunctures  yes/no
+  Do not search for common horizon until the punctures are near to each other.
+  This variable also exists for other surfaces, replace surface0 by surface1, etc.
+
+
+
+Outdated:
+
+AHmod_LevelOffset   [Outdated, no longer used]
+  Sometimes the MOTS does not fit into the innermost box.
+  Then AHmod has to be searched in a larger box.
+
+AHmod_start_after_merger, [no longer used]
+  replaced with AHmod_surface?_WaitUntilClosePunctures   for each surface
+  
+  

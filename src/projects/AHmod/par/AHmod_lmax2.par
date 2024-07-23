@@ -1,0 +1,154 @@
+# parameter file for testing AHmod with amr_lmax2 != amr_lmax
+# for two black holes, mass ratio 2:1
+
+
+physics = adm bssn multigrid punctures Gauge AHmod
+
+
+#############################################################################
+# initial data
+
+bhmass1      = 0.5
+bhy1         = 10
+bhpx1        = -0.1
+bhpy1        = -0.001
+bhmass2      = 1.0
+bhy2         = -5
+bhpx2        = 0.1
+bhpy2        = 0.001
+
+punctures_solver        = multigrid
+punctures_persist       = no
+punctures_itmax         = 100
+punctures_boundary      = robin
+punctures_tolerance     = 1e-8
+
+mg_verbose              = some
+mg_size_nmin            = 15
+mg_vcycle_nmax          = 200
+mg_exact_nmin           = 50
+mg_exact_nmax           = 500
+
+############################################################################
+# basic setup
+
+order_centered          = 6
+order_advection         = 6
+advection_lopsided6     = 2
+advection_lopsided      = 1
+
+bampi_timer_on          = yes
+bampi_lowlatency        = yes
+bampi_nghosts           = 4
+order_RP                = 6
+amr_nbuffer             = 6
+
+evolution_method       = rk
+evolution_method_rk    = rk4
+
+# rk 4 needs these settings to control algebraic constraints
+bssn_register_algcon = yes store
+bssn_normalizedetg   = yes
+bssn_subtractA       = yes
+
+order_dissipation  = 6
+dissipation_factor = 0.5
+
+# rk4 allows a larger time step
+dtfac = 0.5
+
+
+#############################################################################
+# moving punctures
+
+adm_conformal                   = no
+bssn_moving_punctures           = yes
+bssn_moving_punctures_type      = chi
+bssn_chi_psipower               = -2
+chi_div_floor                   = 0.00001
+
+amr_lmax                = 11 
+amr_lmax2		= 10
+nxyz                    = 96 
+amr_move_lcube          = 6 
+amr_move_nxyz           = 48  
+
+dxyz                    = 64.0
+amr_bo_dxmax            = 1.0
+
+amr                     = bo newfmr move
+amr_fmr                 = nestedboxes
+grid                    = box 
+
+
+#############################################################################
+# output
+
+finaltime = 500
+
+
+#############################################################################
+# evolution
+
+punctures_lapse         = psiBL^(-2)
+bssn_initial_shift      = zero
+
+bssn_lapse              = 1+log withshift
+
+bssn_shift              = gamma0 withGadv withBadv withShiftadv
+bssn_shiftalphapower    = 0.0
+bssn_shiftdriver        = 1.0
+
+#############################################################################
+# boundary
+
+boundary                = radiative
+
+
+############################################################################
+# gauge
+
+Gauge                   = moving_puncture new
+
+############################################################################
+# AHmod for 2 punctures (numbered 0 and 1) and 3 horizons (each puncture + 
+# common AH)
+
+
+AHmod_verbose     = yes
+AHmod_time        = 0.5
+
+AHmod_ntheta      = 30
+AHmod_nphi        = 60
+AHmod_LMAX        = 10
+AHmod_interpolation_order = 4
+
+AHmod_output      = yes
+AHmod_output_xyt  = yes
+AHmod_output_lm   = no
+
+AHmod_nhorizons   = 3
+AHmod_searchMTS   = 1  0.0 500.0  0     1 0.0 500.0 1    2 300.0 500.0 0 1
+AHmod_uselast     = yes
+
+AHmod_flow_iter   = 500
+AHmod_mass_tol    = 1.0e-04
+AHmod_hmean_tol   = 100.0
+
+AHmod_initial_guess_expand = 1.0
+AHmod_UseOptimalLevel = no
+AHmod_box_savety_factor = 1.2
+
+# set distance in M at which BHs are considered as merged
+# default: d = 0.1 
+AHmod_merger_distance = 0.5
+AHmod_initial_radius = 1.0
+
+AHmod_surface0_WaitUntilClosePunctures = no
+AHmod_surface1_WaitUntilClosePunctures = no
+AHmod_surface2_WaitUntilClosePunctures = no
+
+
+
+
+

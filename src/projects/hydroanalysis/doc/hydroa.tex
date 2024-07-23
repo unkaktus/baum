@@ -1,0 +1,168 @@
+\documentclass[a4paper,10pt]{article}
+
+% --------------------------------------
+% Packages
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{color}
+\usepackage{comment}
+
+% --------------------------------------
+% New commands/macros
+\newcommand{\be}{\begin{equation}}
+\newcommand{\ee}{\end{equation}}
+
+% --------------------------------------
+% Title page setup
+\title{Hydro analysis}
+\author{S.Bernuzzi \texttt{sebastiano.bernuzzi@uni-jena.de}}
+\date{\today}
+
+% ++++++++++++++++++++++++++++++++++++++
+
+\begin{document}
+
+% --------------------------------------
+% Title page, abstract, and table of contents
+%\maketitle
+%\begin{abstract}
+%\end{abstract}
+%\tableofcontents
+
+% --------------------------------------
+\section{Equations}
+\label{sec:eqs} 
+
+\subsection{Bounded/unbounded rest-mass}
+
+Given the rest-mass density $D$, the bounded (unbounded) part is
+determined as  
+\be
+- u_t > 1 \ \ \ (-u_t < 1 )
+\ee 
+where $u^a$ is the 4-velocity of the fluid, 
+\be
+u^a = W\,( n^a + v^a) 
+= W \left[ 1/\alpha , v^i - \beta^i / \alpha \right] \ .
+\ee
+The volume integrals
+\be
+M = \int d^3x D
+\ee 
+give the rest-mass. Once the rest-mass densities
+(bounded/unbounded/outside the horizon) are computed, standard scalar
+output routines can be used to compute the related masses. 
+(\verb output_0d/*_integral.l? ).
+
+\subsection{Vorticity}
+
+The vorticity tensor is defined as
+\be
+w_{ab} = \partial_a (h u_b) - \partial_b (h u_a) \ ,
+\ee
+where 
+\be
+h = 1 + \epsilon + \frac{p}{\rho}
+\ee
+is the specific enthalpy.
+In practice the components $w_{ab}$ define a vector $w_i$ and we
+compute 
+\be
+\label{eq:vor}
+w_z = \partial_x (h u_y) - \partial_y (h u_x) \ ,
+\ee
+and permutations.
+
+% --------------------------------------
+\section{Parameters and variables}
+\label{sec:parvar} 
+
+Parameters
+\begin{itemize}
+\item \verb#hydroanalysis_D# the variable name to be used for $D$ (\verb#grhd_D#)
+\item \verb#hydroanalysis_p# the variable name to be used for $p$ (\verb#grhd_p#)
+\item \verb#hydroanalysis_r# the variable name to be used for $\rho$ (\verb#grhd_rho#)
+\item \verb#hydroanalysis_e# the variable name to be used for $\epsilon$ (\verb#grhd_epsl#)
+\item \verb#hydroanalysis_v# the variable name to be used for $v^i$ (\verb#grhd_vx#)
+\item \verb#hydroanalysis_lmin# analysis of levels $l>l_{\rm min}$
+\item \verb#hydroanalysis_lmax# analysis of levels $l>l_{\rm max}$
+\end{itemize}
+Variables
+\begin{itemize}
+\item \verb#hydroa_Dh# $D$ outside the horizon
+\item \verb#hydroa_Db# $D$ bounded 
+\item \verb#hydroa_Du# $D$ unbounded 
+\item \verb#hydroa_vor[xyz]# vorticity
+\end{itemize}
+
+% --------------------------------------
+\section{Tests}
+\label{sec:tests} 
+
+\verb#par/star.par#\\
+For a static star one has
+\begin{itemize}
+\item $D^{\rm b} = D$ $D^{\rm u} = 0$ $D^{\rm h} = 0$ 
+\item $w_i=0$
+\end{itemize}
+
+
+% --------------------------------------
+\section{Log changes/TODO list}
+\label{sec:log} 
+
+Please include here your changes and the svn revision.
+
+\begin{itemize}
+
+
+\item 19.11.2013 r9742
+    \begin{itemize}
+  \item Include computation of total Energy and total internal energy, according to arXiv:1212.0905
+  \item Safety check, ejecta is now only outward moving matter.
+  \item Include Mode projection of rho on levels, the origin for the spherical harmonics is always the origin
+  \item TODO. Decide whether we want to have the origin at the puncture positions to meassure the modes of the individual star during the inspiral.
+  \end{itemize}
+
+\item 7.02.2013 r8693
+  \begin{itemize}
+  \item Use atmosphere to exclude some points from computation 
+  \item TODO. Skip the analysis in shells and in levels $l<l_{\rm min}$ and $l>l_{\rm max}$, see comments in \verb#hydroanalysis.c#   
+  \item TODO. Standard benchmark with a binary (include a parfile).
+  \end{itemize}
+
+\item 5.02.2013 r8693
+  \begin{itemize}
+  \item Fixed calculation of Lorentz factor $W$ and added safe divisions in \verb#compute_hydrovars.m#   
+  \item Added OpenMP support in \verb compute_hydrovars.m  , to be tested.
+  \item Set to 0 all the rest-mass density inside the horizon.
+  \item TODO. Skip the analysis in shells and in levels $l<l_{\rm min}$ and $l>l_{\rm max}$, see comments in \verb#hydroanalysis.c#   
+  \item TODO. Standard benchmark with a binary (include a parfile).
+  \end{itemize}
+
+\item 30.10.2012 r8046
+  \begin{itemize}
+  \item First version of the project.
+  \item Derivatives in Eq.~\eqref{eq:vor} are taken with operator
+    $D_0$. If it is oscillatory, a non-oscillatory derivative may be
+    preferable. 
+  \item TODO. Include Entropy calculation. 
+    For ideal gas $s=p/\rho^\Gamma$, Is there a
+    simple and general diganostic for entropy?
+  \end{itemize}
+
+\end{itemize}
+
+
+
+
+% --------------------------------------
+%\begin{thebibliography}{100}
+
+%\end{thebibliography}
+% --------------------------------------
+
+% ++++++++++++++++++++++++++++++++++++++
+
+\end{document}

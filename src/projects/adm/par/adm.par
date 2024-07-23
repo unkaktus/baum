@@ -1,0 +1,13 @@
+# adm.par
+# BB 6/02
+# 
+# basic test for adm variables
+# since no variables are enable, no output!
+
+
+physics = adm
+
+nxyz = 30
+dxyz = 0.2
+grid = box
+

@@ -1,0 +1,59 @@
+# movpunc.par
+# BB 11/05
+# 
+# basic test for moving punctures
+
+# --------------------------------------------------------------------------
+# basic setup
+
+physics = adm bssn multigrid punctures
+
+grid  	= box octant
+amr 	= bo newfmr
+amr_fmr = nestedboxes
+dtfac 	= 0.25
+
+amr_lmax 	= 2
+nxyz		= 40
+dxyz  		= 0.5
+
+finaltime 	= 100
+
+
+# --------------------------------------------------------------------------
+# output
+
+1doutiter	= 1
+1doutput 	= gxx alpha betax ham bssn_gxx bssn_Axx bssn_K bssn_Gx bssn_phi bssn_chi
+
+
+# --------------------------------------------------------------------------
+# initial data
+
+bhmass1           = 1
+punctures_solver  = none
+punctures_persist = no
+
+
+# --------------------------------------------------------------------------
+# evolution
+
+evolution_method 	= icn
+boundary 		= radiative
+bssn_subtractA 		= yes
+bssn_initial_lapse 	= one
+bssn_initial_shift 	= zero
+bssn_lapse		= 1+log
+bssn_lapsepsipower      = 4
+bssn_shift		= gamma0
+bssn_shiftpsipower      = 2.0
+bssn_shiftalphapower    = 1.0
+bssn_shiftdriver        = 2.0
+
+
+# --------------------------------------------------------------------------
+# moving punctures
+
+adm_conformal 			= no
+bssn_moving_punctures 		= yes
+bssn_moving_punctures_type 	= phi

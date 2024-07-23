@@ -1,0 +1,26 @@
+# bssn_RHS_KS.par
+# WT 4/2004
+# 
+# basic test for the RHS in bssn with Kerr-Schild initial Data: 
+# all is at default settings
+
+physics = adm bssn KerrSchild
+
+iterations = 1
+
+1doutiter = 1
+1doutput = gxx Kxx alpha betax bssn_gxx bssn_phi bssn_Gx bssn_K bssn_Axx
+
+grid			= box
+dxyz			= 0.8
+nx			= 10
+ny			= 11
+nz			= 11
+
+evolution_method	= euler
+evolve_euler_debug	= yes
+
+bhmass1 = 1
+
+bssn_initial_lapse	= donothing
+bssn_initial_shift	= donothing

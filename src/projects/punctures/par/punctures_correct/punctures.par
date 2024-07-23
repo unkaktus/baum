@@ -1,0 +1,18 @@
+# punctures.par
+# BB 6/02
+# 
+# basic test for puncture data
+# add Bowen-York and perhaps elliptic solve once available
+
+physics = adm punctures
+
+iterations = 0
+
+1doutiter = 1
+1doutputx = gxx Kxx alpha betax psi dpsiopsix ddpsiopsixx
+
+nxyz = 10
+dxyz = 0.4
+grid = box
+
+bhmass1 = 1

@@ -1,0 +1,37 @@
+errors or problems that where corrected in AHmod compared to AHF
+
+after loop over sphere
+
+//determine the processor with the highest rank for each point
+// error prone? instead i1+1 use ntheta*nphi ?
+old:  bampi_allreduce_max_vector(localp, globalp, i1+1); 
+new:  bampi_allreduce_max_vector(localp, globalp, ntheta*nphi); 
+
+
+PROBLEM?
+I thought that localp and globalp should be integer arrays
+(they store the rank or -1)
+but doing so will make some memory allocation wrong.
+Stay with 'dvector'
+
+
+
+near to the end when the new coefficients a0, ac, as are computed
+old:  for(i=0;i<ntheta;i++){
+        spec_cl[l1]+=dtheta*int1_spec_c[i][l1]*sin(theta);
+        spec_sl[l1]+=dtheta*int1_spec_s[i][l1]*sin(theta);
+      }
+
+
+new:  for(i=0;i<ntheta;i++){
+        theta = AHmod_theta(dtheta,i);
+        spec_cl[l1]+=dtheta*int1_spec_c[i][l1]*sin(theta);
+        spec_sl[l1]+=dtheta*int1_spec_s[i][l1]*sin(theta);
+      }
+
+in free list at the end 
+  
+old : -
+new : free_dmatrix(sigma,0,ntheta-1,0,nphi-1);
+      free_dvector(spec_sl,0,(LMAX1+1)*(LMAX1+1));
+      free_dvector(spec_cl,0,(LMAX1+1)*(LMAX1+1));

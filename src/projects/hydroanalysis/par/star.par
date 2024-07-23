@@ -1,0 +1,181 @@
+# example parfile for hydroanalysis for 
+# the evolution of a spherical star in bammatter
+
+physics = adm bssn matter eos grhd BBIDdataReader hydroanalysis AHmod
+
+
+############################################################################
+# Checkpointing
+
+checkpoint                  = no
+checkpoint_dt               = 100.0 
+checkpoint_variables        = all
+
+#storage_verbose = yes
+bssnRHSto0 = no
+
+
+############################################################################
+# grid
+
+order_centered              = 4
+order_advection             = 4
+advection_lopsided6         = 2
+advection_lopsided          = 1
+
+bampi_timer_on              = yes
+bampi_lowlatency            = yes
+bampi_nghosts               = 6
+order_RP                    = 6
+amr_nbuffer                 = 6
+
+amr_lmax                    = 0
+nxyz			    = 60 
+amr_move_lcube              = 0
+#amr_move_nxyz              = 48
+
+dxyz			    = 0.5 
+amr_bo_dxmax                = 0.8
+
+amr                         = newfmr bo        # onedt # move
+amr_fmr                     = nestedboxes
+grid                        = box octant # quadrant bitant octant
+interpolate_RP_boxtobox     = yes N
+
+#storage_verbose             = yes
+
+
+############################################################################
+# initial data
+
+mass1 = 1.
+initial_file = /home/bernuzzi/datbern/3Dmatter/BAM/12.04/bam/src/projects/matter/id/modelA0.64.ini
+
+
+############################################################################
+# eos
+
+eos                    = ideal
+eos_Gamma		    = 2
+eos_K		    = 100
+
+
+############################################################################
+# hydro
+
+hrsc_nghosts		    = 4
+hrsc_rec		    = WENOZ
+hrsc_TVD_limiter	    = MC2
+hrsc_rec_metric		    = LAG4
+hrsc_flux		    = LLF
+
+grhd_C2P		    = h_root
+grhd_C2P_NewtonRaphsonTR    = 0.000000000001
+grhd_C2P_NewtonRaphsonNR    = 100
+
+grhd_vmax		    = 0.999
+grhd_Wlor_max		    = 1e5
+
+grhd_use_atmosphere	    = yes
+grhd_use_atmosphere	    = ColdStatic
+grhd_atm_factor		    = 100
+grhd_atm_level		    = 0.0000000001
+
+grhd_use_atmosphere_mask    = no
+grhd_use_atmosphere_prerhs  = yes
+grhd_use_atmosphere_postrhs = no
+
+
+
+#############################################################################
+# bssn evolution
+
+evolution_method            = rk
+evolution_method_rk         = rk4g # rk4g # rk3
+dtfac                       = 0.25
+
+bssn_register_algcon    = yes store
+bssn_normalizedetg      = yes
+bssn_subtractA          = yes
+
+bssn_initial_shift      = zero
+bssn_lapse              = 1+log withshift
+#bssn_lapseharmonicf     = 4
+bssn_shift              = gamma0 withGadv withBadv withShiftadv
+bssn_shiftalphapower    = 0.0
+bssn_shiftdriver        = 2.0
+
+order_dissipation       = 6
+dissipation_factor      = 0.1
+
+bssn_chi_div_floor          = 1e-5
+
+
+#############################################################################
+# boundary
+
+boundary                = radiative
+
+
+############################################################################
+# gauge
+
+Gauge                   = moving_puncture
+
+
+############################################################################
+# hydroanalysis
+
+hydroanalysis_lmin	= 0
+hydroanalysis_lmax	= 1
+
+hydroanalysis_D		= grhd_D
+hydroanalysis_p		= grhd_p
+hydroanalysis_r		= grhd_rho
+hydroanalysis_e		= grhd_epsl
+hydroanalysis_v		= grhd_vx
+
+
+#############################################################################
+# output
+
+finaltime = 100
+
+0douttime        = 1
+#0doutiter        = 1
+0doutput         = adm_rho ham momx grhd_rho grhd_D hydroa_Dh hydroa_Du hydroa_Db hydroa_vorx hydroa_vory hydroa_vorz
+0doutputpt       = yes
+
+1douttime        = 1
+#1doutiter        = 1
+1doutput         = alpha betax ham momx adm_gxx adm_Kxx adm_detg adm_rho adm_Sx adm_SSxx grhd_rho grhd_epsl grhd_p grhd_vx grhd_v2 grhd_D grhd_Sx grhd_Tau hydroa_Dh hydroa_Du hydroa_Db hydroa_vorx hydroa_vory hydroa_vorz
+1doutinterpolate = yes
+1doutputall      = yes #everything
+
+#2douttime        = 1.0 
+2doutiter        = 1
+2doutputxy       = grhd_v2
+2doutputxz       = grhd_v2
+2dformat         = vtk binary float
+2doutinterpolate = yes
+
+#3douttime        = 1.0
+#3doutiter	  = 1
+#3doutput	 = matter_rho rho matter_D
+#3doutputall      = yes
+#3dformat	 = vtk binary float
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,41 @@
+# maximal.par
+# BB 7/03
+# 
+# basic test for maximal slicing
+
+
+physics = adm bssn punctures Gauge
+
+iterations = 40
+
+0doutiter = 1
+0doutput = gzz bssn_K ham
+
+1doutiter = 1
+1doutput = gzz Kzz alpha betaz psi maximal_r maximal_f maximal_KK maximal_Gz maximal_gi bssn_K bssn_gzz bssn_Azz ham
+
+nxyz = 200
+dxyz = 0.1
+grid = box 1d
+
+bhmass1  		= 1
+boundary 		= radiative
+evolution_method 	= icn
+
+bssn_lapse		= constant    # 1+log, constant
+bssn_forceKzero		= yes
+bssn_lapsepsipower      = 4
+
+bssn_shift		= constant    # gamma0, constant
+bssn_shiftpsipower      = 2.0
+bssn_shiftalphapower    = 1.0
+bssn_shiftdriver        = 2.0
+
+bssn_initial_lapse 	= one
+bssn_initial_shift 	= zero
+
+Gauge 			= maximal
+maximal_itmax 		= 10000
+maximal_boundary 	= robin
+maximal_verbose 	= yes
+ell_verbose 		= no

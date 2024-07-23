@@ -1,0 +1,51 @@
+# WT 24.7.2003
+# Test puncture lapse and shift
+# compute lapse such that M_ADM=M_Kalphapsi, also compute masses and shift
+# for puncture data with elliptic solve
+
+physics = adm punctures multigrid
+
+grid = box bitant
+nx   = 18
+ny   = 18
+nz   = 18
+dxyz = 0.5
+
+mg_verbose		= yes
+mg_size_nmin		= 4
+mg_vcycle_nmax		= 1000
+mg_exact_nmin		= 10
+mg_exact_nmax		= 100
+
+punctures_solver  = multigrid
+punctures_persist = yes
+punctures_itmax   = 1000
+punctures_tolerance = 1e-5
+
+punctures_boundary = robin
+
+punctures_lapse    = maximal
+punctures_lapse_at_puncture = MK_equals_MADM
+punctures_lapse_MK_MADM_diff = 0.001
+
+punctures_shift = thinsandwich
+punctures_shift_falloff = 2
+punctures_shift_test = yes
+
+punctures_mass = yes
+
+# Cook-Baumgarte ISCO
+bhmass1 =  0.45
+bhy1	=  1.1515
+bhpx1	= -0.335
+
+bhmass2 =  0.45
+bhy2	= -1.1515
+bhpx2	=  0.335
+
+iterations = 0
+
+1doutiter = 1
+1doutput = gxx Kxx alpha betax punctures_u punctures_v punctures_ex punctures_dgdtxx punctures_lbetaxx punctures_lbrhsxx 
+1doutputall = yes
+1doutinterpolate = yes

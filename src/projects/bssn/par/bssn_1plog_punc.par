@@ -1,0 +1,32 @@
+# bssn_1plog_punc.par
+# WT April 2004
+# 
+# basic test for bssn with 1+log slicing of puncture initial Data: 
+# all is at default settings
+
+physics = adm bssn punctures
+
+iterations = 5
+
+1doutiter = 1
+1doutput = gxx Kxx alpha betax bssn_gxx bssn_phi bssn_Gx bssn_K bssn_Axx
+
+nxyz = 10
+dxyz = 0.4
+grid = box
+
+bhmass1 = 1
+
+bssn_initial_lapse	= one
+bssn_initial_shift	= zero
+
+bssn_lapse		= 1+log
+bssn_lapseharmonicf	= 2
+bssn_lapsepsipower	= 4
+
+bssn_shift		= gamma0
+bssn_shiftgammacoeff	= 0.75
+bssn_shiftalphapower	= 1.0
+bssn_shiftpsipower	= 2.0
+bssn_shiftdriver	= 2.0
+

@@ -1,0 +1,43 @@
+# bh.par
+# JG 12.2005
+# 
+
+physics = adm bssn punctures ADM_mass
+
+#######################################################
+# Setup
+
+grid = box octant #bitant quadrant
+
+iterations = 5
+
+#1doutiter = 1
+#1doutput = gxx Kxx alpha betax bssn_gxx bssn_K psi dpsiopsix ddpsiopsixx bssn_Gx  bssn_Axx bssn_phi
+
+dtfac = 0.25
+
+nxyz = 60
+dxyz = 1.0
+
+bhmass1                 = 1
+
+evolution_method  	    = icn
+boundary                    = radiative 
+
+bssn_subtractA          = yes
+bssn_initial_lapse      = one
+bssn_initial_shift      = zero
+bssn_lapse              = 1+log
+bssn_lapsepsipower      = 4
+bssn_shift              = gamma0
+bssn_shiftpsipower      = 2.0
+bssn_shiftalphapower    = 1.0
+bssn_shiftdriver        = 2.0
+
+##########################################################
+# ADM Mass
+
+ADM_mass_ncircles = 101
+ADM_mass_npoints  = 80
+ADM_mass_radius   = 25.0
+ADM_mass_findevery = 1

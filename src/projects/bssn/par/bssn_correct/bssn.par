@@ -1,0 +1,34 @@
+# bssn.par
+# BB 6/02
+# 
+# basic test for bssn
+
+
+physics = adm bssn
+
+iterations = 5
+
+1doutiter = 1
+1doutput = gxx Kxx alpha betax bssn_gxx bssn_K psi dpsiopsix ddpsiopsixx                                      bssn_Gx  bssn_Axx bssn_phi
+
+nxyz = 10
+dxyz = 0.4
+grid = box
+
+adm_data  		= puncture
+
+boundary 		= radiative
+
+evolution_method 	= icn
+
+bssn_subtractA 		= yes
+bssn_initial_lapse 	= one
+bssn_initial_shift 	= zero
+bssn_lapse		= 1+log
+bssn_lapsepsipower      = 4
+bssn_shift		= gamma0
+bssn_shiftpsipower      = 2.0
+bssn_shiftalphapower    = 1.0
+bssn_shiftdriver        = 2.0
+
+

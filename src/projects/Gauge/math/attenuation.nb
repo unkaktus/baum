@@ -1,0 +1,407 @@
+(************** Content-type: application/mathematica **************
+                     CreatedBy='Mathematica 5.0'
+
+                    Mathematica-Compatible Notebook
+
+This notebook can be used with any Mathematica-compatible
+application, such as Mathematica, MathReader or Publicon. The data
+for the notebook starts with the line containing stars above.
+
+To get the notebook into a Mathematica-compatible application, do
+one of the following:
+
+* Save the data starting with the line of stars above into a file
+  with a name ending in .nb, then open the file inside the
+  application;
+
+* Copy the data starting with the line of stars above to the
+  clipboard, then use the Paste menu command inside the application.
+
+Data for notebooks contains only printable 7-bit ASCII and can be
+sent directly in email or through ftp in text mode.  Newlines can be
+CR, LF or CRLF (Unix, Macintosh or MS-DOS style).
+
+NOTE: If you modify the data for this notebook not in a Mathematica-
+compatible application, you must delete the line below containing
+the word CacheID, otherwise Mathematica-compatible applications may
+try to use invalid cache data.
+
+For more information on notebooks and Mathematica-compatible 
+applications, contact Wolfram Research:
+  web: http://www.wolfram.com
+  email: info@wolfram.com
+  phone: +1-217-398-0700 (U.S.)
+
+Notebook reader applications are available free of charge from 
+Wolfram Research.
+*******************************************************************)
+
+(*CacheID: 232*)
+
+
+(*NotebookFileLineBreakTest
+NotebookFileLineBreakTest*)
+(*NotebookOptionsPosition[      9863,        304]*)
+(*NotebookOutlinePosition[     10494,        326]*)
+(*  CellTagsIndexPosition[     10450,        322]*)
+(*WindowFrame->Normal*)
+
+
+
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[{
+    \(\(\(f\  = \ 
+      r/\((1 + a/Sqrt[\((r - r0)\)^2])\)^3\)\(\[IndentingNewLine]\)
+    \)\), "\[IndentingNewLine]", 
+    \(D[f, r]\)}], "Input"],
+
+Cell[BoxData[
+    \(r\/\((1 + a\/\@\((r - r0)\)\^2)\)\^3\)], "Output"],
+
+Cell[BoxData[
+    \(1\/\((1 + a\/\@\((r - r0)\)\^2)\)\^3 + \(3\ a\ r\ \((r - \
+r0)\)\)\/\(\((1 + a\/\@\((r - r0)\)\^2)\)\^4\ \((\((r - \
+r0)\)\^2)\)\^\(3/2\)\)\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(g\  = \ \(f /. a \[Rule] 1/2\) /. 
+        r0 \[Rule] 4\), "\[IndentingNewLine]", 
+    \(dg\  = D[g, r]\), "\[IndentingNewLine]", 
+    \(Plot[g, {r, 0, 10}]\), "\[IndentingNewLine]", 
+    \(Plot[dg, {r, 0, 10}]\)}], "Input"],
+
+Cell[BoxData[
+    \(r\/\((1 + 1\/\(2\ \@\((\(-4\) + r)\)\^2\))\)\^3\)], "Output"],
+
+Cell[BoxData[
+    \(1\/\((1 + 1\/\(2\ \@\((\(-4\) + r)\)\^2\))\)\^3 + \(3\ \((\(-4\) + r)\)\
+\ r\)\/\(2\ \((1 + 1\/\(2\ \@\((\(-4\) + r)\)\^2\))\)\^4\ \((\((\(-4\) + r)\)\
+\^2)\)\^\(3/2\)\)\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(Clear[a, r0]\), "\[IndentingNewLine]", 
+    \(\(a\  = \ 1/4;\)\), "\[IndentingNewLine]", 
+    \(\(r0\  = \ 4;\)\), "\[IndentingNewLine]", 
+    \(\(psim3\  = \ \((1 + a/Sqrt[\((r - r0)\)^2\ ] + \ 
+              a/Sqrt[\((r + 
+                        r0)\)^2])\)^\((\(-3\))\);\)\), "\[IndentingNewLine]", \
+
+    \(f = r\ psim3\), "\[IndentingNewLine]", 
+    \(f /. r -> r0 - 0.5\), "\[IndentingNewLine]", 
+    \(f /. r \[Rule] r0 + 0.5\), "\[IndentingNewLine]", 
+    \(Plot[{psim3, r\ psim3}, \ {r, \ \(-10\), \ 
+        10}]\), "\[IndentingNewLine]", 
+    \(\)}], "Input"],
+
+Cell[BoxData[
+    \(r\/\((1 + 1\/\(2\ \@\((\(-4\) + r)\)\^2\) + 1\/\(2\ \@\((4 + r)\)\^2\))\
+\)\^3\)], "Output"],
+
+Cell[BoxData[
+    \(0.3965123695075693`\)], "Output"],
+
+Cell[BoxData[
+    \(0.5156501457725949`\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(Clear[c]\), "\[IndentingNewLine]", 
+    \(f = r/\((1 + c^2\ r^2)\)\), "\[IndentingNewLine]", 
+    \(\(df\  = \ D[f, r];\)\), "\[IndentingNewLine]", 
+    \(Solve[df\  \[Equal] \ 0, r]\), "\[IndentingNewLine]", 
+    \(\(\(c\  = \ 1/r0\)\(\[IndentingNewLine]\)
+    \)\), "\[IndentingNewLine]", 
+    \(Plot[f\ psim3, {r, \(-10\), 100}]\)}], "Input"],
+
+Cell[BoxData[
+    \(r\/\(1 + c\^2\ r\^2\)\)], "Output"],
+
+Cell[BoxData[
+    \({{r \[Rule] \(-\(1\/c\)\)}, {r \[Rule] 1\/c}}\)], "Output"],
+
+Cell[BoxData[
+    \(1\/4\)], "Output"]
+}, Open  ]],
+
+Cell[BoxData[{
+    \(\(a\  = \ 1/4;\)\), "\[IndentingNewLine]", 
+    \(\(r0\  = \ 0;\)\), "\[IndentingNewLine]", 
+    \(\(chim3\  = \ \((1 + a/Sqrt[\((r - r0)\)^2\ ] + \ 
+              a/Sqrt[\((r + 
+                        r0)\)^2])\)^\((\(-3\))\);\)\), "\[IndentingNewLine]", \
+
+    \(Plot[{chim3}, {r, \(-10\), 10}]\)}], "Input"],
+
+Cell[BoxData[""], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(Clear[a, r0, c]\), "\[IndentingNewLine]", 
+    \(\(psim3\  = \ \((1 + a/Sqrt[\((r - r0)\)^2\ ] + \ 
+              a/Sqrt[\((r + 
+                        r0)\)^2])\)^\((\(-3\))\);\)\), "\[IndentingNewLine]", \
+
+    \(\(att\  = \ r/\((1 + c \((\ r/r0)\)^4)\);\)\), "\[IndentingNewLine]", 
+    \(f = att\ psim3\), "\[IndentingNewLine]", 
+    \(\(df\  = \ D[f, r];\)\), "\[IndentingNewLine]", 
+    \(a\  = \ 1/4; \ r0 = 4; \ c = 0.44;\), "\[IndentingNewLine]", 
+    \(Plot[{f}, \ {r, \(-10\), 20}]\)}], "Input"],
+
+Cell[BoxData[
+    \(r\/\(\((1 + \(c\ r\^4\)\/r0\^4)\)\ \((1 + a\/\@\((r - r0)\)\^2 + \
+a\/\@\((r + r0)\)\^2)\)\^3\)\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(Clear[a, r0, c]\), "\[IndentingNewLine]", 
+    \(\(psim3\  = \ \((1 + a/Sqrt[\((r - r0)\)^2\ ] + \ 
+              a/Sqrt[\((r + 
+                        r0)\)^2])\)^\((\(-3\))\);\)\), "\[IndentingNewLine]", \
+
+    \(\(att\  = \ 
+        r/\((1 + Sqrt[\((c\ r)\)^2]^3)\);\)\), "\[IndentingNewLine]", 
+    \(f = att\ psim3\), "\[IndentingNewLine]", 
+    \(\(df\  = \ D[f, r];\)\), "\[IndentingNewLine]", 
+    \(a\  = \ 1/4; \ r0 = 4; \ c = 0.22;\), "\[IndentingNewLine]", 
+    \(Plot[{f}, \ {r, \(-10\), 20}]\)}], "Input"],
+
+Cell[BoxData[
+    \(r\/\(\((1 + \((c\^2\ r\^2)\)\^\(3/2\))\)\ \((1 + a\/\@\((r - r0)\)\^2 + \
+a\/\@\((r + r0)\)\^2)\)\^3\)\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(Clear[a, r0, c]\), "\[IndentingNewLine]", 
+    \(\(psim3\  = \ \((1 + a/Sqrt[\((r - r0)\)^2\ ] + \ 
+              a/Sqrt[\((r + 
+                        r0)\)^2])\)^\((\(-3\))\);\)\), "\[IndentingNewLine]", \
+
+    \(\(att\  = \ r/\((1 + c \((r/r0)\)^2)\);\)\), "\[IndentingNewLine]", 
+    \(f = att\ psim3\), "\[IndentingNewLine]", 
+    \(\(df\  = \ D[f, r];\)\), "\[IndentingNewLine]", 
+    \(a\  = \ 1/4; \ r0 = 4; \ c = 1.9;\), "\[IndentingNewLine]", 
+    \(Plot[{f, att, psim3}, \ {r, \(-10\), 20}]\)}], "Input"],
+
+Cell[BoxData[
+    \(r\/\(\((1 + \(c\ r\^2\)\/r0\^2)\)\ \((1 + a\/\@\((r - r0)\)\^2 + \
+a\/\@\((r + r0)\)\^2)\)\^3\)\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(Clear[a, r0, c]\), "\[IndentingNewLine]", 
+    \(\(psim3\  = \ \((1 + a/Sqrt[\((r - r0)\)^2\ ] + \ 
+              a/Sqrt[\((r + 
+                        r0)\)^2])\)^\((\(-3\))\);\)\), "\[IndentingNewLine]", \
+
+    \(\(att\  = \ Sin[Pi\ \(r/2\)/r0];\)\), "\[IndentingNewLine]", 
+    \(f = att\ psim3\), "\[IndentingNewLine]", 
+    \(\(df\  = \ D[f, r];\)\), "\[IndentingNewLine]", 
+    \(a\  = \ 1/4; \ r0 = 4; \ c = 0.205;\), "\[IndentingNewLine]", 
+    \(Plot[{f}, \ {r, \(-10\), 20}]\)}], "Input"],
+
+Cell[BoxData[
+    \(Sin[\(\[Pi]\ r\)\/\(2\ r0\)]\/\((1 + a\/\@\((r - r0)\)\^2 + a\/\@\((r + \
+r0)\)\^2)\)\^3\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(Clear[a, r0, c]\), "\[IndentingNewLine]", 
+    \(\(psim3\  = \ \((1 + a/Sqrt[\((r - r0)\)^2\ ] + \ 
+              a/Sqrt[\((r + 
+                        r0)\)^2])\)^\((\(-3\))\);\)\), "\[IndentingNewLine]", \
+
+    \(att\ \  = \ Sin[2  ArcTan[c\ r/r0]]\), "\[IndentingNewLine]", 
+    \(f = att\ psim3\), "\[IndentingNewLine]", 
+    \(\(df\  = \ D[f, r];\)\), "\[IndentingNewLine]", 
+    \(a\  = \ 1/4; \ r0 = 4; \ c = 1.4;\), "\[IndentingNewLine]", 
+    \(Plot[{f}, \ {r, \(-10\), 20}]\)}], "Input"],
+
+Cell[BoxData[
+    \(Sin[2\ ArcTan[\(c\ r\)\/r0]]\)], "Output"],
+
+Cell[BoxData[
+    \(Sin[2\ ArcTan[\(c\ r\)\/r0]]\/\((1 + a\/\@\((r - r0)\)\^2 + a\/\@\((r + \
+r0)\)\^2)\)\^3\)], "Output"],
+
+Cell[BoxData[
+    TagBox[\(\[SkeletonIndicator]  Graphics  \[SkeletonIndicator]\),
+      False,
+      Editable->False]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(f\  = Sin[2  ArcTan[r/r0]]\), "\[IndentingNewLine]", 
+    \(g\  = \ f\  /. r \[Rule] 1/x\), "\[IndentingNewLine]", 
+    \(g\  + \ O[x]^2\)}], "Input"],
+
+Cell[BoxData[
+    \(Sin[2\ ArcTan[r\/4]]\)], "Output"],
+
+Cell[BoxData[
+    \(Sin[2\ ArcTan[1\/\(4\ x\)]]\)], "Output"],
+
+Cell[BoxData[
+    InterpretationBox[
+      RowBox[{\(8\ x\), "+", 
+        InterpretationBox[\(O[x]\^2\),
+          SeriesData[ x, 0, {}, 1, 2, 1],
+          Editable->False]}],
+      SeriesData[ x, 0, {8}, 1, 2, 1],
+      Editable->False]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(Clear[a, r0, c]\), "\[IndentingNewLine]", 
+    \(\(psim3\  = \ \((1 + a/Sqrt[\((r - r0)\)^2\ ] + \ 
+              a/Sqrt[\((r + 
+                        r0)\)^2])\)^\((\(-3\))\);\)\), "\[IndentingNewLine]", \
+
+    \(att\ \  = \ \(r\ /\ r0\)\ /\ 
+        Sqrt[c^2\  + \ r^2/r0^2]^2\), "\[IndentingNewLine]", 
+    \(f = att\ psim3\), "\[IndentingNewLine]", 
+    \(\(df\  = \ D[f, r];\)\), "\[IndentingNewLine]", 
+    \(a\  = \ 1/4; \ r0 = 4; \ c = 1;\), "\[IndentingNewLine]", 
+    \(f /. r \[Rule] r0 - 0.5\), "\[IndentingNewLine]", 
+    \(f /. r \[Rule] r0 + 0.5\), "\[IndentingNewLine]", 
+    \(Plot[{f, att}, \ {r, \(-10\), 20}]\)}], "Input"],
+
+Cell[BoxData[
+    \(r\/\(\((c\^2 + r\^2\/r0\^2)\)\ r0\)\)], "Output"],
+
+Cell[BoxData[
+    \(r\/\(\((c\^2 + r\^2\/r0\^2)\)\ r0\ \((1 + a\/\@\((r - r0)\)\^2 + \
+a\/\@\((r + r0)\)\^2)\)\^3\)\)], "Output"],
+
+Cell[BoxData[
+    \(0.1374674424000506`\)], "Output"],
+
+Cell[BoxData[
+    \(0.13880055875566996`\)], "Output"]
+}, Open  ]]
+},
+FrontEndVersion->"5.0 for X",
+ScreenRectangle->{{0, 1600}, {0, 1200}},
+WindowSize->{897, 898},
+WindowMargins->{{150, Automatic}, {Automatic, 52}}
+]
+
+(*******************************************************************
+Cached data follows.  If you edit this Notebook file directly, not
+using Mathematica, you must remove the line containing CacheID at
+the top of  the file.  The cache data will then be recreated when
+you save this file from within Mathematica.
+*******************************************************************)
+
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+
+(*NotebookFileOutline
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[1776, 53, 163, 4, 59, "Input"],
+Cell[1942, 59, 70, 1, 67, "Output"],
+Cell[2015, 62, 173, 3, 70, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[2225, 70, 245, 5, 75, "Input"],
+Cell[2473, 77, 81, 1, 67, "Output"],
+Cell[2557, 80, 203, 3, 70, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[2797, 88, 592, 13, 155, "Input"],
+Cell[3392, 103, 112, 2, 67, "Output"],
+Cell[3507, 107, 53, 1, 27, "Output"],
+Cell[3563, 110, 53, 1, 27, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[3653, 116, 366, 7, 123, "Input"],
+Cell[4022, 125, 55, 1, 41, "Output"],
+Cell[4080, 128, 79, 1, 44, "Output"],
+Cell[4162, 131, 38, 1, 44, "Output"]
+}, Open  ]],
+Cell[4215, 135, 332, 7, 75, "Input"],
+Cell[4550, 144, 26, 0, 27, "Input"],
+
+Cell[CellGroupData[{
+Cell[4601, 148, 528, 10, 123, "Input"],
+Cell[5132, 160, 129, 2, 67, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[5298, 167, 541, 11, 123, "Input"],
+Cell[5842, 180, 136, 2, 67, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[6015, 187, 537, 10, 123, "Input"],
+Cell[6555, 199, 129, 2, 67, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[6721, 206, 520, 10, 123, "Input"],
+Cell[7244, 218, 122, 2, 76, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[7403, 225, 519, 10, 123, "Input"],
+Cell[7925, 237, 62, 1, 41, "Output"],
+Cell[7990, 240, 122, 2, 76, "Output"],
+Cell[8115, 244, 130, 3, 27, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[8282, 252, 171, 3, 59, "Input"],
+Cell[8456, 257, 54, 1, 41, "Output"],
+Cell[8513, 260, 61, 1, 44, "Output"],
+Cell[8577, 263, 251, 7, 29, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[8865, 275, 665, 13, 155, "Input"],
+Cell[9533, 290, 69, 1, 53, "Output"],
+Cell[9605, 293, 129, 2, 67, "Output"],
+Cell[9737, 297, 53, 1, 27, "Output"],
+Cell[9793, 300, 54, 1, 27, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+
+
+(*******************************************************************
+End of Mathematica Notebook file.
+*******************************************************************)
+
