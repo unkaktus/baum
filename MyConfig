@@ -24,7 +24,7 @@ EXECDIR = $(TOP)/exe
 CC = mpicc
 
 OFLAGS += -DOPENMP -fopenmp -DFFLUSH -O2
-#WARN += -Wno-implicit-function-declaration -Wno-incompatible-function-pointer-types -Wno-int-conversion
+WARN += -Wno-implicit-function-declaration -Wno-incompatible-function-pointer-types -Wno-int-conversion
 
 INCS += -I${CONDA_PREFIX}/include
 SPECIALLIBS += -L${CONDA_PREFIX}/lib -lfukaccia -lfuka_exporter -lfftw3 -lhdf5
