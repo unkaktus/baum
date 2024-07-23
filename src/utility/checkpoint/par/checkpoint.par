@@ -1,0 +1,74 @@
+# checkpoint.par
+# BB 01/2006
+# 
+# basic test of checkpointing for  bbh orbit 
+physics = adm bssn multigrid punctures
+
+checkpoint = yes
+checkpoint_di = 1
+
+finaltime = .25    # run once with 0.25, then again with 0.50
+                   # for clean start:
+                   # rm -r checkpoint checkpoint_previous
+
+
+############################################################################
+# main parameters for experimentation
+
+punctures_from_fit_x 	= 1.0
+
+amr_lmax 		= 2
+nxyz  			= 18
+dxyz  			= 0.5
+
+
+############################################################################
+# output
+
+1douttime 	 = 0.25
+1doutput 	 = alpha ham
+1doutinterpolate = yes
+
+
+############################################################################
+# basic setup
+
+punctures_from_fit   	= yes
+amr 			= bo newfmr
+amr_fmr 		= nestedboxes
+grid  			= box quadrant
+dtfac 			= 0.25
+
+
+############################################################################
+# initial data
+
+punctures_solver  = multigrid
+punctures_persist = no
+punctures_itmax   = 100
+punctures_tolerance = 1e-4
+punctures_boundary = robin
+
+mg_verbose		= some       # no, some, yes
+mg_size_nmin		= 4
+mg_vcycle_nmax		= 5
+mg_exact_nmin		= 10
+mg_exact_nmax		= 100
+
+
+############################################################################
+# evolution
+
+evolution_method 	= icn
+boundary 		= radiative
+bssn_subtractA 		= yes
+bssn_initial_lapse 	= one
+bssn_initial_shift 	= zero
+bssn_lapse		= 1+log
+bssn_lapsepsipower      = 4
+bssn_shift		= gamma0
+bssn_shiftpsipower      = 2.0
+bssn_shiftalphapower    = 1.0
+bssn_shiftdriver        = 2.0
+
+

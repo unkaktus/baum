@@ -1,0 +1,29 @@
+projects += src/projects/adm
+projects += src/projects/bssn
+projects += src/projects/z4
+
+projects += src/projects/punctures
+projects += src/projects/Gauge
+
+projects += src/projects/matter
+projects += src/projects/grhd
+projects += src/projects/eos
+
+projects += src/projects/ADM_mass
+projects += src/projects/AHmod
+projects += src/projects/AHF
+projects += src/projects/Invariants
+projects += src/projects/hydroanalysis
+
+projects += src/projects/fuka_reader
+projects += src/projects/tracer
+
+# name and directory for the executable
+EXEC = bam
+EXECDIR = $(TOP)/exe
+
+CC = mpicc -DOPENMP -fopenmp -DFFLUSH -Wno-implicit-function-declaration -Wno-incompatible-function-pointer-types -Wno-int-conversion
+OFLAGS = -O2 -DREDUCEORDERTO6 -ggdb -std=c99 -std=gnu99
+
+INCS += -I${CONDA_PREFIX}/include
+SPECIALLIBS += -L${CONDA_PREFIX}/lib -lfukaccia -lfuka_exporter -lfftw3 -lgsl -lblas -lhdf5

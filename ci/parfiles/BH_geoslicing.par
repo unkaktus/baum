@@ -1,0 +1,35 @@
+# BH_Schw_geo_sclicing.par
+# simple test to run BAM for geodesic slicing regarding a Schwarzschild black hole 
+# TD 23/08
+# 
+physics = adm bssn punctures
+
+ExitIfNAN = yes
+finaltime = 3.2
+
+1douttime = 0.25
+1doutput = adm_gxx adm_Kxx bssn_chi bssn_gxx bssn_K ham
+
+nxyz                 = 64
+dxyz                 = 0.0625
+dtfac                = 0.25
+amr_lmax             = 1
+evolution_method_rk  = rk4g
+
+grid         = box octant
+amr          = bo newfmr
+amr_fmr      = nestedboxes
+
+bhmass1 = 1
+
+bssn_normalizedetg      = yes
+bssn_subtractA          = yes
+bssn_chi_div_floor      = 1e-8
+
+bssn_initial_lapse      = one
+bssn_initial_shift      = zero
+bssn_lapse              = one
+bssn_shift              = zero
+
+mass1 = 1
+mass2 = 0

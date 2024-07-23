@@ -1,0 +1,104 @@
+# srhd 1d Riemann problem: blast wave 1 
+# y-direction
+# see marti & mueller LRR 
+# sbernuz 08/2012
+
+physics = adm bssn matter grhd eos srhdtestID
+
+
+############################################################################
+# initial data
+
+srhdtestID     = riemannp
+
+srhdtestID_dir = y
+
+riemannp_pos   = 0.
+riemannp_rho   = 10. 1.
+riemannp_epsl  = 1.995 1.5e-6
+riemannp_v1    = 0. 0.
+
+boundary_periodicx   = no
+boundary_periodicy   = no
+boundary_periodicz   = no
+
+
+############################################################################
+# basic setup
+
+#Bampi_timer_on              = yes
+#bampi_lowlatency            = yes
+bampi_nghosts               = 6
+order_RP                    = 4
+amr_nbuffer                 = 6
+
+amr_lmax                    = 0
+amr_lmax2                   = 0
+amr_move_lcube              = 0
+
+nxyz                        = 0
+dxyz                        = 2.5e-3
+
+nx                          = 1
+ny                          = 400
+nz                          = 1
+
+amr                         = newfmr bo
+amr_fmr                     = nestedboxes
+grid                        = box
+
+
+#############################################################################
+# evolution
+
+evolution_method            = rk
+evolution_method_rk         = rk3
+ 
+dtfac                       = 0.25
+finaltime                   = 0.4
+
+
+############################################################################
+# eos
+
+eos                    = ideal
+eos_Gamma	       = 1.6666666666666666666666666666666
+#eos_Gamma	       = 1.3333333333333333333333333333333
+
+
+############################################################################
+# hydro
+
+grhd_C2P		    = p_root
+grhd_C2P_NewtonRaphsonTR    = 1e-8
+grhd_C2P_NewtonRaphsonNR    = 100
+
+grhd_vmax		    = 1
+grhd_Wlor_max		    = 1e20
+
+grhd_use_atmosphere	    = no
+grhd_atm_factor		    = 100
+grhd_atm_level		    = -1
+grhd_use_atmosphere_mask    = no
+
+hrsc_nghosts		    = 4
+hrsc_rec		    = WENOZ
+hrsc_TVD_limiter	    = MC2
+hrsc_rec_metric		    = AVG
+hrsc_flux		    = LLF
+
+
+############################################################################
+# spacetime (do not evolve)
+
+bssnsourceRHSto0	    = yes
+
+
+#############################################################################
+# output
+
+1douttime        = 0.1
+#1doutiter        = 1
+1doutput         = grhd_rho grhd_epsl grhd_p grhd_vx
+1doutputall      = no
+

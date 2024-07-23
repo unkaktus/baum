@@ -1,0 +1,20 @@
+# bampi.par
+# BB 5/02
+# 
+# basic parallelization test 
+
+system_monitor_every = 0
+
+physics = scalarwaves
+wave_amplitude = 1.0
+wave_sigma     = 1.0
+
+iterations = 5
+
+1doutiter = 1
+1doutput = g
+
+nxyz = 32
+dxyz = 0.125
+grid = box
+

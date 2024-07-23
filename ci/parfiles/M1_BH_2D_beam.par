@@ -1,0 +1,187 @@
+# bh_*.par
+# 
+# benchmark for parallel fmr
+#
+# evolves 1 BH on several levels of refinement, output only 5 times
+# uses "standard" BSSN system with full gauge for stability
+#
+# levels of refinement: l5 means there are 5 levels, level 0,1,2,3,4
+#
+# number of grid points: n80o means there are 42x42x42 points
+# (80o means 80 points on a full grid, but o stands for octant, which with
+# ghost points for the symmetry results in n/2 + 2 points, in this case 42)
+#
+# to check correctness of run: compare alpha_min.t0
+# 0.000000000000000e+00   1.000000000000000e+00
+# 1.000000000000000e+00   9.846252675112988e-01
+# 2.000000000000000e+00   8.273268453079756e-01
+# 3.000000000000000e+00   6.009544289598961e-01
+# 4.000000000000000e+00   4.879163668529976e-01
+
+physics = adm multigrid matter radiation grhdDY grrhd_m1 eos bssn punctures
+
+
+# --------------------------------------------------------------------------
+# vary the computational load with these two parameters:
+# number of grid points (with octant symmetry) 
+# number of refinement levels (counting from 0) 
+
+nx = 96
+ny = 96
+nz = 5
+amr_lmax 		= 0
+
+
+# --------------------------------------------------------------------------
+# output
+# the number of iterations on the coarsest level is
+#   finaltime/(dxyz*dtfac)
+# for dxyz=2.0, dtfac=0.25, finaltime=4 there are 8 top level iterations
+# if furthermore amr_lmax=4, there are 128 finest level iteration
+
+finaltime = 2
+
+# -------------------------------------------------------------------------
+# output
+
+0douttime	 = 0.005
+0doutputmin	 = alpha
+
+1douttime 	 = 0.005
+1doutput 	 = gxx alpha betax ham bssn_chi
+1doutinterpolate = yes
+
+2douttime               = 0.01
+2doutput                = alpha adm_gxx adm_gxy adm_gyy betax adm_Kxx adm_Kxy adm_Kyy grhd_rho grrhd_m1_nue_z grrhd_m1_nue_E grrhd_m1_nue_Fx grrhd_m1_nue_Fy grrhd_m1_nue_Fz grrhd_m1_nua_E grrhd_m1_nux_E 				grrhd_m1_nua_J grrhd_m1_nue_N grrhd_m1_nue_n grrhd_m1_nua_N grrhd_m1_nua_n grrhd_m1_nux_N grrhd_m1_nux_n
+2dformat                = vtk binary float
+2doutputmode            = xy xz yz
+2doutinterpolate        = no
+2doutputall             = yes
+
+
+# --------------------------------------------------------------------------
+# basic setup
+
+amr 	= bo newfmr
+amr_fmr = nestedboxes
+grid  	= box periodicz #octant
+dxyz  	= 0.075 / 2
+dtfac 	= 0.25
+bampi_nghosts               = 6
+boundary = radiative
+
+# -------------------------------------------------------------------------
+# excision
+
+AHmod_output = yes
+AHmod_nhorizons = 1
+AHmod_searchMTS = 1
+
+grhd_excision_modus = cut
+grhd_excision_fact  = 1e-14
+grhd_excision_rfct  = 1
+
+grrhd_m1_excision_modus = cut
+grrhd_m1_excision_fact  = 1e-14
+grhd_excision_rfct      = 1
+
+# --------------------------------------------------------------------------
+# initial data
+
+mass1         = 0
+mass2         = 0
+punctures_solver  = none
+punctures_persist = no
+
+# --------------------------------------------------------------------------
+# hydro
+
+grhd_C2P                    = rroot
+grhd_C2P_NewtonRaphsonTR    = 1e-8
+grhd_C2P_NewtonRaphsonNR    = 100
+
+
+grhd_vmax                   = 0.99
+grhd_Wlor_max               = 1e8
+
+grhd_use_atmosphere         = ColdStatic
+grhd_atm_factor             = 100
+grhd_atm_level              = 1e-9
+grhd_use_atmosphere_mask    = yes
+grhd_use_atmosphere_postrhs = yes
+
+
+hrsc_nghosts                = 4
+hrsc_rec                    = CENO3
+hrsc_TVD_limiter            = MC2
+hrsc_rec_metric             = LAG4
+hrsc_flux                   = HLL #LLF
+
+# --------------------------------------------------------------------------
+# M1
+
+grrhd_m1_ic = BH2D
+grrhd_m1_BH2D_x0 = -47.5*0.075 / 2
+grrhd_m1_BH2D_y0 = -47.5*0.075 / 2  - 2.5 # 0.075/ 2 *0.5 - 2.5
+
+grrhd_m1_beam = yes
+grrhd_m1_y_beam  = 1
+grrhd_m1_dy_beam = 0.2
+grrhd_m1_z_beam  = 0
+grrhd_m1_dz_beam = 50
+
+grrhd_m1_implicit_sources = linear
+grrhd_m1_fluxes = Radice
+
+grrhd_m1_C2P_NewtonRaphsonTR = 1e-8
+grrhd_m1_C2P_NewtonRaphsonNR = 100
+
+rad_hrsc_rec              = CONST
+rad_hrsc_flux             = LLF
+
+radiation_use_mask = no
+optical_depth_mask = 1
+
+grrhd_m1_Nbins = 18
+
+grrhd_m1_energy_conserv = no
+grrhd_m1_NuHeat = no
+
+# --------------------------------------------------------------------------
+# eos
+
+eos                         = poly
+
+eos_Gamma                   = 2
+eos_K                       = 100
+
+
+# --------------------------------------------------------------------------
+# evolution
+
+evolution_method        = rk
+evolution_method_rk     = rk3
+dtfac                   = 0.25
+
+bssn_normalizedetg      = yes
+bssn_subtractA          = yes
+bssn_chi_div_floor      = 1e-4
+
+Gauge = donothing
+
+bssn_initial_lapse      = donothing
+bssn_initial_shift      = zero
+bssn_lapse              = 1+log withshift
+bssn_shift              = gamma0 withGadv withBadv withShiftadv
+bssn_shiftalphapower    = 0.0
+bssn_shiftdriver        = 0.3
+bssn_shiftgammacoeff    = 0.75
+
+#punctures_lapse         = psiBL^(-2)
+
+bssnsourceRHSto0            = yes
+bssnRHSto0                  = yes
+
+
+evolve_geometry = no
+

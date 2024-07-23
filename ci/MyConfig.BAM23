@@ -1,0 +1,46 @@
+## BAM23 Integration Tests
+
+projects += src/projects/adm
+projects += src/projects/scalarwaves
+
+projects += src/projects/bssn
+projects += src/projects/z4
+
+projects += src/projects/punctures
+projects += src/projects/Gauge
+
+projects += src/projects/matter
+projects += src/projects/grhd
+projects += src/projects/eos
+projects += src/projects/srhdtestID
+projects += src/projects/radiation
+projects += src/projects/grhdDY
+projects += src/projects/grrhd_m1
+
+projects += src/projects/ADM_mass
+projects += src/projects/AHmod
+projects += src/projects/AHF
+projects += src/projects/Invariants
+projects += src/projects/hydroanalysis
+
+projects += src/projects/BBIDdataReader
+projects += src/projects/LIDdataReader
+projects += src/projects/BNSdataReader
+projects += src/projects/BHNSLIDdataReader
+projects += src/projects/RNSdataReader
+projects += src/projects/shocktube
+projects += src/projects/Teukolsky
+projects += src/projects/conformal_diagrams
+projects += src/projects/PIDdataReader
+
+# name and directory for the executable
+EXEC = bam
+EXECDIR = $(TOP)/exe
+
+CC = mpicc -DOPENMP -fopenmp -DFFLUSH
+OFLAGS = -O2 -DREDUCEORDERTO6 -ggdb -std=c99 -std=gnu99
+
+# Build with XDMF
+#DFLAGS += -DXDMF
+#INCS += $(shell pkg-config --cflags xdmf)
+#SPECIALLIBS += $(shell pkg-config --libs xdmf)

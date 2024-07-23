@@ -1,0 +1,97 @@
+# Simple 3D Gauge Wave Test with 2nd order FD for Z4c
+
+
+############################################################################
+# physics
+ 
+physics                 = adm z4 Gauge AwA
+
+
+############################################################################
+# basic setup
+ 
+order_centered          = 2
+order_advection         = 2
+
+advection_lopsided      = 2
+ 
+bampi_timer_on          = yes
+bampi_lowlatency        = yes
+bampi_nghosts           = 2
+amr_move_lcube          = 0
+amr_lmax                = 0
+
+grid                    = box periodicx periodicy periodicz
+grid_fournplustwo       = no
+
+dxyz                    = 0.0625
+nx                      = 16
+ny                      = 16
+nz                      = 16
+
+evolution_method       = rk
+evolution_method_rk    = rk4g
+
+dtfac                  = 0.25
+
+
+#############################################################################
+# initial data
+
+adm_data               = none
+
+AwA                    = simple_gauge_wave
+AwA_amplitude          = 0.005
+AwA_sigma              = 0.08
+
+mass1		       = 0.0
+mass2		       = 0.0
+
+
+#############################################################################
+# output
+
+# Note: conformal Z4c variables common to BSSN have same names. i.e.
+#       bssn_gxx, bssn_chi, bssn_Axx, bssn_Gx
+
+finaltime = 30.
+
+0douttime        = 1.
+0doutput         = ham
+
+1douttime        = 1.
+1doutput         = alpha
+1doutinterpolate = no
+ 
+
+#############################################################################
+# evolution
+
+punctures_lapse         = psiBL^(-2)
+ 
+order_dissipation       = 0
+dissipation_factor      = 0.0
+
+z4_register_algcon     = yes store
+z4_normalizedetg       = yes
+z4_subtractA           = yes
+
+z4_lapse               = harmonic
+z4_initial_shift       = zero
+z4_shift               = withoutB
+z4_shiftdriver         = 0.
+
+z4_kappa1	       = 0.0
+z4_kappa2	       = 0.0
+
+
+#############################################################################
+# boundary
+
+boundary                = none
+
+
+############################################################################
+# gauge
+
+Gauge                   = moving_puncture

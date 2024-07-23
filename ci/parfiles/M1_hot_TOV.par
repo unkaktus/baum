@@ -1,0 +1,306 @@
+physics = adm z4 Gauge matter eos grhdDY BBIDdataReader ADM_mass hydroanalysis radiation grrhd_m1
+
+nxyz                        = 200 /2
+amr_move_nxyz               = 100 /2
+dxyz                        = 16.896 / 4 /1.5 *2				# 0.264*2^6
+amr_bo_dxmax                = 0.264*8    /1.5 *2
+0douttime                   = 0.264*4         
+2douttime                   = 0.264*128      
+Invariants_output_time      = 0.264*4
+AHmod_time                  = 0.264*32
+
+
+############################################################################
+# initial data
+
+# do you want to compute/check first a sequence ?
+BBID_tov_MvsR      = no
+BBID_tov_N         = 1000
+BBID_tov_rho0      = 0.0014
+BBID_tov_drho      = 1e-03
+#BBID_tov_rho0             = 1e-5
+#BBID_tov_drho             = 1.1
+
+BBID_tov_file = tov_MvsR.dat
+
+# compute TOV
+BBID_tov_integrate = p
+BBID_tov_npts      = 3000
+BBID_tov_rhoc1     = 0.00183487*0.9
+BBID_tov_R01       = 10
+
+#px1 = 10
+#py1 = 10
+#pz1 = 0
+
+mass1         = 0.1
+
+
+############################################################################
+# checkpointing
+
+checkpoint                  = no
+checkpoint_resub            = no
+ExitIfNAN		    = yes
+
+############################################################################
+# basic setup
+
+order_centered              = 4
+order_advection             = 4
+advection_lopsided6         = 2
+advection_lopsided          = 1
+
+order_dissipation           = 6
+dissipation_factor          = 0.5
+dissipation_factor_level0   = 0.1
+
+bampi_timer_on              = yes
+bampi_lowlatency            = yes
+bampi_nghosts               = 6
+order_RP                    = 6
+order_RP_shells             = 6
+amr_nbuffer                 = 6
+
+amr_lmax                    = 4
+amr_move_lcube              = 2
+
+amr                         = bo newfmr move
+amr_fmr                     = nestedboxes
+grid                        = box octant #for precessing cases this should be changed
+
+#############################################################################
+# evolution
+
+evolution_method            = rk
+evolution_method_rk         = rk4g
+dtfac                       = 0.25
+finaltime                   = 5
+
+z4_normalizedetg            = yes
+z4_subtractA                = yes
+z4_chi_div_floor            = 1e-5
+
+z4_initial_lapse            = donothing
+z4_initial_shift            = zero
+z4_lapse                    = 1+log withshift
+z4_shift                    = gamma0 withGadv withBadv withShiftadv
+z4_shiftalphapower          = 0.0
+z4_shiftdriver              = 0.3
+z4_shiftgammacoeff          = 0.75
+
+z4_kappa1                   = 0.02
+z4_kappa2                   = 0.0
+
+punctures_lapse             = psiBL^(-2)
+
+#############################################################################
+# eos
+
+eos                         = nuclear
+
+eos_tab_file                = ./eos/SFHo/SFHo.d
+
+eos_tab_file_beta	    =   ./eos/SFHo/SFHo_isentropic_beta.d
+
+eos_T			    = 0.10000000000000001
+eos_Y 			    = 0.4
+
+#############################################################################
+# hydro
+
+grhd_C2P                    = illinois_3d
+grhd_C2P_NewtonRaphsonTR    = 1e-9
+grhd_C2P_NewtonRaphsonNR    = 1000
+
+grhd_vmax                   = 0.9
+grhd_Wlor_max               = 1e8
+
+grhd_use_atmosphere         = ColdStatic
+grhd_atm_factor             = 1
+grhd_atm_level              = 10
+#grhd_atm_T                 = 0.
+grhd_use_atmosphere_mask    = no
+grhd_recvel                 = bx
+grhd_use_nls                = no
+grhd_add_nls                = no
+
+hrsc_nghosts                = 4
+hrsc_rec                    = WENOZ
+hrsc_TVD_limiter            = MC2
+hrsc_rec_metric             = LAG6
+hrsc_flux                   = HLL
+hrsc_rec_safety             = no
+
+grhd_use_excision           = no
+grhd_excision_rfct          = 0.9
+grhd_excision_modus         = atm
+
+matter_interpolate_scheme_restriction  = linear
+matter_interpolate_scheme_prolongation = linear
+matter_interpolate_order  = 4
+conservative_amr          = yes
+camr_treshold             = 1e20
+
+rhs_matter_null_ONlevel0 = yes
+
+
+##########################################################################
+# M1
+
+grrhd_m1_implicit_sources = linear
+grrhd_m1_fluxes = Radice
+
+grrhd_m1_atm_level = 1e-20
+
+grrhd_m1_C2P_NewtonRaphsonTR = 1e-8
+grrhd_m1_C2P_NewtonRaphsonNR = 100
+
+rad_hrsc_rec              = CONST
+rad_hrsc_flux             = LLF
+
+grrhd_m1_decouple_fac = 0
+grrhd_m1_decouple_T   = 0
+
+
+#grrhd_m1_Nbins = 18
+#grrhd_m1_NuTab_path = ./NuTabs/SFHo/NuLib_SFHo_rho400_temp180_ye60_ng24_ns3_int
+grrhd_m1_EqTab_path = ./eos/SFHo/SFHo_equilibrium.d
+grrhd_m1_nls_rates = yes
+
+radiation_use_mask = no
+optical_depth_mask = 100
+
+radiation_interpolate_order = 4
+radiation_interpolate_scheme_restriction = LINTVD
+radiation_interpolate_scheme_prolongation = LINTVD
+
+rhs_radiation_null_ONlevel0 = yes
+
+radiation_at_merger     = no
+radiation_activate_dist = 18
+
+rad_evolution_method            = rk
+rad_evolution_method_rk         = rk3
+
+
+#############################################################################
+# output
+
+stdout_flush = yes
+
+
+0doutput                = alpha adm_rho   ham momx  grhd_rho grhd_D grhd_DY grhd_Y grhd_Tau grhd_T 
+			  nls_Qeff_nue  nls_Reff_nue grrhd_m1_nue_E grrhd_m1_nue_n grrhd_m1_nue_J  
+                          nls_Qeff_nua  nls_Reff_nua grrhd_m1_nua_E grrhd_m1_nua_n grrhd_m1_nua_J
+                          nls_Qeff_nux  nls_Reff_nux grrhd_m1_nux_E grrhd_m1_nux_n grrhd_m1_nux_J
+                          grrhd_m1_nue_T  grrhd_m1_nua_T  grrhd_m1_nux_T grrhd_m1_nue_ka  grrhd_m1_nua_ka  grrhd_m1_nux_ka
+
+
+1doutput               = grrhd_m1_nue_T  grrhd_m1_nua_T  grrhd_m1_nux_T grhd_T grhd_rho grhd_Y nls_tau_nue nls_tau_nua nls_tau_nux
+1douttime               = 16.896 / 4
+
+
+2douttime               = 16.896 / 4 
+2doutput                = alpha betax bssn_chi bssn_K   ham momx grhd_rho grhd_epsl grhd_p grhd_vx grhd_v2 grhd_Y grhd_D grhd_Tau grhd_T grhd_DY grhd_turbTauxx
+                          nls_Qeff_nue nls_Qeff_nua nls_Qeff_nux nls_tau_nue nls_tau_nua nls_tau_nux nls_Reff_nua nls_Reff_nue nls_Reff_nux
+                          grrhd_m1_nue_ka grrhd_m1_nue_ks grrhd_m1_nue_kn grrhd_m1_nue_eta grrhd_m1_nue_E grrhd_m1_nue_n grrhd_m1_nue_z grrhd_m1_nue_J
+                          grrhd_m1_nua_ka grrhd_m1_nua_ks grrhd_m1_nua_kn grrhd_m1_nua_eta grrhd_m1_nua_E grrhd_m1_nua_n grrhd_m1_nua_z grrhd_m1_nua_J
+                          grrhd_m1_nux_ka grrhd_m1_nux_ks grrhd_m1_nux_kn grrhd_m1_nux_eta grrhd_m1_nux_E grrhd_m1_nux_n grrhd_m1_nux_z grrhd_m1_nux_J
+			  grrhd_m1_nue_T  grrhd_m1_nua_T  grrhd_m1_nux_T grrhd_m1_nue_Fx grrhd_m1_nua_Fx grrhd_m1_nux_Fx
+
+
+2doutputmode            = xy xz
+2dformat                = vtk binary float
+2doutinterpolate        = no
+2doutputall             = yes
+2doutputr               = rpsi4 ipsi4
+2doutputr_type          = SphericalDF
+
+
+#############################################################################
+# boundary
+
+boundary                = background radcentered 
+
+############################################################################
+# gauge
+
+Gauge                   = moving_puncture
+compute_moving_puncture_distance = line
+moving_puncture_fixz    = none
+
+track_matter_var        = alpha
+track_matter_mode       = min
+track_matter_minmove    = 0.01
+
+#############################################################################
+# invariants
+
+ntheta                      = 47
+nphi                        = 46
+invariants_compute_modes    = yes
+invariants_modes_r          = 300 400 500 600 700 800 900 1000 1100 1200 
+invariants_modes_lmin       = 0
+invariants_modes_lmax       = 5
+invariants_energy_r         = 300 400 500 600 700 800 900 1000 1100 1200
+gauss_codacci_mainardi      = standard
+invariants_order            = 6
+
+#############################################################################
+# ADM Mass
+# (extract same radii as waves)
+
+ADM_mass_ncircles     = 101
+ADM_mass_npoints      = 80
+ADM_mass_lmin         = 0
+ADM_mass_lmax         = 5
+ADM_mass_r            = 300 400 500 600 700 800 900 1000 1100 1200
+
+#######################################################
+# AH finder
+
+AHmod_verbose     = no
+AHmod_ntheta      = 30
+AHmod_nphi        = 60
+AHmod_LMAX        = 10
+AHmod_interpolation_order = 4
+AHmod_nhorizons   = 1
+AHmod_searchMTS   = 1  2000.0  20000.0  0
+AHmod_uselast     = yes
+AHmod_initial_guess_expand = 1.0
+AHmod_LevelOffset = 1
+AHmod_UseOptimalLevel = no
+AHmod_surface0_WaitUntilClosePunctures = no
+AHmod_flow_iter   = 500
+AHmod_mass_tol    = 1.0e-04
+AHmod_hmean_tol   = 100.0
+AHmod_output      = yes
+AHmod_output_xyt  = yes
+AHmod_output_lm   = yes
+
+#######################################################
+#hydroanalysis
+
+hydroanalysis_radiation_spheres  = yes
+hydroanalysis_radiation_angular_radius = 80
+
+hydroanalysis_ejecta_spheres  = yes
+hydroanalysis_ejecta_spheres_radius = 60
+hydroanalysis_ejecta_nradius = 1
+hydroanalysis_ejecta_dradius = 20
+
+hydroanalysis_Mbar_radius  = 8
+hydroanalysis_Mbar_nradius = 12
+hydroanalysis_Mbar_dradius = 1.
+hydroanalysis_rATM         = 1e-25
+hydroa_mode_projection     = no
+
+#######################################################
+#puncture properties
+
+moving_puncture_properties  = yes
+puncture_properties_r       = 8 9 10 11 12 14 15 20
+puncture_properties_punc    = 2
+puncture_properties_npoints = 40
+puncture_properties_circles = 41

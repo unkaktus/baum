@@ -1,0 +1,157 @@
+# parameter file for equal-mass binary made of superposed boosted TOV 
+# 07/2012
+
+physics = adm z4 Gauge matter eos grhd BBIDdataReader 
+
+#############################################################################
+# initial data
+
+# compute TOV
+BBID_tov_integrate = p	
+BBID_tov_npts	   = 10000
+
+BBID_tov_rhoc1	   = 0.00128
+BBID_tov_rhoc2	   = 0.00128
+BBID_tov_R01	   = 10
+BBID_tov_R02	   = 10
+
+# set masses
+mass1         = 1
+mass2         = 1
+
+# positions and momenta for boost
+px1           = +40
+px2           = -40
+my1           = 0.105
+my2           = -0.105
+
+
+amr_verbose = all
+stdout_verbose = dtdxdiss outtime speed
+
+############################################################################
+# basic setup
+
+order_centered              = 4
+order_advection             = 4
+advection_lopsided6         = 2
+advection_lopsided          = 1
+
+order_dissipation           = 6
+dissipation_factor          = 0.5
+dissipation_factor_shells   = 0.1
+
+bampi_timer_on              = yes
+bampi_lowlatency            = yes
+bampi_nghosts               = 6
+order_RP                    = 6
+order_RP_shells             = 6
+amr_nbuffer                 = 6
+
+amr_lmax                    = 4
+nxyz                        = 128
+amr_move_lcube              = 2
+amr_move_nxyz               = 64
+
+dxyz                        = 8.0 
+amr_bo_dxmax                = 1.0
+
+amr                         = bo newfmr move
+amr_fmr                     = nestedboxes
+grid                        = box bitant 
+
+
+############################################################################
+# eos
+
+eos                    = poly
+
+eos_Gamma	       = 2
+eos_K		       = 100
+
+
+############################################################################
+# hydro
+
+hrsc_nghosts		    = 4
+hrsc_rec		    = WENOZ
+hrsc_TVD_limiter	    = MC2
+hrsc_rec_metric		    = LAG4
+hrsc_flux		    = LLF
+
+grhd_C2P		    = p_root
+grhd_C2P_NewtonRaphsonTR    = 0.000000000001
+grhd_C2P_NewtonRaphsonNR    = 100
+
+grhd_vmax		    = 0.999
+grhd_Wlor_max		    = 1e5
+
+grhd_use_atmosphere	    = yes
+grhd_use_atmosphere	    = ColdStatic
+grhd_atm_factor		    = 100
+grhd_atm_level		    = 0.0000000001
+
+
+
+#############################################################################
+# evolution
+
+evolution_method        = rk
+evolution_method_rk     = rk4g
+dtfac                   = 0.25
+
+z4_normalizedetg            = yes
+z4_subtractA                = yes
+z4_chi_div_floor            = 1e-5
+z4_initial_lapse            = donothing
+z4_initial_shift            = zero
+z4_lapse                    = 1+log withshift
+z4_shift                    = withShiftadv
+z4_shiftdriver              = 0.3
+z4_kappa1                   = 0.02
+z4_kappa2                   = 0.0
+
+punctures_lapse             = psiBL^(-2)
+
+#############################################################################
+# output
+
+finaltime = 3
+
+0douttime                = 2
+0doutput                = alpha bssn_chi bssn_K ham momx momy momz grhd_D
+
+1doutiter               = 2
+1doutput                = alpha betax bssn_gxx bssn_K bssn_chi grhd_rho 
+1doutinterpolate        = yes
+1doutputall             = yes
+
+2douttime               = 2
+2doutput                = alpha bssn_chi bssn_K ham grhd_D grhd_rho grhd_v2
+2dformat                = vtk binary float
+2doutinterpolate        = yes
+
+#############################################################################
+# invariants
+
+ntheta                      = 47
+nphi                        = 46
+invariants_compute_modes    = yes
+invariants_modes_r          = 60 80 100 150 200 300 400 500 600
+invariants_modes_lmin       = 0
+invariants_modes_lmax       = 1
+invariants_energy_r         = 60 80 100 150 200 300 400 500 600
+gauss_codacci_mainardi      = standard
+invariants_order            = 4
+
+#############################################################################
+# boundary
+
+boundary                = radiative 
+
+############################################################################
+# gauge
+
+Gauge                   = moving_puncture
+compute_moving_puncture_distance = line
+

@@ -1,0 +1,594 @@
+Adding command line parameters
+  parameter outdir                     =  fmr_mg_2proc
+  parameter parameterfile              =  fmr_mg_2proc.par
+Reading parameter file "fmr_mg_2proc.par"
+------------------------------------------------------------------------------
+Initializing libraries
+Adding amr
+  variable  x
+  variable  y
+  variable  z
+  parameter amr                        =  bo newfmr
+  parameter amr_bo_dxmax               =  0
+  parameter amr_lmax                   =  2
+  parameter storage_verbose            =  no
+  parameter amr_fmr                    =  nestedboxes
+  parameter amr_nbuffer                =  3
+  variable  flagregrid
+  variable  flagrestrict
+  variable  flagprolong
+Adding elliptic/iterative
+  parameter ell_verbose                =  yes
+  variable  u
+  variable  f
+  variable  r
+  variable  iterative_p
+  variable  iterative_ph
+  variable  iterative_rt
+  variable  iterative_s
+  variable  iterative_sh
+  variable  iterative_t
+  variable  iterative_v
+Adding multigrid
+  variable  mg_redblack
+  parameter mg_relaxation              =  rgbs
+  parameter mg_persist                 =  no
+  parameter mg_verbose                 =  yes
+  parameter mg_typeofcycles            =  fullV
+  parameter mg_levels_nmax             =  -1
+  parameter mg_size_nmin               =  6
+  parameter mg_relax_npre              =  3
+  parameter mg_relax_npost             =  3
+  parameter mg_exact_nmin              =  10
+  parameter mg_exact_nmax              =  100
+  parameter mg_vcycle_nmin             =  0
+  parameter mg_vcycle_nmax             =  5
+  parameter mg_wcycle_nmin             =  0
+  parameter mg_wcycle_nmax             =  0
+  parameter mg_wcycle_factol           =  1.0
+Adding boundary
+  parameter boundary_verbose           =  yes
+  parameter boundary                   =  radiative
+  parameter boundary_radpower          =  0
+  parameter boundary_radconstant       =  
+  parameter boundary_rad_shiftadvection  =  no
+Adding output
+  function  write data to files
+  function  write data to files, FMR style
+  parameter 0doutiter                  =  -1
+  parameter 1doutiter                  =  -1
+  parameter 2doutiter                  =  -1
+  parameter 3doutiter                  =  -1
+  parameter 0douttime                  =  -1
+  parameter 1douttime                  =  0.25
+  parameter 2douttime                  =  -1
+  parameter 3douttime                  =  -1
+  parameter 1doutinterpolate           =  no
+  parameter 2doutinterpolate           =  no
+  parameter 3doutinterpolate           =  no
+  parameter 0doutput                   =  
+  parameter 1doutput                   =  punctures_u
+  parameter 2doutput                   =  
+  parameter 3doutput                   =  
+  parameter outputall                  =  no
+  parameter 0doutputall                =  no
+  parameter 1doutputall                =  no
+  parameter 2doutputall                =  no
+  parameter 3doutputall                =  no
+  parameter 0doutputmax                =  
+  parameter 0doutputmin                =  
+  parameter 0doutputnorm               =  
+  parameter 0doutputnorminf            =  
+  parameter 1doutputx                  =  
+  parameter 1doutputy                  =  
+  parameter 1doutputz                  =  
+  parameter 1doutputd                  =  
+  parameter 2doutputxy                 =  
+  parameter 2doutputxz                 =  
+  parameter 2doutputyz                 =  
+  parameter 2doutputxd                 =  
+  parameter 2doutputyd                 =  
+  parameter 2doutputzd                 =  
+  parameter 2dformat                   =  opendx binary float
+  parameter 3dformat                   =  opendx binary float
+  parameter hdf5_timesteps_in_one_file  =  yes
+  parameter outputx0                   =  0
+  parameter outputy0                   =  0
+  parameter outputz0                   =  0
+Adding evolve
+  function  evolve with method of lines like icn, rk, dlf
+  parameter evolution_method           =  icn
+  parameter evolution_method_rk        =  rk4
+  parameter evolve_persist             =  yes
+  parameter evolve_euler_debug         =  no
+  parameter evolve_compute_change      =  
+  parameter evolve_DissipationFactor   =  0
+  parameter evolve_Dissipation_h_Power  =  3
+  parameter evolve_DissipationOrder    =  2
+  parameter evolve_DissipationDiagonalCoupling  =  1
+  parameter evolve_Dissipation         =  no
+Adding interpolate
+Adding NumericUtils
+Adding adm
+  function  compute ADM constraints
+  variable  gxx
+  variable  gxy
+  variable  gxz
+  variable  gyy
+  variable  gyz
+  variable  gzz
+  variable  Kxx
+  variable  Kxy
+  variable  Kxz
+  variable  Kyy
+  variable  Kyz
+  variable  Kzz
+  variable  alpha
+  variable  betax
+  variable  betay
+  variable  betaz
+  variable  betadotx
+  variable  betadoty
+  variable  betadotz
+  variable  ham
+  variable  momx
+  variable  momy
+  variable  momz
+  variable  trK
+  parameter adm_normalizedConstraints  =  no
+  variable  psi
+  variable  dpsiopsix
+  variable  dpsiopsiy
+  variable  dpsiopsiz
+  variable  ddpsiopsixx
+  variable  ddpsiopsixy
+  variable  ddpsiopsixz
+  variable  ddpsiopsiyy
+  variable  ddpsiopsiyz
+  variable  ddpsiopsizz
+  variable  K_initial
+  function  compute and save initial value of the trace of K_ij
+  parameter adm_NANcheck               =  no
+  parameter adm_exitifNAN              =  gxx
+  function  exit if NAN
+Adding bssn
+  function  initialize bssn system from adm initial data
+  function  fill in ADM variables from BSSN variables
+  variable  bssn_gxx
+  variable  bssn_gxy
+  variable  bssn_gxz
+  variable  bssn_gyy
+  variable  bssn_gyz
+  variable  bssn_gzz
+  variable  bssn_phi
+  variable  bssn_Axx
+  variable  bssn_Axy
+  variable  bssn_Axz
+  variable  bssn_Ayy
+  variable  bssn_Ayz
+  variable  bssn_Azz
+  variable  bssn_K
+  variable  bssn_Gx
+  variable  bssn_Gy
+  variable  bssn_Gz
+  variable  bssn_alphaDensity
+  variable  bssn_ginvtmpxx
+  variable  bssn_ginvtmpxy
+  variable  bssn_ginvtmpxz
+  variable  bssn_ginvtmpyy
+  variable  bssn_ginvtmpyz
+  variable  bssn_ginvtmpzz
+  parameter bssn_densitizedLapse       =  no
+  parameter bssn_alphaDensityWeight    =  1.0
+  parameter bssn_forceKzero            =  no
+  parameter bssn_subtractA             =  yes
+  parameter bssn_normalizedetg         =  no
+  parameter bssn_lapsepsipower         =  4
+  parameter bssn_lapseharmonicf        =  2
+  parameter bssn_subtractK0            =  yes
+  parameter bssn_shiftpsipower         =  2.0
+  parameter bssn_shiftalphapower       =  1.0
+  parameter bssn_shiftgammacoeff       =  0.75
+  parameter bssn_shiftdriver           =  2.0
+  parameter bssn_shift                 =  gamma0
+  parameter bssn_lapse                 =  1+log
+  parameter bssn_shift_stop_time       =  -1.0
+  parameter bssn_initial_shift         =  zero
+  parameter bssn_initial_lapse         =  one
+Adding punctures: black hole parameters
+  parameter bhmass1                    =  0.0
+  parameter bhx1                       =  0.0
+  parameter bhy1                       =  0.0
+  parameter bhz1                       =  0.0
+  parameter bhpx1                      =  0.0
+  parameter bhpy1                      =  0.0
+  parameter bhpz1                      =  0.0
+  parameter bhsx1                      =  0.0
+  parameter bhsy1                      =  0.0
+  parameter bhsz1                      =  0.0
+  parameter bhmass2                    =  0.0
+  parameter bhx2                       =  0.0
+  parameter bhy2                       =  0.0
+  parameter bhz2                       =  0.0
+  parameter bhpx2                      =  0.0
+  parameter bhpy2                      =  0.0
+  parameter bhpz2                      =  0.0
+  parameter bhsx2                      =  0.0
+  parameter bhsy2                      =  0.0
+  parameter bhsz2                      =  0.0
+  parameter bh_fmr                     =  default
+  parameter bh_fmr_ry_o_r_max          =  1.0
+  parameter bh_fmr_ry_o_rx_max         =  2.0
+  parameter punctures_from_fit         =  yes
+  parameter punctures_from_fit_x       =  1.0
+  function  set parameters based on fit
+Adding punctures
+  function  compute puncture data
+  function  flags for box/sphere refinement
+  variable  punctures_u
+  variable  punctures_v
+  variable  punctures_a
+  variable  punctures_b
+  variable  punctures_c
+  variable  punctures_cf
+  variable  punctures_d
+  variable  punctures_ex
+  variable  punctures_ey
+  variable  punctures_ez
+  variable  punctures_f
+  variable  punctures_r
+  variable  punctures_sx
+  variable  punctures_sy
+  variable  punctures_sz
+  variable  punctures_lu
+  parameter punctures_solver           =  multigrid
+  parameter punctures_persist          =  yes
+  parameter punctures_itmax            =  100
+  parameter punctures_tolerance        =  1e-4
+  parameter punctures_linSolver        =  bicgstab
+  parameter punctures_linSolver_itmax  =  20
+  parameter punctures_linSolver_tolFac  =  0.1
+  parameter punctures_use_HYPRE_tol    =  yes
+  parameter punctures_mass             =  no
+  parameter punctures_lapse            =  none
+  parameter punctures_lapse_at_puncture  =  -1
+  parameter punctures_lapse_MK_MADM_diff  =  0.001
+  parameter punctures_shift            =  none
+  parameter punctures_shift_add_beta_rot  =  yes
+  parameter punctures_shift_falloff    =  2
+  parameter punctures_shift_rhs        =  delA
+  parameter punctures_shift_test       =  no
+  parameter punctures_MK_eq_MADM_Sequence  =  no
+  parameter punctures_Sequence_D1      =  2
+  parameter punctures_Sequence_Dstep   =  1.0
+  parameter punctures_Sequence_PointNumber  =  1
+  parameter punctures_Sequence_D2      =  use_Dstep
+  parameter punctures_Sequence_newtMAXITS  =  200
+  parameter punctures_Sequence_newtTOLF  =  1e-4
+  parameter punctures_boundary         =  robin
+  variable  robinindex
+  variable  robinflag
+You are running on more than 1 processor and
+have requested amr_lmax = 2.
+
+WARNING: this is highly experimental code which will crash!
+
+Adding bampi
+  parameter bampi_xsize                =  0
+  parameter bampi_ysize                =  0
+  parameter bampi_zsize                =  0
+  parameter bampi_nghosts              =  2
+  parameter bampi_verbose              =  no
+Adding main
+  parameter physics                    =  adm bssn multigrid punctures
+  parameter grid                       =  box quadrant
+  parameter r_sphere                   =  0.5
+  parameter nx                         =  5
+  parameter ny                         =  5
+  parameter nz                         =  5
+  parameter nxyz                       =  18
+  parameter dx                         =  0.1
+  parameter dy                         =  0.1
+  parameter dz                         =  0.1
+  parameter dxyz                       =  0.5
+  parameter xmin                       =  0
+  parameter xmax                       =  0
+  parameter ymin                       =  0
+  parameter ymax                       =  0
+  parameter zmin                       =  0
+  parameter zmax                       =  0
+  parameter dtfac                      =  0.25
+  parameter iterations                 =  0
+  parameter finaltime                  =  0
+  parameter iterate_parameters         =  no
+------------------------------------------------------------------------------
+Creating grid
+  Creating a rectangular box
+  quadrant selected, setting size to 18x11x11
+  nx =  18, lx =    8.500, xmin =   -4.250, xmax =    4.250, dx = 0.500000
+  ny =  11, ly =    5.000, ymin =   -0.750, ymax =    4.250, dy = 0.500000
+  nz =  11, lz =    5.000, zmin =   -0.750, zmax =    4.250, dz = 0.500000
+------------------------------------------------------------------------------
+Initializing grid
+------------------------------------------------------------------------------
+Regrid l1
+r = 2.255000e+00   rx = 2.255000e+00   ry = 2.255000e+00
+r = 2.255000e+00   rx = 2.255000e+00   ry = 2.255000e+00
+Flag regrid l0 --> 240 flagged, global 480
+l=0, h=0.500,0.500,0.500: [0.250,2.250]x[-0.250,3.250]x[-0.250,2.250]  5x8x6 = 240
+l=0, h=0.500,0.500,0.500: [-2.250,2.250]x[-0.250,3.250]x[-0.250,2.250]  10x8x6 = 480
+  nx =  20, lx =    4.750, xmin =   -2.375, xmax =    2.375, dx = 0.250000
+  ny =  16, ly =    3.750, ymin =   -0.375, ymax =    3.375, dy = 0.250000
+  nz =  12, lz =    2.750, zmin =   -0.375, zmax =    2.375, dz = 0.250000
+local newlevel:
+l=1, h=0.250,0.250,0.250: [-0.375,2.375]x[-0.375,3.375]x[-0.375,2.375]  12x16x12 = 2304
+local newlevel minus ghosts:
+l=1, h=0.250,0.250,0.250: [0.125,2.375]x[0.125,3.375]x[0.125,2.375]  10x14x10 = 1400
+local parent plus buffer:
+l=0, h=0.500,0.500,0.500: [-0.750,3.250]x[-0.750,4.250]x[-0.750,3.250]  9x11x9 = 891
+global local parent:
+l=0, h=0.500,0.500,0.500: [-3.250,3.250]x[-0.750,4.250]x[-0.750,3.250]  14x11x9 = 1386
+R 3 3 3: 45 flags
+me1, p0: 45 points
+me1, p1: 45 points
+combuf p1 blocal[0] ni=0
+combuf p1 blocal[1] ni=45
+combuf p1 bglobal[0] ni=0
+combuf p1 bglobal[1] ni=45
+R 0 1 1: 396 flags
+me1, p0: 396 points
+me1, p1: 396 points
+combuf p1 blocal[0] ni=0
+combuf p1 blocal[1] ni=396
+combuf p1 bglobal[0] ni=0
+combuf p1 bglobal[1] ni=396
+R 1 3 3: 96 flags
+me1, p0: 96 points
+me1, p1: 96 points
+combuf p1 blocal[0] ni=0
+combuf p1 blocal[1] ni=96
+combuf p1 bglobal[0] ni=0
+combuf p1 bglobal[1] ni=96
+R 0 1 3: 441 flags
+me1, p0: 441 points
+me1, p1: 441 points
+combuf p1 blocal[0] ni=0
+combuf p1 blocal[1] ni=441
+combuf p1 bglobal[0] ni=0
+combuf p1 bglobal[1] ni=441
+Created new level:
+l=1, h=0.250,0.250,0.250: [-2.375,2.375]x[-0.375,3.375]x[-0.375,2.375]  20x16x12 = 3840
+dt = 0.062500, dt/dx = 0.250000
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+Regrid l2
+r = 1.127500e+00   rx = 1.127500e+00   ry = 1.127500e+00
+r = 1.127500e+00   rx = 1.127500e+00   ry = 1.127500e+00
+Flag regrid l1 --> 300 flagged, global 600
+l=1, h=0.250,0.250,0.250: [0.125,1.125]x[-0.125,2.125]x[-0.125,1.125]  5x10x6 = 300
+l=1, h=0.250,0.250,0.250: [-1.125,1.125]x[-0.125,2.125]x[-0.125,1.125]  10x10x6 = 600
+  nx =  20, lx =    2.375, xmin =   -1.188, xmax =    1.188, dx = 0.125000
+  ny =  20, ly =    2.375, ymin =   -0.188, ymax =    2.188, dy = 0.125000
+  nz =  12, lz =    1.375, zmin =   -0.188, zmax =    1.188, dz = 0.125000
+local newlevel:
+l=2, h=0.125,0.125,0.125: [-0.188,1.188]x[-0.188,2.188]x[-0.188,1.188]  12x20x12 = 2880
+local newlevel minus ghosts:
+l=2, h=0.125,0.125,0.125: [0.062,1.188]x[0.062,2.188]x[0.062,1.188]  10x18x10 = 1800
+local parent plus buffer:
+l=1, h=0.250,0.250,0.250: [-0.375,1.625]x[-0.375,2.625]x[-0.375,1.625]  9x13x9 = 1053
+global local parent:
+l=1, h=0.250,0.250,0.250: [-1.625,1.625]x[-0.375,2.625]x[-0.375,1.625]  14x13x9 = 1638
+R 3 3 3: 63 flags
+me1, p0: 63 points
+me1, p1: 63 points
+combuf p1 blocal[0] ni=0
+combuf p1 blocal[1] ni=63
+combuf p1 bglobal[0] ni=0
+combuf p1 bglobal[1] ni=63
+R 0 1 1: 476 flags
+me1, p0: 476 points
+me1, p1: 476 points
+combuf p1 blocal[0] ni=0
+combuf p1 blocal[1] ni=476
+combuf p1 bglobal[0] ni=0
+combuf p1 bglobal[1] ni=476
+R 1 3 3: 128 flags
+me1, p0: 128 points
+me1, p1: 128 points
+combuf p1 blocal[0] ni=0
+combuf p1 blocal[1] ni=128
+combuf p1 bglobal[0] ni=0
+combuf p1 bglobal[1] ni=128
+R 0 1 3: 539 flags
+me1, p0: 539 points
+me1, p1: 539 points
+combuf p1 blocal[0] ni=0
+combuf p1 blocal[1] ni=539
+combuf p1 bglobal[0] ni=0
+combuf p1 bglobal[1] ni=539
+Created new level:
+l=2, h=0.125,0.125,0.125: [-1.188,1.188]x[-0.188,2.188]x[-0.188,1.188]  20x20x12 = 4800
+dt = 0.031250, dt/dx = 0.250000
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+Computing black hole initial data (puncture data):
+m1   4.300e-01
+x1   0.000e+00  y1   1.000e+00  z1   0.000e+00
+px1 -3.696e-01  py1  0.000e+00  pz1  0.000e+00
+sx1  0.000e+00  sy1  0.000e+00  sz1  0.000e+00
+
+m2   4.300e-01
+x2   0.000e+00  y2  -1.000e+00  z2   0.000e+00
+px2  3.696e-01  py2  0.000e+00  pz2  0.000e+00
+sx2  0.000e+00  sy2  0.000e+00  sz2  0.000e+00
+
+Calling multigrid solver
+  variable  punctures_u_multigrid_w
+------------------------------------------------------------------------------
+Adding level -3 to multigrid stack
+------------------------------------------------------------------------------
+Creating grid
+  Creating a rectangular box
+  quadrant selected, setting size to 10x7x7
+  nx =  10, lx =    9.000, xmin =   -4.500, xmax =    4.500, dx = 1.000000
+  ny =   7, ly =    6.000, ymin =   -1.500, ymax =    4.500, dy = 1.000000
+  nz =   7, lz =    6.000, zmin =   -1.500, zmax =    4.500, dz = 1.000000
+------------------------------------------------------------------------------
+Adding level -4 to multigrid stack
+------------------------------------------------------------------------------
+Creating grid
+  Creating a rectangular box
+  quadrant selected, setting size to 6x5x5
+  nx =   6, lx =   10.000, xmin =   -5.000, xmax =    5.000, dx = 2.000000
+  ny =   5, ly =    8.000, ymin =   -3.000, ymax =    5.000, dy = 2.000000
+  nz =   5, lz =    8.000, zmin =   -3.000, zmax =    5.000, dz = 2.000000
+------------------------------------------------------------------------------
+grid 0x816f168: nlevels 5, lmin 0, lmax 4, nvariables 95
+l=0, h=2.000,2.000,2.000: [-5.000,5.000]x[-3.000,5.000]x[-3.000,5.000]  6x5x5 = 150
+l=1, h=1.000,1.000,1.000: [-4.500,4.500]x[-1.500,4.500]x[-1.500,4.500]  10x7x7 = 490
+l=2, h=0.500,0.500,0.500: [-4.250,4.250]x[-0.750,4.250]x[-0.750,4.250]  18x11x11 = 2178
+l=3, h=0.250,0.250,0.250: [-2.375,2.375]x[-0.375,3.375]x[-0.375,2.375]  20x16x12 = 3840
+l=4, h=0.125,0.125,0.125: [-1.188,1.188]x[-0.188,2.188]x[-0.188,1.188]  20x20x12 = 4800
+------------------------------------------------------------------------------
+level      size        l2(res)   li(res)     l2(tau)   li(tau)
+  l0     6x  5x  5    1.453e-03 4.065e-03  
+
+----- level 0, V-cycle 1 -------------------------
+
+exactsolve: swept  52 for res  9.359e-06, V 12, vcycle l=0, n=0
+
+level      size        l2(res)   li(res)     l2(tau)   li(tau)
+  l0     6x  5x  5    9.359e-06 1.168e-05  
+
+.............. prolongating u 0 -> 1 .............
+level      size        l2(res)   li(res)     l2(tau)   li(tau)
+  l0     6x  5x  5    9.359e-06 1.168e-05  
+  l1    10x  7x  7    3.178e-03 1.933e-02   3.390e-04 9.455e-04
+
+----- level 1, V-cycle 1 -------------------------
+
+exactsolve: swept  49 for res  9.264e-06, V 12, vcycle l=0, n=0
+
+level      size        l2(res)   li(res)     l2(tau)   li(tau)
+  l0     6x  5x  5    9.264e-06 1.157e-05  
+  l1    10x  7x  7    2.516e-04 6.407e-04   3.211e-04 8.805e-04
+
+----- level 1, V-cycle 2 -------------------------
+
+exactsolve: swept  15 for res  9.642e-06, V 12, vcycle l=0, n=0
+
+level      size        l2(res)   li(res)     l2(tau)   li(tau)
+  l0     6x  5x  5    9.642e-06 1.204e-05  
+  l1    10x  7x  7    3.996e-05 8.016e-05   3.194e-04 8.751e-04
+
+.............. prolongating u 1 -> 2 .............
+level      size        l2(res)   li(res)     l2(tau)   li(tau)
+  l0     6x  5x  5    2.521e-05 4.078e-05  
+  l1    10x  7x  7    3.996e-05 8.016e-05   3.194e-04 8.751e-04
+  l2    18x 11x 11    5.637e-03 8.916e-02   3.807e-04 2.286e-03
+
+----- level 2, V-cycle 1 -------------------------
+
+exactsolve: swept  44 for res  9.627e-06, V 12, vcycle l=0, n=0
+
+level      size        l2(res)   li(res)     l2(tau)   li(tau)
+  l0     6x  5x  5    9.627e-06 1.203e-05  
+  l1    10x  7x  7    1.641e-04 3.190e-04   5.640e-04 1.561e-03
+  l2    18x 11x 11    6.070e-04 3.019e-03   4.180e-04 2.514e-03
+
+----- level 2, V-cycle 2 -------------------------
+
+exactsolve: swept  10 for res  9.318e-06, V 12, vcycle l=0, n=0
+
+level      size        l2(res)   li(res)     l2(tau)   li(tau)
+  l0     6x  5x  5    9.318e-06 1.162e-05  
+  l1    10x  7x  7    3.578e-05 6.833e-05   5.461e-04 1.511e-03
+  l2    18x 11x 11    1.327e-04 3.723e-04   4.108e-04 2.465e-03
+
+----- level 2, V-cycle 3 -------------------------
+
+exactsolve: swept   9 for res  8.541e-06, V 12, vcycle l=0, n=0
+
+level      size        l2(res)   li(res)     l2(tau)   li(tau)
+  l0     6x  5x  5    8.541e-06 1.065e-05  
+  l1    10x  7x  7    2.147e-05 4.073e-05   5.467e-04 1.510e-03
+  l2    18x 11x 11    5.841e-05 1.969e-04   4.100e-04 2.460e-03
+
+.............. prolongating u 2 -> 3 .............
+level      size        l2(res)   li(res)     l2(tau)   li(tau)
+  l0     6x  5x  5    1.430e-05 2.003e-05  
+  l1    10x  7x  7    4.194e-05 9.228e-05   5.475e-04 1.513e-03
+  l2    18x 11x 11    5.841e-05 1.969e-04   4.100e-04 2.460e-03
+  l3    20x 16x 12    8.018e-03 1.606e-01   1.746e-04 1.471e-03
+
+----- level 3, V-cycle 1 -------------------------
+
+exactsolve: swept  29 for res  9.366e-06, V 12, vcycle l=0, n=0
+
+level      size        l2(res)   li(res)     l2(tau)   li(tau)
+  l0     6x  5x  5    9.366e-06 1.170e-05  
+  l1    10x  7x  7    4.117e-05 7.297e-05   6.158e-04 1.707e-03
+  l2    18x 11x 11    1.397e-04 4.177e-04   5.144e-04 3.007e-03
+  l3    20x 16x 12    4.322e-04 6.458e-03   1.544e-04 1.804e-03
+
+----- level 3, V-cycle 2 -------------------------
+
+exactsolve: swept   9 for res  1.013e-07, V 12, vcycle l=0, n=0
+
+level      size        l2(res)   li(res)     l2(tau)   li(tau)
+  l0     6x  5x  5    1.013e-07 1.220e-07  
+  l1    10x  7x  7    1.707e-06 7.150e-06   6.141e-04 1.706e-03
+  l2    18x 11x 11    5.723e-06 5.916e-05   5.219e-04 3.053e-03
+  l3    20x 16x 12    3.946e-05 5.123e-04   1.638e-04 1.732e-03
+
+.............. prolongating u 3 -> 4 .............
+level      size        l2(res)   li(res)     l2(tau)   li(tau)
+  l0     6x  5x  5    1.982e-06 4.334e-06  
+  l1    10x  7x  7    7.513e-06 3.921e-05   6.140e-04 1.706e-03
+  l2    18x 11x 11    4.861e-05 3.780e-04   5.239e-04 3.064e-03
+  l3    20x 16x 12    3.946e-05 5.123e-04   1.635e-04 1.732e-03
+  l4    20x 20x 12    8.736e-03 1.289e-01   9.255e-04 2.119e-02
+
+----- level 4, V-cycle 1 -------------------------
+
+exactsolve: swept   9 for res  8.456e-08, V 12, vcycle l=0, n=0
+
+level      size        l2(res)   li(res)     l2(tau)   li(tau)
+  l0     6x  5x  5    8.456e-08 1.073e-07  
+  l1    10x  7x  7    6.685e-07 3.453e-06   6.128e-04 1.702e-03
+  l2    18x 11x 11    5.436e-06 6.191e-05   5.151e-04 3.008e-03
+  l3    20x 16x 12    5.495e-05 8.245e-04   1.692e-04 1.294e-03
+  l4    20x 20x 12    5.391e-04 5.453e-03   7.894e-04 1.863e-02
+
+----- level 4, V-cycle 2 -------------------------
+
+exactsolve: swept   9 for res  8.146e-08, V 12, vcycle l=0, n=0
+
+level      size        l2(res)   li(res)     l2(tau)   li(tau)
+  l0     6x  5x  5    8.146e-08 1.021e-07  
+  l1    10x  7x  7    1.307e-07 6.689e-07   6.118e-04 1.699e-03
+  l2    18x 11x 11    7.945e-07 8.988e-06   5.090e-04 2.963e-03
+  l3    20x 16x 12    7.229e-06 1.033e-04   1.709e-04 1.326e-03
+  l4    20x 20x 12    5.490e-05 5.140e-04   7.873e-04 1.857e-02
+
+------------------------------------------------------------------------------
+Removing stack: level->l = 2
+Leaving multigrid solver
+The value of punctures_u at   0.000   1.000   0.000   is   5.547594e-02.
+The value of punctures_u at   0.000  -1.000   0.000   is   0.000000e+00.
+------------------------------------------------------------------------------
+Initializing bssn:   set lapse to one
+  set shift to zero
+  deriving BSSN variables from ADM variables
+Initializing bssn:   set lapse to one
+  set shift to zero
+  deriving BSSN variables from ADM variables
+Initializing bssn:   set lapse to one
+  set shift to zero
+  deriving BSSN variables from ADM variables
+------------------------------------------------------------------------------
+Done with initialization
+ 0     0   0.000
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+Thank you for running b a m.

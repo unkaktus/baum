@@ -1,0 +1,11 @@
+ # order of interpolation in first, second and third index
+           3           3           3
+ # calculation of beta-equilibrium (1: yes, else: no) and for given entropy (1: yes, else: no)
+           0           0
+ # tabulation scheme (0 = explicit listing, 1 = loops, see manual)
+           1
+ # parameter values (first, second and third index) depending on tabulation scheme
+  0.10000000000000001        9.9999999999999998E-013   1.0000000000000000E-002
+   158.00000000000000        1.5000000000000000       0.59999999999999998     
+         126         476          60
+           1           1           0

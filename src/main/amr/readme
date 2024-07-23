@@ -1,0 +1,17 @@
+Changes in the amr for bam12
+
+bam12 is simplified and cleaned up comparing older versions,
+sometimes we have to 'reinvent' things, 
+here is a list of reused functions added from older versions:
+
+dtim 01/13 - different refinements around different objects
+
+add parameter lmax2, which reduces the number of refinements 
+around puncture1, puncture0 is untouched. 
+In bam11 the more massive puncture was less refined, 
+since we are now dealing with BHNS, we can not use this anymore, 
+because the more massive BH needs more refinements than the NS. 
+
+The removement is done in a way, where the box, which should be removed 
+is set identically to the box we want to store on the same level, 
+the mesh refinement does the rest for us.  

@@ -1,0 +1,113 @@
+# Robust stability test with 2nd order FD for bssn and Z4c
+# Make sure you re-scale the 2-norm of Ham by sqrt(nx*ny*nz*h^3) when plotting
+
+
+############################################################################
+# physics
+ 
+physics                 = adm z4 Gauge AwA
+#physics                 = adm bssn Gauge AwA
+
+
+############################################################################
+# basic setup
+ 
+order_centered          = 2
+order_advection         = 2
+
+advection_lopsided      = 2
+ 
+bampi_timer_on          = yes
+bampi_lowlatency        = yes
+bampi_nghosts           = 2
+amr_move_lcube          = 0
+amr_lmax                = 0
+
+grid                    = box periodicx periodicy periodicz
+grid_fournplustwo       = no
+
+dxyz                    = 0.02
+nx                      = 50
+ny                      = 4
+nz                      = 4
+
+evolution_method       = rk
+evolution_method_rk    = rk4g
+
+dtfac                  = 0.5
+
+
+#############################################################################
+# initial data
+
+adm_data               = none
+
+AwA                    = robust_stability
+AwA_amplitude          = 1.0e-10  #1.0e-10/(rho)**2
+AwA_sigma              = 1.
+
+mass1		       = 0.0
+mass2		       = 0.0
+
+
+#############################################################################
+# output
+
+finaltime = 500.
+
+0douttime        = 2.
+0doutput         = ham
+
+#1douttime        = 50
+#1doutput         = alpha betax
+#1doutinterpolate = no 
+
+#############################################################################
+# evolution
+
+# Note: gauge choices in z4 are limited
+
+punctures_lapse         = psiBL^(-2)
+ 
+order_dissipation       = 4
+dissipation_factor      = 0.02
+
+z4_register_algcon     = yes store
+z4_normalizedetg       = yes
+z4_subtractA           = yes
+ 
+z4_initial_lapse       = onepluswave
+z4_lapse               = 1+log withshift
+z4_shift               = gamma0 withoutB withShiftadv
+z4_shiftgammacoeff     = 1.0
+z4_shiftalphapower     = 0.0
+z4_shiftdriver         = 2.0
+
+z4_kappa1	       = 0.0
+z4_kappa2	       = 0.0
+
+
+#bssn_register_algcon    = yes store
+#bssn_normalizedetg      = yes
+#bssn_subtractA          = yes
+
+#bssn_initial_lapse      = onepluswave
+#bssn_lapse              = 1+log withshift
+#bssn_shift              = gamma0 withoutB withShiftadv
+#bssn_shiftgammacoeff    = 1.0
+#bssn_shiftalphapower    = 0.0
+#bssn_shiftdriver        = 0.0
+
+##bssn_use_eta            = yes
+
+
+#############################################################################
+# boundary
+
+boundary                = none
+
+
+############################################################################
+# gauge
+
+Gauge                   = moving_puncture

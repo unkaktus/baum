@@ -1,0 +1,211 @@
+# g1.par
+# BB, 18.3.2006
+# 
+# running with Goddard parameters
+#
+physics = adm bssn multigrid punctures Gauge Invariants ADM_mass
+
+
+############################################################################
+# basic setup
+
+#stdout_flush =  yes
+#stdout_redirect = yes
+bampi_lowlatency = yes
+#evolve_persist = no
+
+
+
+order_centered          = 4
+order_advection         = 4
+advection_lopsided      = 1
+ 
+bampi_nghosts           = 4
+order_RP                = 6 
+
+amr_nbuffer            = 6 
+evolution_method       = rk
+evolution_method_rk    = rk4
+
+bssn_register_algcon = yes store
+bssn_normalizedetg   = yes
+bssn_subtractA       = yes
+
+order_dissipation  = 6
+dissipation_factor = 0.5
+
+dtfac = 0.5
+
+# --------------------------------------------------------------------------
+# moving punctures
+
+adm_conformal                   = no
+bssn_moving_punctures           = yes
+bssn_moving_punctures_type      = phi
+chi_div_floor = 0.000001
+
+bhmass1 =  0.483
+bhy1    =  3.257
+bhpx1   = -0.133
+bhmass2 =  0.483
+bhy2    = -3.257
+bhpx2   =  0.133
+
+#punctures_from_fit     = yes
+#punctures_from_fit_x   = 3.257
+
+
+amr_lmax                = 9 
+nxyz                    = 64
+
+amr_move_lcube          = 5
+amr_move_nxyz           = 32
+
+
+dxyz                    = 20
+
+amr                     = bo newfmr move
+amr_fmr                 = nestedboxes
+grid                    = box quadrant
+amr_bo_dxmax            = 2.5
+
+#--------------------------------------------------------------------------
+# Checkpoints
+
+checkpoint = yes
+#checkpoint_di = 1
+checkpoint_dt = 10
+checkpoint_DeltaT = 120
+
+#---------------------------------------------------------------------------
+# output
+
+finaltime = 300.0
+
+0douttime        = 0.625
+0doutput         = ham bssn_trA bssn_detg ADM_mass bssn_K alpha bssn_phi momx
+0doutputmax      = ham bssn_trA bssn_detg          bssn_K alpha bssn_phi momx
+0doutputmin      = ham bssn_trA bssn_detg          bssn_K alpha bssn_phi momx
+0doutputnorm     = ham bssn_trA bssn_detg          bssn_K alpha bssn_phi momx
+
+1douttime        = 0.625
+1doutput         = alpha betax bssn_phi bssn_trA bssn_detg ham momx bssn_Gx bssn_K rpsi4 ipsi4
+1doutinterpolate = yes
+1doutputall      = no
+
+
+#2douttime        = 1.25
+#2doutputxy       = alpha rpsi4 ipsi4 betax bssn_gxx bssn_gxy bssn_K bssn_phi bssn_Gx ham momx
+#2dformat = vtk binary float
+#2doutinterpolate = yes
+
+# For now the string for the 2doutputr parameter is not used, just make
+# sure, it is non-empty!
+2doutputr        = sphere_data
+
+
+ntheta          = 47
+nphi            = 46
+invariants_compute_modes = no # yes
+invariants_modes_r = 4 15 25 30 60 80
+
+
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# initial data
+
+punctures_solver        = multigrid
+punctures_persist       = no
+punctures_itmax         = 100
+punctures_tolerance     = 1e-9
+punctures_boundary      = robin
+
+mg_verbose              = yes       # no, some, yes
+mg_size_nmin            = 14
+mg_vcycle_nmax          = 20
+mg_exact_nmin           = 150
+mg_exact_nmax           = 500
+
+
+#===========================================================================
+# evolution
+
+punctures_lapse       = psiBL^(-2)
+bssn_initial_lapse    = donothing
+bssn_initial_shift    = zero
+
+bssn_lapse            = 1+log withshift
+
+bssn_shift            = gamma0
+bssn_shiftalphapower  = 0.0
+bssn_shiftdriver      = 1.0
+
+
+#***************************************************************************
+# boundary
+
+boundary                = radiative
+
+
+############################################################################
+# gauge
+
+Gauge                   = moving_puncture
+
+
+##########################################################
+# ADM Mass
+
+ADM_mass_ncircles = 101
+ADM_mass_npoints  = 80
+ADM_mass_lmin     = 2
+ADM_mass_lmax     = 5
+ADM_mass_r        = 30 50 100
+
+############################################################################
+# AH finder
+
+ahf_active = no
+#ahf_find3  = yes
+ahf_persists = yes
+ahf_ReportAlways = yes # report not just AHs
+ahf_trapped_surface = yes # Minimize (expansion + delta)
+trapped_surface_delta = 0.0
+
+ahf_r0 = 7.0
+ahf_xc = 0.0
+ahf_findevery      = 1
+#ahf_findeverytime  = 0.0
+
+ahf_findafter = 100
+
+ahf_level_min = 6
+ahf_level_max = 9
+
+ahf_phi = yes # assume axisymmetry or not?
+
+ahf_flowtol = 0.001
+
+ahf_offset   =  no
+ahf_wander   =  yes
+ahf_refx     =  no
+ahf_refy     =  no
+ahf_refz     =  yes
+ahf_cartoon  =  no
+ahf_octant   =  no
+
+ahf_guessold =  no
+
+
+ahf_flow    = yes
+ahf_logfile = yes
+
+
+ahf_1Doutput   = yes
+ahf_2Doutput   = yes
+ahf_3Doutput   = yes
+ahf_HDF5output = yes
+ahf_areamap    = yes # Find area map? -- FIXME: WHAT DOES THIS MEAN
+ahf_gaussout   = yes # Output gaussian curvature of horizon
+ahf_mask       = off
+ahf_masktype   = cube
+

@@ -1,0 +1,21 @@
+context: {}
+
+package:
+  name: "compose"
+  version: "v1.0.0"
+
+source:
+  git_url: https://gitlab.obspm.fr/mmancini/code-compose
+  git_depth: 1
+
+requirements:
+  build:
+    - "{{ compiler('fortran') }}"
+    - hdf5
+  run:
+    - hdf5
+  
+build:
+  script:
+    - make
+    - cp compose ${PREFIX}/bin/

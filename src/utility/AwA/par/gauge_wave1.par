@@ -1,0 +1,116 @@
+# Apple with Apple test with 2nd order FD for bssn and Z4c
+
+
+############################################################################
+# physics
+ 
+physics                 = adm z4 Gauge AwA
+#physics                 = adm bssn Gauge AwA
+
+
+############################################################################
+# basic setup
+ 
+order_centered          = 2
+order_advection         = 2
+
+advection_lopsided      = 2
+ 
+bampi_timer_on          = yes
+bampi_lowlatency        = yes
+bampi_nghosts           = 2
+amr_move_lcube          = 0
+amr_lmax                = 0
+
+grid                    = box tubex 1d periodicx
+grid_fournplustwo       = no
+
+#nxyz                    = 0
+dxyz                    = 0.02
+nx                      = 50
+ny                      = 0
+nz                      = 0
+
+evolution_method       = rk
+evolution_method_rk    = rk4 
+
+dtfac                  = 0.5
+
+
+#############################################################################
+# initial data
+
+adm_data               = none
+
+AwA                    = gauge_wave1
+AwA_amplitude          = 0.1
+AwA_sigma              = 1.0
+
+mass1		       = 0.0
+mass2		       = 0.0
+
+
+#############################################################################
+# output
+
+# Note: conformal Z4c variables common to BSSN have same names. i.e.
+#       bssn_gxx, bssn_chi, bssn_Axx, bssn_Gx
+
+finaltime = 1000.
+ 
+1douttime        = 1.0
+1doutput         = bssn_gyy betax
+1doutinterpolate = no
+ 
+
+#############################################################################
+# evolution
+
+# Note: gauge choices in z4 are limited
+
+punctures_lapse         = psiBL^(-2)
+ 
+order_dissipation       = 0
+dissipation_factor      = 0.
+
+z4_register_algcon     = yes store
+z4_normalizedetg       = yes
+z4_subtractA           = yes
+ 
+z4_initial_lapse       = onepluswave
+z4_initial_shift       = zero
+z4_lapse               = 1+log #withshift
+z4_shift               = gamma0 withoutB withShiftadv
+bssn_shiftgammacoeff   = 1.0
+z4_shiftalphapower     = 0.0
+z4_shiftdriver         = 0.0
+
+z4_kappa1	       = 0.0
+z4_kappa2	       = 0.0
+
+
+#bssn_register_algcon    = yes store
+#bssn_normalizedetg      = yes
+#bssn_subtractA          = yes
+
+#bssn_initial_lapse      = onepluswave
+#bssn_initial_shift      = zero
+#bssn_lapse              = 1+log withshift
+#bssn_shift              = gamma0 withoutB withShiftadv
+#bssn_shiftgammacoeff    = 1.0
+#bssn_shiftalphapower    = 0.0
+#bssn_shiftdriver        = 0.0
+
+##bssn_use_eta            = yes
+
+
+#############################################################################
+# boundary
+
+boundary                = none
+
+
+############################################################################
+# gauge
+
+Gauge                   = moving_puncture

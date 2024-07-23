@@ -1,0 +1,151 @@
+#4th order evolution of a BBH using mpdata initial data 
+
+physics = adm bssn Gauge AHmod PIDdataReader
+ 
+############################################################################
+# basic setup
+ 
+order_centered          = 4
+order_advection         = 4
+advection_lopsided6     = 2
+advection_lopsided      = 1
+ 
+bampi_timer_on          = yes
+bampi_lowlatency        = yes
+bampi_nghosts           = 6
+order_RP                = 6
+order_RP_shells         = 6
+amr_nbuffer             = 6
+ 
+evolution_method       = rk
+evolution_method_rk    = rk4
+dtfac = 0.25
+ 
+ 
+#############################################################################
+# moving punctures
+
+adm_conformal                   = no
+bssn_moving_punctures           = yes
+bssn_moving_punctures_type      = chi
+chi_div_floor                   = 0.00001
+
+amr_npunctures = 2 
+amr_lmax                = 4
+nxyz                    = 96 
+amr_move_lcube          = 2
+amr_move_nxyz           = 64 
+dxyz                    = 1.0	
+amr_bo_dxmax            = 0.5
+amr                     = newfmr bo move # onedt # move
+amr_fmr                 = nestedboxes
+grid                    = box bitant #shells # quadrant #bitant
+ 
+ 
+#############################################################################
+# output
+ 
+finaltime = 0.55
+ 
+0douttime         = 0.5
+0doutput         = ham momx momy momz rpsi4 ipsi4
+0doutputmax      = bssn_phi
+ 
+1douttime        = 0.5
+
+1doutput         = alpha betax bssn_gxx bssn_Axx bssn_Gx bssn_chi bssn_K ham gxx momx momy momz
+1doutinterpolate = yes
+1doutputall      = yes
+ 
+ 
+#############################################################################
+# initial data
+ 
+mass1 = 1.0
+mass2 = 1.0
+px1 =  6.0
+px2 = -6.0
+py1 =   0.0
+py2 =   0.0
+pz1 = 0.0
+pz2 = 0.0
+
+mx1= 0.0
+mx2=  0.0
+my1=  0.2
+my2=  -0.2
+mz1= 0.0
+mz2= 0.0
+
+sx1= 0.0
+sx2= 0.0
+sy1= 0.0
+sy2= 0.0
+sz1= 0.0
+sz2= 0.0
+
+punctures_solver = spectral 
+initial_file = ./id/BBH_mpdata/BBH_test
+ 
+spectral = yes
+1log_initial = no
+PID_order = 8
+use_correction_U = no 
+maximal_trumpet = no
+
+#############################################################################
+# evolution 
+bssn_register_algcon    = yes store
+bssn_normalizedetg      = yes
+bssn_subtractA          = yes
+punctures_lapse         = one
+ 
+order_dissipation       = 6
+dissipation_factor      = 0.5
+ 
+bssn_initial_lapse      = one 
+bssn_initial_shift      = zero
+bssn_lapse              = 1+log  withshift
+bssn_shift              = gamma0 withGadv withBadv withShiftadv
+bssn_shiftalphapower    = 0.0
+bssn_shiftdriver        = 2.0 
+
+
+#############################################################################
+# moving punctures
+adm_conformal               = no
+bssn_moving_punctures       = yes
+bssn_moving_punctures_type  = chi
+chi_div_floor               = 0.00001
+ 
+#############################################################################
+# boundary
+
+boundary                = radiative centered 
+
+ 
+############################################################################
+# gauge
+ 
+Gauge                   = moving_puncture
+
+###########################################################################
+# AH finder
+
+AHmod_verbose     = yes
+AHmod_ntheta      = 30
+AHmod_nphi        = 60
+AHmod_nhorizons   = 2
+AHmod_searchMTS   = 1  0.0  20.0  0      1 0.0 20.0 1 
+AHmod_uselast     = yes
+AHmod_initial_guess_expand = 1.0
+AHmod_LevelOffset = 1
+AHmod_UseOptimalLevel = no
+AHmod_initial_radius = 1.0
+AHmod_flow_iter   = 500
+AHmod_mass_tol    = 1.0e-06
+AHmod_hmean_tol   = 100.0
+AHmod_time        = 0.5
+AHmod_output      = yes
+AHmod_output_xyt  = yes
+AHmod_output_lm   = yes

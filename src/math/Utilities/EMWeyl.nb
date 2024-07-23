@@ -1,0 +1,3137 @@
+(************** Content-type: application/mathematica **************
+                     CreatedBy='Mathematica 4.2'
+
+                    Mathematica-Compatible Notebook
+
+This notebook can be used with any Mathematica-compatible
+application, such as Mathematica, MathReader or Publicon. The data
+for the notebook starts with the line containing stars above.
+
+To get the notebook into a Mathematica-compatible application, do
+one of the following:
+
+* Save the data starting with the line of stars above into a file
+  with a name ending in .nb, then open the file inside the
+  application;
+
+* Copy the data starting with the line of stars above to the
+  clipboard, then use the Paste menu command inside the application.
+
+Data for notebooks contains only printable 7-bit ASCII and can be
+sent directly in email or through ftp in text mode.  Newlines can be
+CR, LF or CRLF (Unix, Macintosh or MS-DOS style).
+
+NOTE: If you modify the data for this notebook not in a Mathematica-
+compatible application, you must delete the line below containing
+the word CacheID, otherwise Mathematica-compatible applications may
+try to use invalid cache data.
+
+For more information on notebooks and Mathematica-compatible 
+applications, contact Wolfram Research:
+  web: http://www.wolfram.com
+  email: info@wolfram.com
+  phone: +1-217-398-0700 (U.S.)
+
+Notebook reader applications are available free of charge from 
+Wolfram Research.
+*******************************************************************)
+
+(*CacheID: 232*)
+
+
+(*NotebookFileLineBreakTest
+NotebookFileLineBreakTest*)
+(*NotebookOptionsPosition[    101071,       3067]*)
+(*NotebookOutlinePosition[    101724,       3090]*)
+(*  CellTagsIndexPosition[    101680,       3086]*)
+(*WindowFrame->Normal*)
+
+
+
+Notebook[{
+Cell[BoxData[
+    \(\(\( (*\ 
+      Curvature\ and\ Curvature\ Invariants\ *) \)\(\[IndentingNewLine]\)\(\
+\[IndentingNewLine]\)\(If\ [\ firstcall\  =!= \ 1, \ 
+      Block[{}, \[IndentingNewLine]firstcall\  = \ 1; \[IndentingNewLine]<< \ 
+          MathTensor.m;\[IndentingNewLine]]]\[IndentingNewLine]\
+\[IndentingNewLine]
+    \(MathTensor`Dimension\  = \ 4;\)\[IndentingNewLine]
+    \(Update[];\)\[IndentingNewLine]
+    \(Off[PermWeight::def, PermWeight::sym];\)\)\)\)], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(\( (*\ 
+      square\ of\ Weyl\ tensor\ in\ terms\ of\ Riemann\ *) \)\(\
+\[IndentingNewLine]\)\(\(cc = \ 
+        WeylC[ua, ub, uc, ud] WeylC[la, lb, lc, ld]\  /. \ 
+          WeylToRiemannRule;\)\[IndentingNewLine]
+    TensorSimp[Expand[cc]]\)\)\)], "Input"],
+
+Cell[BoxData[
+    RowBox[{\("R"\^2\/3\), "-", 
+      RowBox[{"2", " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"R\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"a"\),
+                    Subscript[ "a"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"b"\),
+                    Superscript[ "b"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ RicciR], 
+              Format[ la], 
+              Format[ ub]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"R\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"b"\),
+                    Subscript[ "b"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"a"\),
+                    Superscript[ "a"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ RicciR], 
+              Format[ lb], 
+              Format[ ua]],
+            Editable->False], ")"}]}], "+", 
+      RowBox[{
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"R\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"a"\),
+                    Subscript[ "a"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"b"\),
+                    Subscript[ "b"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"c"\),
+                    Subscript[ "c"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"d"\),
+                    Subscript[ "d"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ RiemannR], 
+              Format[ la], 
+              Format[ lb], 
+              Format[ lc], 
+              Format[ ld]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"R\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"a"\),
+                    Superscript[ "a"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"b"\),
+                    Superscript[ "b"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"c"\),
+                    Superscript[ "c"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"d"\),
+                    Superscript[ "d"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ RiemannR], 
+              Format[ ua], 
+              Format[ ub], 
+              Format[ uc], 
+              Format[ ud]],
+            Editable->False], ")"}]}]}]], "Output"]
+}, Open  ]],
+
+Cell[BoxData[
+    \(\(\( (*\ 
+      3 + 1\ decomposition\ *) \)\(\[IndentingNewLine]\)\(DefineTensor[
+      n, \ {{1}}]\[IndentingNewLine]
+    DefineTensor[h, \ {{2, 1}, 1}]\[IndentingNewLine]
+    h[a_, b_]\  := \ Metricg[a, b]\  + \ n[a]\ n[b]\[IndentingNewLine]
+    n /: \ n[ua_]\ n[la_]\  := \ \(-1\)\  /; \ PairQ[ua, la]\)\)\)], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(n[ua]\ n[la]\), "\[IndentingNewLine]", 
+    \(Expand[h[la, lb] n[ub]]\), "\[IndentingNewLine]", 
+    \(Expand[h[ua, lb] h[ub, lc]]\)}], "Input"],
+
+Cell[BoxData[
+    \(\(-1\)\)], "Output"],
+
+Cell[BoxData[
+    \(0\)], "Output"],
+
+Cell[BoxData[
+    RowBox[{
+      InterpretationBox[
+        RowBox[{
+          TagBox[
+            FormBox["\<\"g\"\>",
+              "StandardForm"],
+            Format], "\[InvisibleSpace]", 
+          TagBox[
+            FormBox[
+              InterpretationBox[\(\[Null]\_"c"\),
+                Subscript[ "c"],
+                Editable->False],
+              "StandardForm"],
+            Format], "\[InvisibleSpace]", 
+          TagBox[
+            FormBox[
+              InterpretationBox[\(\[Null]\^"a"\),
+                Superscript[ "a"],
+                Editable->False],
+              "StandardForm"],
+            Format]}],
+        SequenceForm[ 
+          Format[ Metricg], 
+          Format[ lc], 
+          Format[ ua]],
+        Editable->False], "+", 
+      RowBox[{
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"c"\),
+                    Subscript[ "c"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ lc]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"a"\),
+                    Superscript[ "a"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ ua]],
+            Editable->False], ")"}]}]}]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(\( (*\ 
+      electric\ and\ magnetic\ parts\ of\ the\ Weyl\ tensor\ *) \)\(\
+\[IndentingNewLine]\)\(Clear[CE, CB]\[IndentingNewLine]
+    DefineTensor[CE, \ {{2, 1}, 1}]\[IndentingNewLine]
+    DefineTensor[CB, \ {{2, 1}, 1}]\[IndentingNewLine]
+    RuleUnique[CEtoC, CE[la_, lb_], \ 
+      WeylC[lc, ld, le, lf]\ h[uc, la]\ n[ud]\ h[ue, lb] 
+        n[uf]]\[IndentingNewLine]
+    RuleUnique[CBtoC, CB[la_, lb_], \ 
+      1/2\ WeylC[lc, ld, lg, lh]\ Epsilon[ug, uh, le, lf] 
+        h[uc, la]\ n[ud]\ h[ue, lb] n[uf]]\[IndentingNewLine]
+    \)\)\)], "Input"],
+
+Cell[BoxData[
+    \(General::"spell1" \(\(:\)\(\ \)\) 
+      "Possible spelling error: new symbol name \"\!\(CBtoC\)\" is similar to \
+existing symbol \"\!\(CEtoC\)\"."\)], "Message"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(\(cedo\  = \ CE[la, lb] /. \ CEtoC;\)\), "\[IndentingNewLine]", 
+    \(\(ceup\  = \ 
+        CE[ua, ub] /. \ 
+          CEtoC;\)\[IndentingNewLine]\), "\[IndentingNewLine]", 
+    \(\(xx\  = \ 
+        Expand[cedo\ ceup];\)\[IndentingNewLine]\), "\[IndentingNewLine]", 
+    \(xx\  = \ CanAll[xx]\), "\[IndentingNewLine]", 
+    \(ee\  = \ Tsimplify[xx]\)}], "Input"],
+
+Cell[BoxData[
+    RowBox[{
+      RowBox[{
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"p"\),
+                    Subscript[ "p"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l1]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"q"\),
+                    Subscript[ "q"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l2]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"r"\),
+                    Subscript[ "r"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l3]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"s"\),
+                    Subscript[ "s"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l4]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"t"\),
+                    Subscript[ "t"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l5]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"u"\),
+                    Subscript[ "u"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l6]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"v"\),
+                    Subscript[ "v"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l7]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"w"\),
+                    Subscript[ "w"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l8]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"C\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"p"\),
+                    Superscript[ "p"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"q"\),
+                    Superscript[ "q"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"v"\),
+                    Superscript[ "v"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"w"\),
+                    Superscript[ "w"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ WeylC], 
+              Format[ u1], 
+              Format[ u2], 
+              Format[ u7], 
+              Format[ u8]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"C\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"r"\),
+                    Superscript[ "r"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"s"\),
+                    Superscript[ "s"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"t"\),
+                    Superscript[ "t"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"u"\),
+                    Superscript[ "u"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ WeylC], 
+              Format[ u3], 
+              Format[ u4], 
+              Format[ u5], 
+              Format[ u6]],
+            Editable->False], ")"}]}], "+", 
+      RowBox[{
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"p"\),
+                    Subscript[ "p"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l1]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"q"\),
+                    Subscript[ "q"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l2]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"r"\),
+                    Subscript[ "r"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l3]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"s"\),
+                    Subscript[ "s"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l4]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"C\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"t"\),
+                    Subscript[ "t"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"p"\),
+                    Superscript[ "p"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"u"\),
+                    Subscript[ "u"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"q"\),
+                    Superscript[ "q"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ WeylC], 
+              Format[ l5], 
+              Format[ u1], 
+              Format[ l6], 
+              Format[ u2]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"C\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"r"\),
+                    Superscript[ "r"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"t"\),
+                    Superscript[ "t"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"s"\),
+                    Superscript[ "s"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"u"\),
+                    Superscript[ "u"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ WeylC], 
+              Format[ u3], 
+              Format[ u5], 
+              Format[ u4], 
+              Format[ u6]],
+            Editable->False], ")"}]}], "+", 
+      RowBox[{
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"p"\),
+                    Subscript[ "p"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l1]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"q"\),
+                    Subscript[ "q"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l2]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"r"\),
+                    Subscript[ "r"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l3]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"s"\),
+                    Subscript[ "s"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l4]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"t"\),
+                    Subscript[ "t"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l5]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"u"\),
+                    Subscript[ "u"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l6]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"v"\),
+                    Subscript[ "v"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l7]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"w"\),
+                    Subscript[ "w"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l8]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"C\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"p"\),
+                    Superscript[ "p"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"q"\),
+                    Superscript[ "q"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"s"\),
+                    Superscript[ "s"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"t"\),
+                    Superscript[ "t"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ WeylC], 
+              Format[ u1], 
+              Format[ u2], 
+              Format[ u4], 
+              Format[ u5]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"C\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"r"\),
+                    Superscript[ "r"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"u"\),
+                    Superscript[ "u"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"v"\),
+                    Superscript[ "v"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"w"\),
+                    Superscript[ "w"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ WeylC], 
+              Format[ u3], 
+              Format[ u6], 
+              Format[ u7], 
+              Format[ u8]],
+            Editable->False], ")"}]}], "-", 
+      RowBox[{"2", " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"p"\),
+                    Subscript[ "p"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l1]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"q"\),
+                    Subscript[ "q"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l2]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"r"\),
+                    Subscript[ "r"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l3]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"s"\),
+                    Subscript[ "s"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l4]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"t"\),
+                    Subscript[ "t"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l5]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"u"\),
+                    Subscript[ "u"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l6]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"C\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"v"\),
+                    Subscript[ "v"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"p"\),
+                    Superscript[ "p"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"q"\),
+                    Superscript[ "q"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"r"\),
+                    Superscript[ "r"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ WeylC], 
+              Format[ l7], 
+              Format[ u1], 
+              Format[ u2], 
+              Format[ u3]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"C\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"s"\),
+                    Superscript[ "s"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"t"\),
+                    Superscript[ "t"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"u"\),
+                    Superscript[ "u"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"v"\),
+                    Superscript[ "v"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ WeylC], 
+              Format[ u4], 
+              Format[ u5], 
+              Format[ u6], 
+              Format[ u7]],
+            Editable->False], ")"}]}], "+", 
+      RowBox[{
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"p"\),
+                    Subscript[ "p"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l1]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"q"\),
+                    Subscript[ "q"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l2]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"r"\),
+                    Subscript[ "r"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l3]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"s"\),
+                    Subscript[ "s"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l4]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"t"\),
+                    Subscript[ "t"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l5]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"u"\),
+                    Subscript[ "u"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l6]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"v"\),
+                    Subscript[ "v"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l7]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"w"\),
+                    Subscript[ "w"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l8]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"C\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"p"\),
+                    Superscript[ "p"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"q"\),
+                    Superscript[ "q"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"r"\),
+                    Superscript[ "r"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"s"\),
+                    Superscript[ "s"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ WeylC], 
+              Format[ u1], 
+              Format[ u2], 
+              Format[ u3], 
+              Format[ u4]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"C\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"t"\),
+                    Superscript[ "t"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"u"\),
+                    Superscript[ "u"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"v"\),
+                    Superscript[ "v"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"w"\),
+                    Superscript[ "w"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ WeylC], 
+              Format[ u5], 
+              Format[ u6], 
+              Format[ u7], 
+              Format[ u8]],
+            Editable->False], ")"}]}]}]], "Output"],
+
+Cell[BoxData[
+    RowBox[{
+      RowBox[{"(", 
+        InterpretationBox[
+          RowBox[{
+            TagBox[
+              FormBox["\<\"n\"\>",
+                "StandardForm"],
+              Format], "\[InvisibleSpace]", 
+            TagBox[
+              FormBox[
+                InterpretationBox[\(\[Null]\_"p"\),
+                  Subscript[ "p"],
+                  Editable->False],
+                "StandardForm"],
+              Format]}],
+          SequenceForm[ 
+            Format[ "n"], 
+            Format[ l1]],
+          Editable->False], ")"}], " ", 
+      RowBox[{"(", 
+        InterpretationBox[
+          RowBox[{
+            TagBox[
+              FormBox["\<\"n\"\>",
+                "StandardForm"],
+              Format], "\[InvisibleSpace]", 
+            TagBox[
+              FormBox[
+                InterpretationBox[\(\[Null]\_"q"\),
+                  Subscript[ "q"],
+                  Editable->False],
+                "StandardForm"],
+              Format]}],
+          SequenceForm[ 
+            Format[ "n"], 
+            Format[ l2]],
+          Editable->False], ")"}], " ", 
+      RowBox[{"(", 
+        InterpretationBox[
+          RowBox[{
+            TagBox[
+              FormBox["\<\"n\"\>",
+                "StandardForm"],
+              Format], "\[InvisibleSpace]", 
+            TagBox[
+              FormBox[
+                InterpretationBox[\(\[Null]\_"r"\),
+                  Subscript[ "r"],
+                  Editable->False],
+                "StandardForm"],
+              Format]}],
+          SequenceForm[ 
+            Format[ "n"], 
+            Format[ l3]],
+          Editable->False], ")"}], " ", 
+      RowBox[{"(", 
+        InterpretationBox[
+          RowBox[{
+            TagBox[
+              FormBox["\<\"n\"\>",
+                "StandardForm"],
+              Format], "\[InvisibleSpace]", 
+            TagBox[
+              FormBox[
+                InterpretationBox[\(\[Null]\_"s"\),
+                  Subscript[ "s"],
+                  Editable->False],
+                "StandardForm"],
+              Format]}],
+          SequenceForm[ 
+            Format[ "n"], 
+            Format[ l4]],
+          Editable->False], ")"}], " ", 
+      RowBox[{"(", 
+        InterpretationBox[
+          RowBox[{
+            TagBox[
+              FormBox["\<\"C\"\>",
+                "StandardForm"],
+              Format], "\[InvisibleSpace]", 
+            TagBox[
+              FormBox[
+                InterpretationBox[\(\[Null]\_"t"\),
+                  Subscript[ "t"],
+                  Editable->False],
+                "StandardForm"],
+              Format], "\[InvisibleSpace]", 
+            TagBox[
+              FormBox[
+                InterpretationBox[\(\[Null]\^"p"\),
+                  Superscript[ "p"],
+                  Editable->False],
+                "StandardForm"],
+              Format], "\[InvisibleSpace]", 
+            TagBox[
+              FormBox[
+                InterpretationBox[\(\[Null]\_"u"\),
+                  Subscript[ "u"],
+                  Editable->False],
+                "StandardForm"],
+              Format], "\[InvisibleSpace]", 
+            TagBox[
+              FormBox[
+                InterpretationBox[\(\[Null]\^"q"\),
+                  Superscript[ "q"],
+                  Editable->False],
+                "StandardForm"],
+              Format]}],
+          SequenceForm[ 
+            Format[ WeylC], 
+            Format[ l5], 
+            Format[ u1], 
+            Format[ l6], 
+            Format[ u2]],
+          Editable->False], ")"}], " ", 
+      RowBox[{"(", 
+        InterpretationBox[
+          RowBox[{
+            TagBox[
+              FormBox["\<\"C\"\>",
+                "StandardForm"],
+              Format], "\[InvisibleSpace]", 
+            TagBox[
+              FormBox[
+                InterpretationBox[\(\[Null]\^"r"\),
+                  Superscript[ "r"],
+                  Editable->False],
+                "StandardForm"],
+              Format], "\[InvisibleSpace]", 
+            TagBox[
+              FormBox[
+                InterpretationBox[\(\[Null]\^"t"\),
+                  Superscript[ "t"],
+                  Editable->False],
+                "StandardForm"],
+              Format], "\[InvisibleSpace]", 
+            TagBox[
+              FormBox[
+                InterpretationBox[\(\[Null]\^"s"\),
+                  Superscript[ "s"],
+                  Editable->False],
+                "StandardForm"],
+              Format], "\[InvisibleSpace]", 
+            TagBox[
+              FormBox[
+                InterpretationBox[\(\[Null]\^"u"\),
+                  Superscript[ "u"],
+                  Editable->False],
+                "StandardForm"],
+              Format]}],
+          SequenceForm[ 
+            Format[ WeylC], 
+            Format[ u3], 
+            Format[ u5], 
+            Format[ u4], 
+            Format[ u6]],
+          Editable->False], ")"}]}]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(\(cbdo\  = \ CB[la, lb] /. \ CBtoC;\)\), "\[IndentingNewLine]", 
+    \(\(cbup\  = \ 
+        CB[ua, ub] /. \ 
+          CBtoC;\)\[IndentingNewLine]\), "\[IndentingNewLine]", 
+    \(\(xx\  = \ 
+        Expand[cbdo\ cbup];\)\[IndentingNewLine]\), "\[IndentingNewLine]", 
+    \(xx\  = \ CanAll[xx]\), "\[IndentingNewLine]", 
+    \(\(xx\  = \ 
+        Expand[xx\  /. \ 
+            EpsilonProductTensorRule];\)\), "\[IndentingNewLine]", 
+    \(\(xx\  = \ CanAll[xx];\)\), "\[IndentingNewLine]", 
+    \(bb\  = \ Tsimplify[xx]\)}], "Input"],
+
+Cell[BoxData[
+    RowBox[{
+      RowBox[{\(1\/4\), " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"Epsilon\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"p"\),
+                    Subscript[ "p"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"q"\),
+                    Subscript[ "q"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"r"\),
+                    Subscript[ "r"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"s"\),
+                    Subscript[ "s"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ Epsilon], 
+              Format[ l1], 
+              Format[ l2], 
+              Format[ l3], 
+              Format[ l4]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"Epsilon\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"t"\),
+                    Subscript[ "t"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"u"\),
+                    Subscript[ "u"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"v"\),
+                    Subscript[ "v"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"w"\),
+                    Subscript[ "w"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ Epsilon], 
+              Format[ l5], 
+              Format[ l6], 
+              Format[ l7], 
+              Format[ l8]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"y"\),
+                    Subscript[ "y"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l10]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"x"\),
+                    Subscript[ "x"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l9]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"p"\),
+                    Superscript[ "p"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ u1]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"q"\),
+                    Superscript[ "q"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ u2]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"t"\),
+                    Superscript[ "t"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ u5]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"u"\),
+                    Superscript[ "u"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ u6]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"C\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"z"\),
+                    Subscript[ "z"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"x"\),
+                    Superscript[ "x"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"r"\),
+                    Superscript[ "r"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"s"\),
+                    Superscript[ "s"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ WeylC], 
+              Format[ l11], 
+              Format[ u9], 
+              Format[ u3], 
+              Format[ u4]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"C\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"y"\),
+                    Superscript[ "y"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"z"\),
+                    Superscript[ "z"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"v"\),
+                    Superscript[ "v"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"w"\),
+                    Superscript[ "w"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ WeylC], 
+              Format[ u10], 
+              Format[ u11], 
+              Format[ u7], 
+              Format[ u8]],
+            Editable->False], ")"}]}], "-", 
+      RowBox[{\(1\/4\), " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"Epsilon\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"p"\),
+                    Subscript[ "p"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"q"\),
+                    Subscript[ "q"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"r"\),
+                    Subscript[ "r"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"s"\),
+                    Subscript[ "s"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ Epsilon], 
+              Format[ l1], 
+              Format[ l2], 
+              Format[ l3], 
+              Format[ l4]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"Epsilon\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"t"\),
+                    Subscript[ "t"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"u"\),
+                    Subscript[ "u"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"v"\),
+                    Subscript[ "v"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"p"\),
+                    Superscript[ "p"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ Epsilon], 
+              Format[ l5], 
+              Format[ l6], 
+              Format[ l7], 
+              Format[ u1]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"w"\),
+                    Subscript[ "w"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l8]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"x"\),
+                    Subscript[ "x"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l9]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"q"\),
+                    Superscript[ "q"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ u2]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"t"\),
+                    Superscript[ "t"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ u5]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"C\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"y"\),
+                    Subscript[ "y"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"w"\),
+                    Superscript[ "w"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"r"\),
+                    Superscript[ "r"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"s"\),
+                    Superscript[ "s"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ WeylC], 
+              Format[ l10], 
+              Format[ u8], 
+              Format[ u3], 
+              Format[ u4]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"C\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"y"\),
+                    Superscript[ "y"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"x"\),
+                    Superscript[ "x"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"u"\),
+                    Superscript[ "u"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"v"\),
+                    Superscript[ "v"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ WeylC], 
+              Format[ u10], 
+              Format[ u9], 
+              Format[ u6], 
+              Format[ u7]],
+            Editable->False], ")"}]}], "-", 
+      RowBox[{\(1\/4\), " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"Epsilon\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"p"\),
+                    Subscript[ "p"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"q"\),
+                    Subscript[ "q"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"r"\),
+                    Subscript[ "r"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"s"\),
+                    Subscript[ "s"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ Epsilon], 
+              Format[ l1], 
+              Format[ l2], 
+              Format[ l3], 
+              Format[ l4]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"Epsilon\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"t"\),
+                    Subscript[ "t"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"u"\),
+                    Subscript[ "u"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"v"\),
+                    Subscript[ "v"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"w"\),
+                    Subscript[ "w"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ Epsilon], 
+              Format[ l5], 
+              Format[ l6], 
+              Format[ l7], 
+              Format[ l8]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"y"\),
+                    Subscript[ "y"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l10]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"z"\),
+                    Subscript[ "z"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l11]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox["l12",
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l12]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"x"\),
+                    Subscript[ "x"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l9]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"p"\),
+                    Superscript[ "p"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ u1]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"q"\),
+                    Superscript[ "q"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ u2]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"t"\),
+                    Superscript[ "t"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ u5]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"u"\),
+                    Superscript[ "u"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ u6]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"C\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"y"\),
+                    Superscript[ "y"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"x"\),
+                    Superscript[ "x"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"r"\),
+                    Superscript[ "r"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"s"\),
+                    Superscript[ "s"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ WeylC], 
+              Format[ u10], 
+              Format[ u9], 
+              Format[ u3], 
+              Format[ u4]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"C\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"z"\),
+                    Superscript[ "z"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox["u12",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"v"\),
+                    Superscript[ "v"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"w"\),
+                    Superscript[ "w"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ WeylC], 
+              Format[ u11], 
+              Format[ u12], 
+              Format[ u7], 
+              Format[ u8]],
+            Editable->False], ")"}]}], "+", 
+      RowBox[{\(1\/4\), " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"Epsilon\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"p"\),
+                    Subscript[ "p"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"q"\),
+                    Subscript[ "q"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"r"\),
+                    Subscript[ "r"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"s"\),
+                    Subscript[ "s"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ Epsilon], 
+              Format[ l1], 
+              Format[ l2], 
+              Format[ l3], 
+              Format[ l4]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"Epsilon\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"t"\),
+                    Subscript[ "t"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"u"\),
+                    Subscript[ "u"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"v"\),
+                    Subscript[ "v"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"p"\),
+                    Superscript[ "p"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ Epsilon], 
+              Format[ l5], 
+              Format[ l6], 
+              Format[ l7], 
+              Format[ u1]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"y"\),
+                    Subscript[ "y"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l10]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"z"\),
+                    Subscript[ "z"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l11]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"w"\),
+                    Subscript[ "w"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l8]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"x"\),
+                    Subscript[ "x"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l9]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"q"\),
+                    Superscript[ "q"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ u2]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"t"\),
+                    Superscript[ "t"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ u5]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"C\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"y"\),
+                    Superscript[ "y"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"z"\),
+                    Superscript[ "z"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"u"\),
+                    Superscript[ "u"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"v"\),
+                    Superscript[ "v"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ WeylC], 
+              Format[ u10], 
+              Format[ u11], 
+              Format[ u6], 
+              Format[ u7]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"C\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"r"\),
+                    Superscript[ "r"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"s"\),
+                    Superscript[ "s"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"w"\),
+                    Superscript[ "w"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"x"\),
+                    Superscript[ "x"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ WeylC], 
+              Format[ u3], 
+              Format[ u4], 
+              Format[ u8], 
+              Format[ u9]],
+            Editable->False], ")"}]}]}]], "Output"],
+
+Cell[BoxData[
+    RowBox[{
+      RowBox[{\(-\(1\/2\)\), " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"p"\),
+                    Subscript[ "p"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l1]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"q"\),
+                    Subscript[ "q"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l2]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"C\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"r"\),
+                    Subscript[ "r"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"s"\),
+                    Subscript[ "s"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"t"\),
+                    Subscript[ "t"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"p"\),
+                    Superscript[ "p"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ WeylC], 
+              Format[ l3], 
+              Format[ l4], 
+              Format[ l5], 
+              Format[ u1]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"C\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"q"\),
+                    Superscript[ "q"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"t"\),
+                    Superscript[ "t"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"r"\),
+                    Superscript[ "r"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"s"\),
+                    Superscript[ "s"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ WeylC], 
+              Format[ u2], 
+              Format[ u5], 
+              Format[ u3], 
+              Format[ u4]],
+            Editable->False], ")"}]}], "+", 
+      RowBox[{
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"p"\),
+                    Subscript[ "p"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l1]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"q"\),
+                    Subscript[ "q"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l2]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"r"\),
+                    Subscript[ "r"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l3]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"n\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"s"\),
+                    Subscript[ "s"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ "n"], 
+              Format[ l4]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"C\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"t"\),
+                    Subscript[ "t"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"p"\),
+                    Superscript[ "p"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\_"u"\),
+                    Subscript[ "u"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"q"\),
+                    Superscript[ "q"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ WeylC], 
+              Format[ l5], 
+              Format[ u1], 
+              Format[ l6], 
+              Format[ u2]],
+            Editable->False], ")"}], " ", 
+        RowBox[{"(", 
+          InterpretationBox[
+            RowBox[{
+              TagBox[
+                FormBox["\<\"C\"\>",
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"r"\),
+                    Superscript[ "r"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"t"\),
+                    Superscript[ "t"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"s"\),
+                    Superscript[ "s"],
+                    Editable->False],
+                  "StandardForm"],
+                Format], "\[InvisibleSpace]", 
+              TagBox[
+                FormBox[
+                  InterpretationBox[\(\[Null]\^"u"\),
+                    Superscript[ "u"],
+                    Editable->False],
+                  "StandardForm"],
+                Format]}],
+            SequenceForm[ 
+              Format[ WeylC], 
+              Format[ u3], 
+              Format[ u5], 
+              Format[ u4], 
+              Format[ u6]],
+            Editable->False], ")"}]}]}]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(ee\  - \ bb\)], "Input"],
+
+Cell[BoxData[
+    RowBox[{\(1\/2\), " ", 
+      RowBox[{"(", 
+        InterpretationBox[
+          RowBox[{
+            TagBox[
+              FormBox["\<\"n\"\>",
+                "StandardForm"],
+              Format], "\[InvisibleSpace]", 
+            TagBox[
+              FormBox[
+                InterpretationBox[\(\[Null]\_"p"\),
+                  Subscript[ "p"],
+                  Editable->False],
+                "StandardForm"],
+              Format]}],
+          SequenceForm[ 
+            Format[ "n"], 
+            Format[ l1]],
+          Editable->False], ")"}], " ", 
+      RowBox[{"(", 
+        InterpretationBox[
+          RowBox[{
+            TagBox[
+              FormBox["\<\"n\"\>",
+                "StandardForm"],
+              Format], "\[InvisibleSpace]", 
+            TagBox[
+              FormBox[
+                InterpretationBox[\(\[Null]\_"q"\),
+                  Subscript[ "q"],
+                  Editable->False],
+                "StandardForm"],
+              Format]}],
+          SequenceForm[ 
+            Format[ "n"], 
+            Format[ l2]],
+          Editable->False], ")"}], " ", 
+      RowBox[{"(", 
+        InterpretationBox[
+          RowBox[{
+            TagBox[
+              FormBox["\<\"C\"\>",
+                "StandardForm"],
+              Format], "\[InvisibleSpace]", 
+            TagBox[
+              FormBox[
+                InterpretationBox[\(\[Null]\_"r"\),
+                  Subscript[ "r"],
+                  Editable->False],
+                "StandardForm"],
+              Format], "\[InvisibleSpace]", 
+            TagBox[
+              FormBox[
+                InterpretationBox[\(\[Null]\_"s"\),
+                  Subscript[ "s"],
+                  Editable->False],
+                "StandardForm"],
+              Format], "\[InvisibleSpace]", 
+            TagBox[
+              FormBox[
+                InterpretationBox[\(\[Null]\_"t"\),
+                  Subscript[ "t"],
+                  Editable->False],
+                "StandardForm"],
+              Format], "\[InvisibleSpace]", 
+            TagBox[
+              FormBox[
+                InterpretationBox[\(\[Null]\^"p"\),
+                  Superscript[ "p"],
+                  Editable->False],
+                "StandardForm"],
+              Format]}],
+          SequenceForm[ 
+            Format[ WeylC], 
+            Format[ l3], 
+            Format[ l4], 
+            Format[ l5], 
+            Format[ u1]],
+          Editable->False], ")"}], " ", 
+      RowBox[{"(", 
+        InterpretationBox[
+          RowBox[{
+            TagBox[
+              FormBox["\<\"C\"\>",
+                "StandardForm"],
+              Format], "\[InvisibleSpace]", 
+            TagBox[
+              FormBox[
+                InterpretationBox[\(\[Null]\^"q"\),
+                  Superscript[ "q"],
+                  Editable->False],
+                "StandardForm"],
+              Format], "\[InvisibleSpace]", 
+            TagBox[
+              FormBox[
+                InterpretationBox[\(\[Null]\^"t"\),
+                  Superscript[ "t"],
+                  Editable->False],
+                "StandardForm"],
+              Format], "\[InvisibleSpace]", 
+            TagBox[
+              FormBox[
+                InterpretationBox[\(\[Null]\^"r"\),
+                  Superscript[ "r"],
+                  Editable->False],
+                "StandardForm"],
+              Format], "\[InvisibleSpace]", 
+            TagBox[
+              FormBox[
+                InterpretationBox[\(\[Null]\^"s"\),
+                  Superscript[ "s"],
+                  Editable->False],
+                "StandardForm"],
+              Format]}],
+          SequenceForm[ 
+            Format[ WeylC], 
+            Format[ u2], 
+            Format[ u5], 
+            Format[ u3], 
+            Format[ u4]],
+          Editable->False], ")"}]}]], "Output"]
+}, Open  ]]
+},
+FrontEndVersion->"4.2 for X",
+ScreenRectangle->{{0, 1600}, {0, 1200}},
+WindowSize->{981, 808},
+WindowMargins->{{Automatic, 204}, {175, Automatic}},
+ShowSelection->True
+]
+
+(*******************************************************************
+Cached data follows.  If you edit this Notebook file directly, not
+using Mathematica, you must remove the line containing CacheID at
+the top of  the file.  The cache data will then be recreated when
+you save this file from within Mathematica.
+*******************************************************************)
+
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+
+(*NotebookFileOutline
+Notebook[{
+Cell[1754, 51, 482, 9, 171, "Input"],
+
+Cell[CellGroupData[{
+Cell[2261, 64, 281, 6, 59, "Input"],
+Cell[2545, 72, 4725, 139, 46, "Output"]
+}, Open  ]],
+Cell[7285, 214, 341, 6, 91, "Input"],
+
+Cell[CellGroupData[{
+Cell[7651, 224, 165, 3, 59, "Input"],
+Cell[7819, 229, 40, 1, 27, "Output"],
+Cell[7862, 232, 35, 1, 27, "Output"],
+Cell[7900, 235, 1949, 63, 27, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[9886, 303, 578, 12, 123, "Input"],
+Cell[10467, 317, 183, 3, 23, "Message"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[10687, 325, 385, 8, 123, "Input"],
+Cell[11075, 335, 34234, 1038, 65, "Output"],
+Cell[45312, 1375, 4921, 157, 29, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[50270, 1537, 555, 12, 155, "Input"],
+Cell[50828, 1551, 36961, 1103, 155, "Output"],
+Cell[87792, 2656, 9329, 279, 44, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[97158, 2940, 44, 1, 27, "Input"],
+Cell[97205, 2943, 3850, 121, 44, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+
+
+(*******************************************************************
+End of Mathematica Notebook file.
+*******************************************************************)
+

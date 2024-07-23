@@ -1,0 +1,5280 @@
+(************** Content-type: application/mathematica **************
+                     CreatedBy='Mathematica 5.2'
+
+                    Mathematica-Compatible Notebook
+
+This notebook can be used with any Mathematica-compatible
+application, such as Mathematica, MathReader or Publicon. The data
+for the notebook starts with the line containing stars above.
+
+To get the notebook into a Mathematica-compatible application, do
+one of the following:
+
+* Save the data starting with the line of stars above into a file
+  with a name ending in .nb, then open the file inside the
+  application;
+
+* Copy the data starting with the line of stars above to the
+  clipboard, then use the Paste menu command inside the application.
+
+Data for notebooks contains only printable 7-bit ASCII and can be
+sent directly in email or through ftp in text mode.  Newlines can be
+CR, LF or CRLF (Unix, Macintosh or MS-DOS style).
+
+NOTE: If you modify the data for this notebook not in a Mathematica-
+compatible application, you must delete the line below containing
+the word CacheID, otherwise Mathematica-compatible applications may
+try to use invalid cache data.
+
+For more information on notebooks and Mathematica-compatible 
+applications, contact Wolfram Research:
+  web: http://www.wolfram.com
+  email: info@wolfram.com
+  phone: +1-217-398-0700 (U.S.)
+
+Notebook reader applications are available free of charge from 
+Wolfram Research.
+*******************************************************************)
+
+(*CacheID: 232*)
+
+
+(*NotebookFileLineBreakTest
+NotebookFileLineBreakTest*)
+(*NotebookOptionsPosition[    135878,       4689]*)
+(*NotebookOutlinePosition[    136563,       4713]*)
+(*  CellTagsIndexPosition[    136519,       4709]*)
+(*WindowFrame->Normal*)
+
+
+
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["SphereData Package", "Title"],
+
+Cell["\<\
+Processing of Data defined on Spheres 
+and Extraction of Radiation Quantities\
+\>", "Subtitle"],
+
+Cell["SH march 2006 - june 2007", "Subtitle",
+  FontSize->18],
+
+Cell[BoxData[{
+    \(Off[General::spell]\), "\n", 
+    \(Off[General::spell1]\)}], "Input"],
+
+Cell[CellGroupData[{
+
+Cell["TODO", "Section"],
+
+Cell["-  convergence tests for BAM 1d/2d time series", "SmallText",
+  FontSize->18]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Comments", "Section"],
+
+Cell["\<\
+This notebook has to the AutoSave Package option turned on, and \
+saves the initializetion cells to a package format  file whenever the \
+notebook is saved.\
+\>", "SmallText",
+  FontSize->18],
+
+Cell[BoxData[
+    \(\(\( (*\ fix\ j, \ loop\ in\ i; \ 
+      BAM\ 2  D\ data\ are\ written\ \(as : \ fix\ theta\), \ 
+      loop\ in\ phi\ *) \)\(\ \)\)\)], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(tab = Table[100\ i\  + \ j, {i, 1, 3}, {j, 1, 2}]\)], "Input"],
+
+Cell[BoxData[
+    \({{101, 102}, {201, 202}, {301, 302}}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(% // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"101", "102"},
+            {"201", "202"},
+            {"301", "302"}
+            },
+          RowSpacings->1,
+          ColumnSpacings->1,
+          ColumnAlignments->{Left}], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(tab[\([1, 2]\)]\)], "Input"],
+
+Cell[BoxData[
+    \(102\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(tab = Table[Table[100\ i\  + \ j, {j, 1, 2}], {i, 1, 3}]\)], "Input"],
+
+Cell[BoxData[
+    \({{101, 102}, {201, 202}, {301, 302}}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(% // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"101", "102"},
+            {"201", "202"},
+            {"301", "302"}
+            },
+          RowSpacings->1,
+          ColumnSpacings->1,
+          ColumnAlignments->{Left}], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(tab[\([1, 2]\)]\)], "Input"],
+
+Cell[BoxData[
+    \(102\)], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Begin Package & usage info", "Section"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(\(BeginPackage["\<sym`\>"];\)\[IndentingNewLine] (*\ 
+      Reserve\ Keywords\ *) \[IndentingNewLine]\), "\n", 
+    \(\(\({INV, SQR, CUB, QAD, exp, pow};\)\(\[IndentingNewLine]\)
+    \)\), "\[IndentingNewLine]", 
+    \(\(\({Radius, GridDim, DX, DY, XMin, XMax, YMin, YMax, Grid, Times, 
+        TimeSeries};\)\(\[IndentingNewLine]\)
+    \)\), "\[IndentingNewLine]", 
+    \(\(\({LinearMomentum, AngularMomentum, MADM, 
+        MADMB};\)\(\[IndentingNewLine]\)
+    \)\), "\[IndentingNewLine]", 
+    \(\(\({RePsi4, ImPsi4, AbsPsi4};\)\(\[IndentingNewLine]\)
+    \)\), "\[IndentingNewLine]", 
+    \(\(\({Position, Speed};\)\(\[IndentingNewLine]\)
+    \)\), "\[IndentingNewLine]", 
+    \(\({Lapse, \ 
+        Shift};\)\[IndentingNewLine]\[IndentingNewLine]\), "\
+\[IndentingNewLine]", 
+    \(\({aKerr, \ RealFreq, \ ImagFreq};\)\), "\[IndentingNewLine]", 
+    \(\(EndPackage[];\)\)}], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    RowBox[{\(General::"spell1"\), \(\(:\)\(\ \)\), "\<\"Possible spelling \
+error: new symbol name \\\"\\!\\(exp\\)\\\" is similar to existing symbol \
+\\\"\\!\\(Exp\\)\\\". \\!\\(\\*ButtonBox[\\\"More\[Ellipsis]\\\", \
+ButtonStyle->\\\"RefGuideLinkText\\\", ButtonFrame->None, \
+ButtonData:>\\\"General::spell1\\\"]\\)\"\>"}]], "Message"],
+
+Cell[BoxData[
+    RowBox[{\(General::"spell1"\), \(\(:\)\(\ \)\), "\<\"Possible spelling \
+error: new symbol name \\\"\\!\\(XMin\\)\\\" is similar to existing symbol \\\
+\"\\!\\(Min\\)\\\". \\!\\(\\*ButtonBox[\\\"More\[Ellipsis]\\\", ButtonStyle->\
+\\\"RefGuideLinkText\\\", ButtonFrame->None, \
+ButtonData:>\\\"General::spell1\\\"]\\)\"\>"}]], "Message"],
+
+Cell[BoxData[
+    RowBox[{\(General::"spell1"\), \(\(:\)\(\ \)\), "\<\"Possible spelling \
+error: new symbol name \\\"\\!\\(XMax\\)\\\" is similar to existing symbol \\\
+\"\\!\\(Max\\)\\\". \\!\\(\\*ButtonBox[\\\"More\[Ellipsis]\\\", ButtonStyle->\
+\\\"RefGuideLinkText\\\", ButtonFrame->None, \
+ButtonData:>\\\"General::spell1\\\"]\\)\"\>"}]], "Message"],
+
+Cell[BoxData[
+    RowBox[{\(General::"spell"\), \(\(:\)\(\ \)\), "\<\"Possible spelling \
+error: new symbol name \\\"\\!\\(YMin\\)\\\" is similar to existing symbols \
+\\!\\({Min, XMin}\\). \\!\\(\\*ButtonBox[\\\"More\[Ellipsis]\\\", \
+ButtonStyle->\\\"RefGuideLinkText\\\", ButtonFrame->None, \
+ButtonData:>\\\"General::spell\\\"]\\)\"\>"}]], "Message"],
+
+Cell[BoxData[
+    RowBox[{\(General::"spell"\), \(\(:\)\(\ \)\), "\<\"Possible spelling \
+error: new symbol name \\\"\\!\\(YMax\\)\\\" is similar to existing symbols \
+\\!\\({Max, XMax}\\). \\!\\(\\*ButtonBox[\\\"More\[Ellipsis]\\\", \
+ButtonStyle->\\\"RefGuideLinkText\\\", ButtonFrame->None, \
+ButtonData:>\\\"General::spell\\\"]\\)\"\>"}]], "Message"],
+
+Cell[BoxData[
+    RowBox[{\(General::"spell1"\), \(\(:\)\(\ \)\), "\<\"Possible spelling \
+error: new symbol name \\\"\\!\\(MADMB\\)\\\" is similar to existing symbol \
+\\\"\\!\\(MADM\\)\\\". \\!\\(\\*ButtonBox[\\\"More\[Ellipsis]\\\", \
+ButtonStyle->\\\"RefGuideLinkText\\\", ButtonFrame->None, \
+ButtonData:>\\\"General::spell1\\\"]\\)\"\>"}]], "Message"]
+}, Open  ]],
+
+Cell[BoxData[
+    \( (*\ *) \)], "Input"],
+
+Cell[BoxData[
+    \(\(BeginPackage["\<SphereData`\>", {"\<sym`\>", "\<MapLookup`\>", \
+"\<Statistics`DataManipulation`\>"}];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \( (*\ *) \)], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    RowBox[{
+      StyleBox[\(ReadSphereData::usage = "\<ReadSphereData[file] reads a file \
+in BAM SphereData format.\>";\),
+        InitializationCell->True], "\n"}], "\[IndentingNewLine]", 
+    StyleBox[\(\(TimeSeriesToSphereData::usage = \
+"\<TimeSeriesToSphereData[data1D, modFunction] constructs BAM SphereData from \
+a time series and a 2D array.\>";\)\(\n\)
+      \),
+      InitializationCell->True], "\n", 
+    RowBox[{
+      StyleBox[\(ReadTimeSeriesData::usage = "\<ReadTimeSeriesData[file] \
+reads ascii 1D data in x y column format from a file.\>";\),
+        InitializationCell->True], "\[IndentingNewLine]"}], "\n", 
+    RowBox[{\(Qualify0DData::usage = "\<Qualify0DData[data0D_,data2D_] \
+defines adds meta-data to a 0d time series from a 2D time series.\>"\), 
+      "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+    RowBox[{\(GridSlice::usage = "\<GridSlice[timeSeries_,k_] extracts the \
+k-th time slice from 2D time series data.\>"\), 
+      "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+    RowBox[{\(FlattenSliceList::usage = "\<FlattenSliceList[slice_] reformats \
+slice data.\>"\), "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+    RowBox[{\(SliceValues::usage = "\<SliceValues[slice_] reformats slice \
+data by replacing full 3D data (x,y,z triples) by just z-values.\>"\), 
+      "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+    RowBox[{\(CombineColumns::usage = "\<CombineColumns[list1_,list2_] \
+combines columns from two lists in into a single list, e.g. \
+CombineColumns[{1,2,3},{4,5,6}] will yield {{1,4},{2,5},{3,6}}.\>"\), 
+      "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+    RowBox[{\(Abs0DStructs::usage = "\<Abs0DStructs[re_,im_] computes the \
+absolute value of complex data.\>"\), 
+      "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+    RowBox[{\(Arg0DStructs::usage = "\<Arg0DStructs[re_,im_] computes the \
+phase angle of complex data.\>"\), 
+      "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+    RowBox[{\(Mult0DStructs::usage = "\<Mult0DStructs[list1_,list2_] \
+multiplies data entries from list1 with entries from list2 and combines them \
+into a single list.\>"\), "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+    RowBox[{\(Add0DStructs::usage\  = "\<Add0DStructs[list1_,list2_] adds \
+data entries from list1 and entries from list2 and combines them into a \
+single list.\>"\), "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+    RowBox[{\(RK2Int::usage = "\<RK2Int[rhs_,dt_] uses RK2 to integrate a \
+list of RHS objects with time step dt.\>"\), 
+      "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+    RowBox[{\(RK2Int2DStruct::"\<RK2Int2DStruct[struct_] uses RK2 to \
+integrate a BAM 2D time series object in time.\>"\), 
+      "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+    RowBox[{\(RK2Int0DStruct::"\<RK2Int0DStruct[struct_] uses RK2 to \
+integrate a BAM 0D time series object in time.\>"\), 
+      "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+    RowBox[{\(SurfaceIntegrate::usage = "\<SurfaceIntegrate[timeSeries_] maps \
+a 2D to a 0D time series by 2D integration over the time slices.\>"\), 
+      "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+    RowBox[{\(ReadADMData::usage = "\<ReadADMData[filename] reads BAM \
+ADM_mass format ASCII data and returns them in the form 
+{Times\[Rule] data, MADM\[Rule] data,MADMB\[Rule]  \
+data,\[IndentingNewLine]LinearMomentum\[Rule] data,AngularMomentum\[Rule] \
+data}, where data is a list 
+of single or triple values as appropriate.\>"\), 
+      "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+    RowBox[{\(ReadLeanPsiData::usage = "\<ReadLeanPsiData[filename] reads \
+LEAN-code psi4 format ASCII data and returns them in the form 
+{Times\[Rule] data, RePsi4\[Rule] data,ImPsi4\[Rule] data,AbsPsi4\[Rule] \
+data}, where data is a list 
+of single or triple values as appropriate.\>"\), 
+      "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+    RowBox[{\(ReadColData::usage = "\<ReadColData[filename,col] reads ASCII \
+data in column format and returns them
+as a list with col columns.\>"\), 
+      "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+    RowBox[{\(Read2DPunctureData::usage = "\<Read2DPunctureData[filename] \
+reads BAM 5-column (x,y) moving puncture format ASCII data, extends them to \
+3D-data assuming movement along the equatiorial pland and returns them in the \
+form 
+{Times\[Rule] data, Position\[Rule] data,Speed\[Rule]  data]}, where data is \
+a list 
+of single or triple values as appropriate.\>"\), 
+      "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+    RowBox[{\(ReadPunctureData::usage = "\<ReadPunctureData[filename] reads \
+BAM 7-column (x,y,z) moving puncture format ASCII data and returns them in \
+the form 
+{Times\[Rule] data, Position\[Rule] data,Speed\[Rule]  data]}, where data is \
+a list 
+of single or triple values as appropriate.\>"\), 
+      "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+    RowBox[{\(ReadLeanPunctureData::usage = "\<ReadLeanPunctureData[filename] \
+reads LEAN 4-column (x,y,z) moving puncture format ASCII data and returns \
+them in the form {Times\[Rule] data, Position\[Rule] data,Speed\[Rule]  \
+data]}, where data is a list 
+of single or triple values as appropriate.\>"\), 
+      "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+    RowBox[{\(MPConcat::usage = "\<MPConcat[mp1,mp2] concatenates moving \
+puncture data structures that correspond to different time windows.\>"\), 
+      "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+    RowBox[{\(ReadQNMData::usage = "\<ReadQNMData[filename] reads Emanuele \
+Berti's 5-column Kerr QNM data in ASCII format and returns them in the form 
+{aKerr\[Rule] data, RealFreq\[Rule] data,ImagFreq\[Rule]  data]}, where data \
+is a list 
+of values.\>"\), "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+    RowBox[{\(ReadCenterData::usage = "\<ReadCenterData[filename] reads BAM \
+5-column alpha_center format ASCII data and returns them in the form 
+{Times\[Rule] data, Lapse\[Rule] data]}, where data is a list 
+of single or triple values as appropriate.\>"\), 
+      "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+    RowBox[{\(Read0DSets::usage = "\<Read0DSets[basename_,dirs_]  reads 0D \
+data time series from files basename in directories dirs.\>"\), 
+      "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+    RowBox[{\(Read0DSets2::usage = "\<Read0DSets2[basenames_,dirs_]  reads 0D \
+data time series from files basename in directories dirs.\>"\), 
+      "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+    RowBox[{\(Interpolate0DSets::usage = "\<Interpolate0DSets[s_,ord_,t_] \
+creates interpolating functions 
+f[t] of order ord for the sets s.\>"\), 
+      "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+    RowBox[{\(ConvFact::usage = "\<ConvFact[integerList_,ord_]  computes the \
+3-level convergence factor
+for a list integerList of gridpoint-numbers and theoretical convergence order \
+ord.\>"\), "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+    RowBox[{\(Conv3Level0DSets::usage = \
+"\<Conv3Level0DSets[functions_,npoints_,ord_] computes the scaled differences \
+for a 3-level convergence test, with convergence order ord and \
+gridpoint-numbers npoints.\>"\), 
+      "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+    RowBox[{\(Richardson0DFunctions::usage = \
+"\<Richardson0DFunctions[funs_,npoints_,order_] computes the 
+Richardson extrapolation with convergence order ord and gridpoint-numbers \
+npoints from 2 functions funs.\>"\), 
+      "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+    RowBox[{\(Richardson0DFunctionsError::usage = \
+"\<Richardson0DFunctionsError[funs_,npoints_,order_] computes the 
+Richardson extrapolation error with convergence order order and \
+gridpoint-numbers npoints from 3 functions funs.\>"\), 
+      "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+    RowBox[{\(NewsFrom0DPsi4::usage = \
+"\<NewsFrom0DPsi4[repsi4_,impsi4_]compute the news from lists representing \
+the real and imaginary part of psi4.\>"\), 
+      "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+    RowBox[{\(hFrom0DPsi4::usage = "\<hFrom0DPsi4[repsi4_,impsi4_] compute h \
+from lists representing the real and imaginary part of psi4.\>"\), 
+      "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+    RowBox[{\(hFrom0DPsi4B::usage = "\<hFrom0DPsi4B[repsi4_,impsi4_] compute \
+h from lists representing the real and imaginary part of psi4, but allowing \
+for a psi4 that does not start at zero.\>"\), 
+      "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+    RowBox[{\(ADMFit1Rad::usage = "\<ADMFit1Rad[filesres_,order_] analyzes \
+convergence of mass-related quantities for one radius depending on \
+resolution, where filesres
+is a list of the format {{file1, numgridpoints1},{file2,numgridpoints2},...}
+and order is the assumed order of convervence. The last 3 entries are taken \
+for analysis!\>"\), "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+    RowBox[{\(ADMFit1Res::usage = "\<ADMFit1Res[filesrad_] analyzes \
+convergence of mass-related quantities for one resolution depending on \
+radius, where filesrad
+is a list of the format {{file1, radius1},{file2,radius2},...}. The last 3 \
+entries are taken for analysis!\>"\), 
+      "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+    RowBox[{\(WriteNRDA0D::usage = "\<WriteNRDA0D[data1_,data2_,filename_] \
+writes NRDA 3-column format ASCII data.\>"\), 
+      "\[IndentingNewLine]"}], "\[IndentingNewLine]", \(Overlap0DSets::usage \
+= "\<Overlap0DSets[function1_,function2_,minmax_] computes
+the overlap integral for 2 functions function1[t] and function2[t], 
+where minmax has the format {t,tmin,tmax}.\>"\)}], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \("Qualify0DData[data0D_,data2D_] defines adds meta-data to a 0d time \
+series from a 2D time series."\)], "Output"],
+
+Cell[BoxData[
+    \("GridSlice[timeSeries_,k_] extracts the k-th time slice from 2D time \
+series data."\)], "Output"],
+
+Cell[BoxData[
+    \("FlattenSliceList[slice_] reformats slice data."\)], "Output"],
+
+Cell[BoxData[
+    \("SliceValues[slice_] reformats slice data by replacing full 3D data \
+(x,y,z triples) by just z-values."\)], "Output"],
+
+Cell[BoxData[
+    \("CombineColumns[list1_,list2_] combines columns from two lists in into \
+a single list, e.g. CombineColumns[{1,2,3},{4,5,6}] will yield \
+{{1,4},{2,5},{3,6}}."\)], "Output"],
+
+Cell[BoxData[
+    \("Abs0DStructs[re_,im_] computes the absolute value of complex \
+data."\)], "Output"],
+
+Cell[BoxData[
+    \("Arg0DStructs[re_,im_] computes the phase angle of complex data."\)], \
+"Output"],
+
+Cell[BoxData[
+    \("Mult0DStructs[list1_,list2_] multiplies data entries from list1 with \
+entries from list2 and combines them into a single list."\)], "Output"],
+
+Cell[BoxData[
+    \("Add0DStructs[list1_,list2_] adds data entries from list1 and entries \
+from list2 and combines them into a single list."\)], "Output"],
+
+Cell[BoxData[
+    \("RK2Int[rhs_,dt_] uses RK2 to integrate a list of RHS objects with time \
+step dt."\)], "Output"],
+
+Cell[BoxData[
+    \(RK2Int2DStruct::"RK2Int2DStruct[struct_] uses RK2 to integrate a BAM 2D \
+time series object in time."\)], "Output"],
+
+Cell[BoxData[
+    \(RK2Int0DStruct::"RK2Int0DStruct[struct_] uses RK2 to integrate a BAM 0D \
+time series object in time."\)], "Output"],
+
+Cell[BoxData[
+    \("SurfaceIntegrate[timeSeries_] maps a 2D to a 0D time series by 2D \
+integration over the time slices."\)], "Output"],
+
+Cell[BoxData[
+    \("ReadADMData[filename] reads BAM ADM_mass format ASCII data and returns \
+them in the form  {Times\[Rule] data, MADM\[Rule] data,MADMB\[Rule]  data,\
+\[IndentingNewLine]LinearMomentum\[Rule] data,AngularMomentum\[Rule] data}, \
+where data is a list  of single or triple values as appropriate."\)], "Output"],
+
+Cell[BoxData[
+    \("ReadLeanPsiData[filename] reads LEAN-code psi4 format ASCII data and \
+returns them in the form  {Times\[Rule] data, RePsi4\[Rule] \
+data,ImPsi4\[Rule] data,AbsPsi4\[Rule] data}, where data is a list  of single \
+or triple values as appropriate."\)], "Output"],
+
+Cell[BoxData[
+    \("Read2DPunctureData[filename] reads BAM 5-column (x,y) moving puncture \
+format ASCII data, extends them to 3D-data assuming movement along the \
+equatiorial pland and returns them in the form  {Times\[Rule] data, Position\
+\[Rule] data,Speed\[Rule]  data]}, where data is a list  of single or triple \
+values as appropriate."\)], "Output"],
+
+Cell[BoxData[
+    \("ReadPunctureData[filename] reads BAM 7-column (x,y,z) moving puncture \
+format ASCII data and returns them in the form  {Times\[Rule] data, Position\
+\[Rule] data,Speed\[Rule]  data]}, where data is a list  of single or triple \
+values as appropriate."\)], "Output"],
+
+Cell[BoxData[
+    \("ReadCenterData[filename] reads BAM 5-column alpha_center format ASCII \
+data and returns them in the form  {Times\[Rule] data, Lapse\[Rule] data]}, \
+where data is a list  of single or triple values as appropriate."\)], "Output"],
+
+Cell[BoxData[
+    \("Read0DSets[basename_,dirs_]  reads 0D data time series from files \
+basename in directories dirs."\)], "Output"],
+
+Cell[BoxData[
+    \("Interpolate0DSets[s_,ord_,t_] creates interpolating functions  f[t] of \
+order ord for the sets s."\)], "Output"],
+
+Cell[BoxData[
+    \("ConvFact[integerList_,ord_]  computes the 3-level convergence factor \
+for a list integerList of gridpoint-numbers and theoretical convergence order \
+ord."\)], "Output"],
+
+Cell[BoxData[
+    \("Conv3Level0DSets[functions_,npoints_,ord_] computes the scaled \
+differences for a 3-level convergence test, with convergence order ord and \
+gridpoint-numbers npoints."\)], "Output"],
+
+Cell[BoxData[
+    \("Richardson0DFunctions[funs_,npoints_,order_] computes the  Richardson \
+extrapolation with convergence order ord and gridpoint-numbers npoints from 2 \
+functions funs."\)], "Output"],
+
+Cell[BoxData[
+    \("NewsFrom0DPsi4[repsi4_,impsi4_]compute the news from lists \
+representing the real and imaginary part of psi4."\)], "Output"],
+
+Cell[BoxData[
+    \("hFrom0DPsi4[repsi4_,impsi4_] compute h from lists representing the \
+real and imaginary part of psi4."\)], "Output"],
+
+Cell[BoxData[
+    \("ADMFit1Rad[filesres_,order_] analyzes convergence of mass-related \
+quantities for one radius depending on resolution, where filesres is a list \
+of the format {{file1, numgridpoints1},{file2,numgridpoints2},...} and order \
+is the assumed order of convervence. The last 3 entries are taken for \
+analysis!"\)], "Output"],
+
+Cell[BoxData[
+    \("ADMFit1Res[filesrad_] analyzes convergence of mass-related quantities \
+for one resolution depending on radius, where filesrad is a list of the \
+format {{file1, radius1},{file2,radius2},...}. The last 3 entries are taken \
+for analysis!"\)], "Output"],
+
+Cell[BoxData[
+    \("Overlap0DSets[function1_,function2_,minmax_] computes the overlap \
+integral for 2 functions function1[t] and function2[t],  where minmax has the \
+format {t,tmin,tmax}."\)], "Output"]
+}, Open  ]],
+
+Cell[BoxData[
+    \(\(Begin["\<`Private`\>"];\)\)], "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["File reader and data format conversion functions", "Section"],
+
+Cell[CellGroupData[{
+
+Cell["ReadSphereData[file_]", "Subsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    RowBox[{
+      RowBox[{\(ReadSphereData[file_]\), ":=", "\[IndentingNewLine]", 
+        RowBox[{"Module", "[", " ", 
+          RowBox[{
+            RowBox[{"{", 
+              RowBox[{
+              "inStream", ",", "gfRule", ",", "GF", ",", "radiusRecord", ",", 
+                "gridRecord", ",", "\[IndentingNewLine]", "thetaMinMaxRecord",
+                 ",", 
+                FormBox["phiMinMaxRecord",
+                  "InputForm"], ",", 
+                FormBox["dthetaRecord",
+                  "InputForm"], ",", 
+                FormBox["dphiRecord",
+                  "InputForm"], ",", "radius", ",", "gridDim", ",", "grid", 
+                ",", "times", ",", "dtheta", ",", "dphi", ",", "thetaMin", 
+                ",", "thetaMax", ",", "phiMin", ",", "phiMax", ",", 
+                "timeSeries", ",", "table", ",", "separator", ",", 
+                "iterationRecord", ",", "timeRecord", ",", "entry", ",", 
+                "time", ",", "i"}], "}"}], ",", "\[IndentingNewLine]", 
+            "\[IndentingNewLine]", \(inStream = 
+              OpenRead[file]; \[IndentingNewLine]\ \[IndentingNewLine] (*\ 
+              which\ grid\ function\ are\ we\ dealing\ \(\(with\)\(?\)\)\ \
+*) \[IndentingNewLine]GF = 
+              ToExpression@
+                StringDrop[Read[inStream, Record], 
+                  2]; \[IndentingNewLine]Print[
+              GF]; \[IndentingNewLine]\[IndentingNewLine] (*\ 
+              read\ meta - 
+                data\ records\ from\ file\ *) \ \
+\[IndentingNewLine]radiusRecord = 
+              Read[inStream, {Word, Word, Word, 
+                  Number}]; \[IndentingNewLine]gridRecord = 
+              Read[inStream, {Word, Word, Word, 
+                  Expression}]; \[IndentingNewLine]thetaMinMaxRecord = 
+              Read[inStream, {Word, Word, Word, Word, Number, Word, Number, 
+                  Word}]; \[IndentingNewLine]phiMinMaxRecord = 
+              Read[inStream, {Word, Word, Word, Word, Number, Word, Number, 
+                  Word}]; \[IndentingNewLine]dthetaRecord = 
+              Read[inStream, {Word, Word, Word, 
+                  Number}]; \[IndentingNewLine]dphiRecord = 
+              Read[inStream, {Word, Word, Word, 
+                  Number}]; \[IndentingNewLine]\[IndentingNewLine] (*\ 
+              assign\ meta - 
+                data\ variables\ from\ file\ records\ and\ print\ what\ we\ \
+got\ *) \[IndentingNewLine]radius = 
+              radiusRecord[\([4]\)]; \[IndentingNewLine]gridDim = \
+{\(gridRecord[\([4]\)]\)[\([1]\)], \(gridRecord[\([4]\)]\)[\([2]\)]}; \
+\[IndentingNewLine]dtheta = dthetaRecord[\([4]\)]; \[IndentingNewLine]dphi = 
+              dphiRecord[\([4]\)]; \[IndentingNewLine]thetaMin = 
+              thetaMinMaxRecord[\([5]\)]; \[IndentingNewLine]thetaMax = 
+              thetaMinMaxRecord[\([7]\)]; \[IndentingNewLine]phiMin = 
+              phiMinMaxRecord[\([5]\)]; \[IndentingNewLine]phiMax = 
+              phiMinMaxRecord[\([7]\)]; \
+\[IndentingNewLine]\[IndentingNewLine]\[IndentingNewLine]grid = 
+              Table[\ {\ i*dtheta, \((j - 1)\)*dphi}, \[IndentingNewLine]{i, 
+                  1, \((gridDim[\([1]\)] + 1)\)}, \[IndentingNewLine]{j, 
+                  1 \((gridDim[\([2]\)] + 
+                        1)\)}\[IndentingNewLine]]; \[IndentingNewLine]\
+\[IndentingNewLine]Print[radius]; \[IndentingNewLine]Print[
+              gridDim]; \[IndentingNewLine]Print[dtheta, "\<  \>", 
+              dphi, "\<   \>", thetaMin, "\<    \>", 
+              thetaMax]; \[IndentingNewLine]Print[
+              phiMin]; \[IndentingNewLine]Print[
+              phiMax]; \[IndentingNewLine]\[IndentingNewLine]\
+\[IndentingNewLine] (*\ 
+              loop\ over\ time\ steps\ and\ read\ data\ \
+*) \[IndentingNewLine]times = {}; \[IndentingNewLine]timeSeries = {}; \
+\[IndentingNewLine]table = {}; \[IndentingNewLine]\[IndentingNewLine]While[
+              Not@MemberQ[Flatten@table, \ 
+                  EndOfFile], \[IndentingNewLine]\[IndentingNewLine]separator\
+\  = \ Read[inStream, Word]; \[IndentingNewLine]If\ [
+                separator \[Equal] EndOfFile, \ 
+                Break[]]; \
+\[IndentingNewLine]\[IndentingNewLine]iterationRecord = 
+                Read[inStream, {Word, Word, 
+                    Number}]; \[IndentingNewLine]timeRecord\ \ \ \ \ \ \ \ \ \
+\ \ \  = Read[inStream, {Word, Word, Word, 
+                    Number}]; \[IndentingNewLine]\[IndentingNewLine]iteration \
+= iterationRecord[\([3]\)]; \[IndentingNewLine]time = 
+                timeRecord[\([4]\)]; \
+\[IndentingNewLine]\[IndentingNewLine]table = 
+                Table[Table[{Read[inStream, Number]}, {j, 
+                      1, \((gridDim[\([2]\)] + 1)\)}], {i, 
+                    1 \((gridDim[\([1]\)] + 
+                          1)\)}]; \
+\[IndentingNewLine]\[IndentingNewLine]AppendTo[timeSeries, 
+                table]; \[IndentingNewLine]AppendTo[times, 
+                time]\[IndentingNewLine]]; \[IndentingNewLine]\
+\[IndentingNewLine] (*\ \(print\ amount\ of\ data\ read\  &\)\ close\ stream\ \
+*) \[IndentingNewLine]Print["\<read to to time step \>", \ 
+              iteration, \ "\< at time \>", \ 
+              time\ ]; \[IndentingNewLine]Print["\<read \>", 
+              N[ByteCount@timeSeries\ /\ 
+                  1024], \ "\< KByte of data;\>"]; \[IndentingNewLine]Close[
+              inStream]; \[IndentingNewLine]\[IndentingNewLine] (*\ 
+              the\ result\ is\ a\ list\ containing\ meta - data, \ 
+              a\ list\ of\ time\ stamps\ and\ the\ time\ series\ of\ data\ \
+*) \[IndentingNewLine]{Radius \[Rule] \ radius, GridDim \[Rule] \ gridDim, 
+              DX \[Rule] \ dtheta, DY \[Rule] \ dphi, 
+              XMin \[Rule] \ thetaMin, XMax \[Rule] \ thetaMax, 
+              YMin \[Rule] \ phiMin, YMax \[Rule] \ phiMax, 
+              Grid \[Rule] \ grid, Times \[Rule] \ times, 
+              TimeSeries \[Rule] \ timeSeries}\)}], "\[IndentingNewLine]", 
+          "]"}]}], ";"}]], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    RowBox[{\(General::"spell1"\), \(\(:\)\(\ \)\), "\<\"Possible spelling \
+error: new symbol name \\\"\\!\\(radius\\)\\\" is similar to existing symbol \
+\\\"\\!\\(Radius\\)\\\". \\!\\(\\*ButtonBox[\\\"More\[Ellipsis]\\\", \
+ButtonStyle->\\\"RefGuideLinkText\\\", ButtonFrame->None, \
+ButtonData:>\\\"General::spell1\\\"]\\)\"\>"}]], "Message"],
+
+Cell[BoxData[
+    RowBox[{\(General::"spell1"\), \(\(:\)\(\ \)\), "\<\"Possible spelling \
+error: new symbol name \\\"\\!\\(gridDim\\)\\\" is similar to existing symbol \
+\\\"\\!\\(GridDim\\)\\\". \\!\\(\\*ButtonBox[\\\"More\[Ellipsis]\\\", \
+ButtonStyle->\\\"RefGuideLinkText\\\", ButtonFrame->None, \
+ButtonData:>\\\"General::spell1\\\"]\\)\"\>"}]], "Message"],
+
+Cell[BoxData[
+    RowBox[{\(General::"spell1"\), \(\(:\)\(\ \)\), "\<\"Possible spelling \
+error: new symbol name \\\"\\!\\(grid\\)\\\" is similar to existing symbol \\\
+\"\\!\\(Grid\\)\\\". \\!\\(\\*ButtonBox[\\\"More\[Ellipsis]\\\", \
+ButtonStyle->\\\"RefGuideLinkText\\\", ButtonFrame->None, \
+ButtonData:>\\\"General::spell1\\\"]\\)\"\>"}]], "Message"],
+
+Cell[BoxData[
+    RowBox[{\(General::"stop"\), \(\(:\)\(\ \)\), "\<\"Further output of \
+\\!\\(General :: \\\"spell1\\\"\\) will be suppressed during this \
+calculation. \\!\\(\\*ButtonBox[\\\"More\[Ellipsis]\\\", \
+ButtonStyle->\\\"RefGuideLinkText\\\", ButtonFrame->None, \
+ButtonData:>\\\"General::stop\\\"]\\)\"\>"}]], "Message"]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["ReadSphereData[file_,steps_]", "Subsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    RowBox[{
+      RowBox[{\(ReadSphereData[file_, steps_]\), ":=", "\[IndentingNewLine]", 
+        
+        RowBox[{"Module", "[", " ", 
+          RowBox[{
+            RowBox[{"{", 
+              RowBox[{
+              "inStream", ",", "gfRule", ",", "GF", ",", "radiusRecord", ",", 
+                "gridRecord", ",", "\[IndentingNewLine]", "thetaMinMaxRecord",
+                 ",", 
+                FormBox["phiMinMaxRecord",
+                  "InputForm"], ",", 
+                FormBox["dthetaRecord",
+                  "InputForm"], ",", 
+                FormBox["dphiRecord",
+                  "InputForm"], ",", "radius", ",", "gridDim", ",", "grid", 
+                ",", "times", ",", "dtheta", ",", "dphi", ",", "thetaMin", 
+                ",", "thetaMax", ",", "phiMin", ",", "phiMax", ",", 
+                "timeSeries", ",", "table", ",", "separator", ",", 
+                "iterationRecord", ",", "timeRecord", ",", "entry", ",", 
+                "time", ",", "i", ",", "count"}], "}"}], ",", 
+            "\[IndentingNewLine]", 
+            "\[IndentingNewLine]", \(inStream = 
+              OpenRead[file]; \[IndentingNewLine]\ \[IndentingNewLine] (*\ 
+              which\ grid\ function\ are\ we\ dealing\ \(\(with\)\(?\)\)\ \
+*) \[IndentingNewLine]GF = 
+              ToExpression@
+                StringDrop[Read[inStream, Record], 
+                  2]; \[IndentingNewLine]Print[
+              GF]; \[IndentingNewLine]\[IndentingNewLine] (*\ 
+              read\ meta - 
+                data\ records\ from\ file\ *) \ \
+\[IndentingNewLine]radiusRecord = 
+              Read[inStream, {Word, Word, Word, 
+                  Number}]; \[IndentingNewLine]gridRecord = 
+              Read[inStream, {Word, Word, Word, 
+                  Expression}]; \[IndentingNewLine]thetaMinMaxRecord = 
+              Read[inStream, {Word, Word, Word, Word, Number, Word, Number, 
+                  Word}]; \[IndentingNewLine]phiMinMaxRecord = 
+              Read[inStream, {Word, Word, Word, Word, Number, Word, Number, 
+                  Word}]; \[IndentingNewLine]dthetaRecord = 
+              Read[inStream, {Word, Word, Word, 
+                  Number}]; \[IndentingNewLine]dphiRecord = 
+              Read[inStream, {Word, Word, Word, 
+                  Number}]; \[IndentingNewLine]\[IndentingNewLine] (*\ 
+              assign\ meta - 
+                data\ variables\ from\ file\ records\ and\ print\ what\ we\ \
+got\ *) \[IndentingNewLine]radius = 
+              radiusRecord[\([4]\)]; \[IndentingNewLine]gridDim = \
+{\(gridRecord[\([4]\)]\)[\([1]\)], \(gridRecord[\([4]\)]\)[\([2]\)]}; \
+\[IndentingNewLine]dtheta = dthetaRecord[\([4]\)]; \[IndentingNewLine]dphi = 
+              dphiRecord[\([4]\)]; \[IndentingNewLine]thetaMin = 
+              thetaMinMaxRecord[\([5]\)]; \[IndentingNewLine]thetaMax = 
+              thetaMinMaxRecord[\([7]\)]; \[IndentingNewLine]phiMin = 
+              phiMinMaxRecord[\([5]\)]; \[IndentingNewLine]phiMax = 
+              phiMinMaxRecord[\([7]\)]; \
+\[IndentingNewLine]\[IndentingNewLine]\[IndentingNewLine]grid = 
+              Table[\ {\ i*dtheta, \((j - 1)\)*dphi}, \[IndentingNewLine]{i, 
+                  1, \((gridDim[\([1]\)] + 1)\)}, \[IndentingNewLine]{j, 
+                  1 \((gridDim[\([2]\)] + 
+                        1)\)}\[IndentingNewLine]]; \[IndentingNewLine]\
+\[IndentingNewLine]Print[radius]; \[IndentingNewLine]Print[
+              gridDim]; \[IndentingNewLine]Print[dtheta, "\<  \>", 
+              dphi, "\<   \>", thetaMin, "\<    \>", 
+              thetaMax]; \[IndentingNewLine]Print[
+              phiMin]; \[IndentingNewLine]Print[
+              phiMax]; \[IndentingNewLine]\[IndentingNewLine]\
+\[IndentingNewLine] (*\ 
+              loop\ over\ time\ steps\ and\ read\ data\ \
+*) \[IndentingNewLine]times = {}; \[IndentingNewLine]timeSeries = {}; \
+\[IndentingNewLine]table = {}; \[IndentingNewLine]count = 
+              0; \[IndentingNewLine]\[IndentingNewLine]While[
+              Not@MemberQ[Flatten@table, \ 
+                  EndOfFile], \[IndentingNewLine]\[IndentingNewLine]count = 
+                count + 
+                  1; \[IndentingNewLine]\[IndentingNewLine]separator\  = \ 
+                Read[inStream, Word]; \[IndentingNewLine]If\ [
+                separator \[Equal] EndOfFile, \ 
+                Break[]]; \
+\[IndentingNewLine]\[IndentingNewLine]iterationRecord = 
+                Read[inStream, {Word, Word, 
+                    Number}]; \[IndentingNewLine]timeRecord\ \ \ \ \ \ \ \ \ \
+\ \ \  = Read[inStream, {Word, Word, Word, 
+                    Number}]; \[IndentingNewLine]\[IndentingNewLine]iteration \
+= iterationRecord[\([3]\)]; \[IndentingNewLine]time = 
+                timeRecord[\([4]\)]; \
+\[IndentingNewLine]\[IndentingNewLine]table = 
+                Table[Table[{Read[inStream, Number]}, {j, 
+                      1, \((gridDim[\([2]\)] + 1)\)}], {i, 
+                    1 \((gridDim[\([1]\)] + 
+                          1)\)}]; \[IndentingNewLine]\[IndentingNewLine]\
+\[IndentingNewLine]If[
+                Mod[count, steps] \[Equal] 0, \[IndentingNewLine]AppendTo[
+                  timeSeries, table]; \[IndentingNewLine]AppendTo[times, 
+                  time];\[IndentingNewLine]];\[IndentingNewLine]]; \
+\[IndentingNewLine]\[IndentingNewLine] (*\ \(print\ amount\ of\ data\ read\  \
+&\)\ close\ stream\ *) \[IndentingNewLine]Print["\<read to to time step \>", \
+\ iteration, \ "\< at time \>", \ 
+              time\ ]; \[IndentingNewLine]Print["\<read \>", 
+              N[ByteCount@timeSeries\ /\ 
+                  1024], \ "\< KByte of data;\>"]; \[IndentingNewLine]Close[
+              inStream]; \[IndentingNewLine]\[IndentingNewLine] (*\ 
+              the\ result\ is\ a\ list\ containing\ meta - data, \ 
+              a\ list\ of\ time\ stamps\ and\ the\ time\ series\ of\ data\ \
+*) \[IndentingNewLine]{Radius \[Rule] \ radius, GridDim \[Rule] \ gridDim, 
+              DX \[Rule] \ dtheta, DY \[Rule] \ dphi, 
+              XMin \[Rule] \ thetaMin, XMax \[Rule] \ thetaMax, 
+              YMin \[Rule] \ phiMin, YMax \[Rule] \ phiMax, 
+              Grid \[Rule] \ grid, Times \[Rule] \ times, 
+              TimeSeries \[Rule] \ timeSeries}\)}], "\[IndentingNewLine]", 
+          "]"}]}], ";"}]], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    RowBox[{\(General::"spell1"\), \(\(:\)\(\ \)\), "\<\"Possible spelling \
+error: new symbol name \\\"\\!\\(radius\\)\\\" is similar to existing symbol \
+\\\"\\!\\(Radius\\)\\\". \\!\\(\\*ButtonBox[\\\"More\[Ellipsis]\\\", \
+ButtonStyle->\\\"RefGuideLinkText\\\", ButtonFrame->None, \
+ButtonData:>\\\"General::spell1\\\"]\\)\"\>"}]], "Message"],
+
+Cell[BoxData[
+    RowBox[{\(General::"spell1"\), \(\(:\)\(\ \)\), "\<\"Possible spelling \
+error: new symbol name \\\"\\!\\(gridDim\\)\\\" is similar to existing symbol \
+\\\"\\!\\(GridDim\\)\\\". \\!\\(\\*ButtonBox[\\\"More\[Ellipsis]\\\", \
+ButtonStyle->\\\"RefGuideLinkText\\\", ButtonFrame->None, \
+ButtonData:>\\\"General::spell1\\\"]\\)\"\>"}]], "Message"],
+
+Cell[BoxData[
+    RowBox[{\(General::"spell1"\), \(\(:\)\(\ \)\), "\<\"Possible spelling \
+error: new symbol name \\\"\\!\\(grid\\)\\\" is similar to existing symbol \\\
+\"\\!\\(Grid\\)\\\". \\!\\(\\*ButtonBox[\\\"More\[Ellipsis]\\\", \
+ButtonStyle->\\\"RefGuideLinkText\\\", ButtonFrame->None, \
+ButtonData:>\\\"General::spell1\\\"]\\)\"\>"}]], "Message"],
+
+Cell[BoxData[
+    RowBox[{\(General::"stop"\), \(\(:\)\(\ \)\), "\<\"Further output of \
+\\!\\(General :: \\\"spell1\\\"\\) will be suppressed during this \
+calculation. \\!\\(\\*ButtonBox[\\\"More\[Ellipsis]\\\", \
+ButtonStyle->\\\"RefGuideLinkText\\\", ButtonFrame->None, \
+ButtonData:>\\\"General::stop\\\"]\\)\"\>"}]], "Message"]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Read0DSets[basename_,directories_]", "Subsection"],
+
+Cell[BoxData[
+    \(\(Read0DSets[basename_, directories_] := 
+        Module[{len, i}, \[IndentingNewLine]\[IndentingNewLine]len\  = 
+            Length@directories; \[IndentingNewLine]\[IndentingNewLine]Table[
+            ReadTimeSeriesData[
+              directories[\([i]\)] <> \ "\</\>" <> basename], {i, 1, 
+              len}]\[IndentingNewLine]];\)\)], "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Read0DSets2[basenames_,directories_]", "Subsection"],
+
+Cell[BoxData[
+    \(\(Read0DSets2[basenames_, directories_] := 
+        Module[{len, i}, \[IndentingNewLine]\[IndentingNewLine]len\  = 
+            Length@directories; \[IndentingNewLine]\[IndentingNewLine]Table[
+            ReadTimeSeriesData[
+              directories[\([i]\)] <> \ "\</\>" <> basenames[\([i]\)]], {i, 
+              1, len}]\[IndentingNewLine]];\)\)], "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["ReadADMData[file_]", "Subsection"],
+
+Cell[BoxData[
+    \(\(ReadADMData[
+          file_] := \[IndentingNewLine]Module[\ {inStream, table, rec, \ 
+            throwaway}, \[IndentingNewLine]\[IndentingNewLine]inStream = 
+            OpenRead[file]; \[IndentingNewLine]\[IndentingNewLine] (*\ 
+            we\ do\ not\ need\ the\ first\ two\ lines\ *) \ \
+\[IndentingNewLine]throwaway = 
+            Read[inStream, String]; \[IndentingNewLine]throwaway = 
+            Read[inStream, 
+              String]; \[IndentingNewLine]\[IndentingNewLine] (*\ 
+            loop\ over\ time\ steps\ and\ read\ data\ \
+*) \[IndentingNewLine]rec = {}; \[IndentingNewLine]table = {}; \
+\[IndentingNewLine]\[IndentingNewLine]While[\(! TrueQ[
+                rec \[Equal] \ \ EndOfFile]\), \[IndentingNewLine]\
+\[IndentingNewLine]rec = 
+              Read[inStream, \[IndentingNewLine]{Number, Number, Number, 
+                  Number, Number, Number, Number, Number, 
+                  Number}]; \[IndentingNewLine]\[IndentingNewLine]If[\(! \
+TrueQ[rec \[Equal] \ \ EndOfFile]\), 
+              AppendTo[table, \ 
+                rec]];\[IndentingNewLine]]; \[IndentingNewLine]\
+\[IndentingNewLine] (*\ \(print\ amount\ of\ data\ read\  &\)\ close\ stream\ \
+*) \[IndentingNewLine]Print["\<read \>", 
+            N[ByteCount@table\ /\ 
+                1024], \ "\< KByte of data;\>"]; \[IndentingNewLine]Close[
+            inStream]; \[IndentingNewLine]\[IndentingNewLine]{Times \[Rule] \ 
+              Column[table, 1], \ \[IndentingNewLine]MADM \[Rule] \ \ Column[
+                table, 2], \[IndentingNewLine]MADMB \[Rule] \ \ Column[table, 
+                3], \[IndentingNewLine]LinearMomentum \[Rule] \ \ Column[
+                table, {4, 5, 
+                  6}], \[IndentingNewLine]AngularMomentum \[Rule] \ \ Column[
+                table, {7, 8, 9}]}\[IndentingNewLine]];\)\)], "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["ReadLeanPsiData[file_]", "Subsection"],
+
+Cell[BoxData[
+    \(\(ReadLeanPsiData[
+          file_] := \[IndentingNewLine]Module[\ {inStream, table, rec, \ 
+            throwaway}, \[IndentingNewLine]\[IndentingNewLine]inStream = 
+            OpenRead[file]; \[IndentingNewLine]\[IndentingNewLine] (*\ 
+            we\ do\ not\ need\ the\ first\ 4\ lines\ *) \ \
+\[IndentingNewLine]throwaway = 
+            Read[inStream, String]; \[IndentingNewLine]throwaway = 
+            Read[inStream, String]; \[IndentingNewLine]throwaway = 
+            Read[inStream, String]; \[IndentingNewLine]throwaway = 
+            Read[inStream, 
+              String]; \[IndentingNewLine]\[IndentingNewLine] (*\ 
+            loop\ over\ time\ steps\ and\ read\ data\ \
+*) \[IndentingNewLine]rec = {}; \[IndentingNewLine]table = {}; \
+\[IndentingNewLine]\[IndentingNewLine]While[\(! TrueQ[
+                rec \[Equal] \ \ EndOfFile]\), \[IndentingNewLine]\
+\[IndentingNewLine]rec = 
+              Read[inStream, \[IndentingNewLine]{Number, Number, Number, 
+                  Number}]; \[IndentingNewLine]\[IndentingNewLine]If[\(! \
+TrueQ[rec \[Equal] \ \ EndOfFile]\), 
+              AppendTo[table, \ 
+                rec]];\[IndentingNewLine]]; \[IndentingNewLine]\
+\[IndentingNewLine] (*\ \(print\ amount\ of\ data\ read\  &\)\ close\ stream\ \
+*) \[IndentingNewLine]Print["\<read \>", 
+            N[ByteCount@table\ /\ 
+                1024], \ "\< KByte of data;\>"]; \[IndentingNewLine]Close[
+            inStream]; \[IndentingNewLine]\[IndentingNewLine]{Times \[Rule] \ 
+              Column[table, 
+                1], \ \[IndentingNewLine]RePsi4 \[Rule] \ \ Column[table, 
+                2], \[IndentingNewLine]ImPsi4 \[Rule] \ \ Column[table, 
+                3], \[IndentingNewLine]AbsPsi4 \[Rule] \ \ Column[table, 
+                4]}\[IndentingNewLine]];\)\)], "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["ReadColData[file_,cols_]", "Subsection"],
+
+Cell[BoxData[
+    \(\(ReadColData[file_, 
+          cols_] := \[IndentingNewLine]Module[\ {inStream, table, form, ii, 
+            rec, \ throwaway}, \[IndentingNewLine]\[IndentingNewLine]form\  = \
+\ Table[Number, {ii, 1, 
+                cols}]; \[IndentingNewLine]\[IndentingNewLine]inStream = 
+            OpenRead[file]; \[IndentingNewLine]\[IndentingNewLine] (*\ 
+            loop\ over\ time\ steps\ and\ read\ data\ \
+*) \[IndentingNewLine]rec = {}; \[IndentingNewLine]table = {}; \
+\[IndentingNewLine]\[IndentingNewLine]While[\(! TrueQ[
+                rec \[Equal] \ \ EndOfFile]\), \[IndentingNewLine]\
+\[IndentingNewLine]rec = 
+              Read[inStream, \ 
+                form\[IndentingNewLine]]; \[IndentingNewLine]\
+\[IndentingNewLine]If[\(! TrueQ[rec \[Equal] \ \ EndOfFile]\), 
+              AppendTo[table, \ 
+                rec]];\[IndentingNewLine]]; \[IndentingNewLine]\
+\[IndentingNewLine] (*\ \(print\ amount\ of\ data\ read\  &\)\ close\ stream\ \
+*) \[IndentingNewLine]Print["\<read \>", 
+            N[ByteCount@table\ /\ 
+                1024], \ "\< KByte of data;\>"]; \[IndentingNewLine]Close[
+            inStream]; \[IndentingNewLine]\[IndentingNewLine]table\
+\[IndentingNewLine]];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(ReadColData[file_, cols_, lines_] := \ \  (*\ 
+          version\ that\ skips\ first\ lines_\ lines\ \
+*) \[IndentingNewLine]Module[\ {inStream, table, form, ii, rec, \ 
+            throwaway}, \[IndentingNewLine]\[IndentingNewLine]form\  = \ 
+            Table[Number, {ii, 1, 
+                cols}]; \[IndentingNewLine]\[IndentingNewLine]inStream = 
+            OpenRead[file]; \[IndentingNewLine]\[IndentingNewLine] (*\ 
+            we\ do\ not\ need\ the\ first\ lines\ *) \[IndentingNewLine]Do[\ 
+            throwaway = 
+              Read[inStream, 
+                String], {lines}]; \[IndentingNewLine]\[IndentingNewLine]\
+\[IndentingNewLine] (*\ 
+            loop\ over\ time\ steps\ and\ read\ data\ \
+*) \[IndentingNewLine]rec = {}; \[IndentingNewLine]table = {}; \
+\[IndentingNewLine]\[IndentingNewLine]While[\(! TrueQ[
+                rec \[Equal] \ \ EndOfFile]\), \[IndentingNewLine]\
+\[IndentingNewLine]rec = 
+              Read[inStream, \ 
+                form\[IndentingNewLine]]; \[IndentingNewLine]\
+\[IndentingNewLine]If[\(! TrueQ[rec \[Equal] \ \ EndOfFile]\), 
+              AppendTo[table, \ 
+                rec]];\[IndentingNewLine]]; \[IndentingNewLine]\
+\[IndentingNewLine] (*\ \(print\ amount\ of\ data\ read\  &\)\ close\ stream\ \
+*) \[IndentingNewLine]Print["\<read \>", 
+            N[ByteCount@table\ /\ 
+                1024], \ "\< KByte of data;\>"]; \[IndentingNewLine]Close[
+            inStream]; \[IndentingNewLine]\[IndentingNewLine]table\
+\[IndentingNewLine]];\)\)], "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Read2DPunctureData[file_]", "Subsection"],
+
+Cell[BoxData[
+    \(\(Read2DPunctureData[
+          file_] := \[IndentingNewLine]Module[\ {inStream, table, 
+            rec}, \[IndentingNewLine]\[IndentingNewLine]inStream = 
+            OpenRead[file]; \[IndentingNewLine]\[IndentingNewLine] (*\ 
+            loop\ over\ time\ steps\ and\ read\ data\ \
+*) \[IndentingNewLine]rec = {}; \[IndentingNewLine]table = {}; \
+\[IndentingNewLine]\[IndentingNewLine]While[\(! TrueQ[
+                rec \[Equal] \ \ EndOfFile]\), \[IndentingNewLine]\
+\[IndentingNewLine]rec = 
+              Read[inStream, \[IndentingNewLine]{Number, Number, Number, 
+                  Number, 
+                  Number}]; \[IndentingNewLine]\[IndentingNewLine]If[\(! \
+TrueQ[rec \[Equal] \ \ EndOfFile]\), \[IndentingNewLine]rec = {rec[\([1]\)], 
+                  rec[\([2]\)], 0, rec[\([3]\)], rec[\([4]\)], 0, 
+                  rec[\([5]\)]}; \[IndentingNewLine]AppendTo[table, \ 
+                rec]];\[IndentingNewLine]]; \[IndentingNewLine]\
+\[IndentingNewLine] (*\ \(print\ amount\ of\ data\ read\  &\)\ close\ stream\ \
+*) \[IndentingNewLine]Print["\<read \>", 
+            N[ByteCount@table\ /\ 
+                1024], \ "\< KByte of data;\>"]; \[IndentingNewLine]Close[
+            inStream]; \[IndentingNewLine]\[IndentingNewLine]{Times \[Rule] \ 
+              Column[table, 
+                7], \ \[IndentingNewLine]Position \[Rule] \ \ Column[
+                table, {1, 2, 
+                  3}], \[IndentingNewLine]Speed \[Rule] \ \ Column[
+                table, {4, 5, 6}]}\[IndentingNewLine]];\)\)], "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["ReadPunctureData[file_]", "Subsection"],
+
+Cell[BoxData[
+    \(\(ReadPunctureData[
+          file_] := \[IndentingNewLine]Module[\ {inStream, table, 
+            rec}, \[IndentingNewLine]\[IndentingNewLine]inStream = 
+            OpenRead[file]; \[IndentingNewLine]\[IndentingNewLine] (*\ 
+            loop\ over\ time\ steps\ and\ read\ data\ \
+*) \[IndentingNewLine]rec = {}; \[IndentingNewLine]table = {}; \
+\[IndentingNewLine]\[IndentingNewLine]While[\(! TrueQ[
+                rec \[Equal] \ \ EndOfFile]\), \[IndentingNewLine]\
+\[IndentingNewLine]rec = 
+              Read[inStream, \[IndentingNewLine]{Number, Number, Number, 
+                  Number, Number, Number, 
+                  Number}]; \[IndentingNewLine]\[IndentingNewLine]If[\(! \
+TrueQ[rec \[Equal] \ \ EndOfFile]\), 
+              AppendTo[table, \ 
+                rec]];\[IndentingNewLine]]; \[IndentingNewLine]\
+\[IndentingNewLine] (*\ \(print\ amount\ of\ data\ read\  &\)\ close\ stream\ \
+*) \[IndentingNewLine]Print["\<read \>", 
+            N[ByteCount@table\ /\ 
+                1024], \ "\< KByte of data;\>"]; \[IndentingNewLine]Close[
+            inStream]; \[IndentingNewLine]\[IndentingNewLine]{Times \[Rule] \ 
+              Column[table, 
+                7], \ \[IndentingNewLine]Position \[Rule] \ \ Column[
+                table, {1, 2, 
+                  3}], \[IndentingNewLine]Speed \[Rule] \ \ Column[
+                table, {4, 5, 6}]}\[IndentingNewLine]];\)\)], "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["ReadLeanPunctureData[file_]", "Subsection"],
+
+Cell[BoxData[
+    \(\(ReadLeanPunctureData[
+          file_] := \[IndentingNewLine]Module[\ {inStream, table, 
+            rec}, \[IndentingNewLine]\[IndentingNewLine]inStream = 
+            OpenRead[file]; \[IndentingNewLine]\[IndentingNewLine] (*\ 
+            loop\ over\ time\ steps\ and\ read\ data\ \
+*) \[IndentingNewLine]rec = {}; \[IndentingNewLine]table = {}; \
+\[IndentingNewLine]\[IndentingNewLine]While[\(! TrueQ[
+                rec \[Equal] \ \ EndOfFile]\), \[IndentingNewLine]\
+\[IndentingNewLine]rec = 
+              Read[inStream, \[IndentingNewLine]{Number, Number, Number, 
+                  Number}]; \[IndentingNewLine]\[IndentingNewLine]If[\(! \
+TrueQ[rec \[Equal] \ \ EndOfFile]\), 
+              AppendTo[table, \ 
+                rec]];\[IndentingNewLine]]; \[IndentingNewLine]\
+\[IndentingNewLine] (*\ \(print\ amount\ of\ data\ read\  &\)\ close\ stream\ \
+*) \[IndentingNewLine]Print["\<read \>", 
+            N[ByteCount@table\ /\ 
+                1024], \ "\< KByte of data;\>"]; \[IndentingNewLine]Close[
+            inStream]; \[IndentingNewLine]\[IndentingNewLine]{Times \[Rule] \ 
+              Column[table, 
+                1], \ \[IndentingNewLine]Position \[Rule] \ \ Column[
+                table, {2, 3, 4}]}\[IndentingNewLine]];\)\)], "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["MPConcat[mp1_,mp2_]", "Subsection"],
+
+Cell[BoxData[
+    \(\(MPConcat[mp1_, mp2_] := 
+        Module[{}, \[IndentingNewLine]\[IndentingNewLine]{Times \[Rule] 
+              Join[Times /. mp1, Times /. mp2], 
+            Position \[Rule] Join[Position /. mp1, Position /. mp2], 
+            Speed \[Rule] 
+              Join[Speed /. mp1, 
+                Speed /. mp2]}\[IndentingNewLine]];\)\)], "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["ReadQNMData[file_]", "Subsection"],
+
+Cell[BoxData[
+    \(\(ReadQNMData[
+          file_] := \[IndentingNewLine]Module[\ {inStream, table, 
+            rec}, \[IndentingNewLine]\[IndentingNewLine]inStream = 
+            OpenRead[file]; \[IndentingNewLine]\[IndentingNewLine] (*\ 
+            loop\ over\ time\ steps\ and\ read\ data\ \
+*) \[IndentingNewLine]rec = {}; \[IndentingNewLine]table = {}; \
+\[IndentingNewLine]\[IndentingNewLine]While[\(! TrueQ[
+                rec \[Equal] \ \ EndOfFile]\), \[IndentingNewLine]\
+\[IndentingNewLine]rec = 
+              Read[inStream, \[IndentingNewLine]{Number, Number, Number, 
+                  Number, 
+                  Number}]; \[IndentingNewLine]\[IndentingNewLine]If[\(! \
+TrueQ[rec \[Equal] \ \ EndOfFile]\), 
+              AppendTo[table, \ 
+                rec]];\[IndentingNewLine]]; \[IndentingNewLine]\
+\[IndentingNewLine] (*\ \(print\ amount\ of\ data\ read\  &\)\ close\ stream\ \
+*) \[IndentingNewLine]Print["\<read \>", 
+            N[ByteCount@table\ /\ 
+                1024], \ "\< KByte of data;\>"]; \[IndentingNewLine]Close[
+            inStream]; \[IndentingNewLine]\[IndentingNewLine]{aKerr \[Rule] \ 
+              Column[table, 
+                1], \ \[IndentingNewLine]RealFreq \[Rule] \ \ Column[table, 
+                2], \[IndentingNewLine]ImagFreq \[Rule] \ \ Column[table, 
+                3]}\[IndentingNewLine]];\)\)], "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["ReadCenterData[file_]", "Subsection"],
+
+Cell[BoxData[
+    \(\(ReadCenterData[
+          file_] := \[IndentingNewLine]Module[\ {inStream, table, 
+            rec}, \[IndentingNewLine]\[IndentingNewLine]inStream = 
+            OpenRead[file]; \[IndentingNewLine]\[IndentingNewLine] (*\ 
+            loop\ over\ time\ steps\ and\ read\ data\ \
+*) \[IndentingNewLine]rec = {}; \[IndentingNewLine]table = {}; \
+\[IndentingNewLine]\[IndentingNewLine]While[\(! TrueQ[
+                rec \[Equal] \ \ EndOfFile]\), \[IndentingNewLine]\
+\[IndentingNewLine]rec = 
+              Read[inStream, \[IndentingNewLine]{Number, Number, Number, 
+                  Number, 
+                  Number}]; \[IndentingNewLine]\[IndentingNewLine]If[\(! \
+TrueQ[rec \[Equal] \ \ EndOfFile]\), \ 
+              AppendTo[table, \ 
+                rec]];\[IndentingNewLine]]; \[IndentingNewLine]\
+\[IndentingNewLine] (*\ \(print\ amount\ of\ data\ read\  &\)\ close\ stream\ \
+*) \[IndentingNewLine]Print["\<read \>", 
+            N[ByteCount@table\ /\ 
+                1024], \ "\< KByte of data;\>"]; \[IndentingNewLine]Close[
+            inStream]; \[IndentingNewLine]\[IndentingNewLine]{Times \[Rule] \ 
+              Column[table, 1], \ \[IndentingNewLine]Lapse \[Rule] \ \ Column[
+                table, 2]}\[IndentingNewLine]];\)\)], "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["TimeSeriesToSphereData[data1D_,modFunction_]", "Subsection"],
+
+Cell[BoxData[
+    \(\(TimeSeriesToSphereData[data1D_, modFunction_] := 
+        Module[\ {ts, grid, dim, result, timeSeries, i, j, 
+            k}, \[IndentingNewLine]\[IndentingNewLine]ts\  = \ 
+            lookupDefault[data1D, \ 
+              TimeSeries, "\<undefined\>"]; \ \[IndentingNewLine]grid\  = \ 
+            lookupDefault[data1D, \ 
+              Grid, "\<undefined\>"]; \ \[IndentingNewLine]dim = \ 
+            lookupDefault[data1D, \ 
+              GridDim, "\<undefined\>"]; \[IndentingNewLine]\
+\[IndentingNewLine]\ 
+          timeSeries = 
+            Table[\ \[IndentingNewLine]\ 
+              Table[modFunction[\([i, j]\)]\ *\ 
+                  ts[\([k]\)], \[IndentingNewLine]{i, 
+                  1, \((dim[\([1]\)] + 1)\)}, \[IndentingNewLine]{j, 
+                  1, \((dim[\([2]\)] + 1)\)}], {k, 1, 
+                Length@ts}]; \
+\[IndentingNewLine]\[IndentingNewLine]Print["\<created \>", 
+            N[ByteCount@timeSeries\ /\ 
+                1024], \ "\< KByte of data\>"]; \[IndentingNewLine]\
+\[IndentingNewLine]result = 
+            data1D; \[IndentingNewLine]result[\([Length@result]\)] = 
+            TimeSeries \[Rule] \ 
+              timeSeries; \
+\[IndentingNewLine]result\[IndentingNewLine]];\)\)], "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["ReadTimeSeriesData[file_]", "Subsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(ReadTimeSeriesData[file_] := 
+        Module[\ {inStream, timeSeries, entry, time, i, 
+            throwaway}, \[IndentingNewLine]\[IndentingNewLine]inStream = 
+            OpenRead[file]; \[IndentingNewLine]\[IndentingNewLine]throwaway = 
+            Read[inStream, 
+              String]; \[IndentingNewLine]\[IndentingNewLine]If\ [
+            StringMatchQ[throwaway, \ "\< *\>"], \[IndentingNewLine]Close@
+              inStream; \[IndentingNewLine]inStream = 
+              OpenRead[
+                file];\[IndentingNewLine]]; \[IndentingNewLine]\
+\[IndentingNewLine]timeSeries = {}; \[IndentingNewLine]record = \ {}; \
+\[IndentingNewLine]\[IndentingNewLine]While[
+            record\  != \ {EndOfFile}, \[IndentingNewLine]\[IndentingNewLine]\
+\ record = Read[inStream, {Number, Number}]; \[IndentingNewLine]\ 
+            AppendTo[timeSeries, 
+              record];\[IndentingNewLine]]; \[IndentingNewLine]Close[
+            inStream]; \[IndentingNewLine]\[IndentingNewLine]Print["\<read \
+\>", N[ByteCount@timeSeries\ \ /\ 
+                1024], \ "\< KByte of data\>"]; \[IndentingNewLine]\
+\[IndentingNewLine]Drop[timeSeries, \(-1\)]\  (*\ 
+            last\ element\ is\ EndOfFile\ *) \ \[IndentingNewLine]];\)\)], \
+"Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    RowBox[{\(General::"spell1"\), \(\(:\)\(\ \)\), "\<\"Possible spelling \
+error: new symbol name \\\"\\!\\(record\\)\\\" is similar to existing symbol \
+\\\"\\!\\(Record\\)\\\". \\!\\(\\*ButtonBox[\\\"More\[Ellipsis]\\\", \
+ButtonStyle->\\\"RefGuideLinkText\\\", ButtonFrame->None, \
+ButtonData:>\\\"General::spell1\\\"]\\)\"\>"}]], "Message"]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Qualify0DData[data0D_,data2D_]", "Subsection"],
+
+Cell[BoxData[
+    \(\(Qualify0DData[data0D_, data2D_] := 
+        Module[{result}, \[IndentingNewLine]\[IndentingNewLine]result = 
+            mapReplace[data2D, TimeSeries, 
+              Map[Last, data0D]]; \[IndentingNewLine]result = 
+            mapReplace[result, Times, 
+              Map[First, data0D]]\[IndentingNewLine]];\)\)], "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["GridSlice[timeSeries_,k_]", "Subsection"],
+
+Cell[BoxData[
+    \(\(GridSlice[timeSeries_, k_] := 
+        Module[{val, grid, result, dx, dy, 
+            dim}, \[IndentingNewLine]\[IndentingNewLine]dx\  = 
+            lookup[timeSeries, DX]; \[IndentingNewLine]dy\  = 
+            lookup[timeSeries, 
+              DY]; \[IndentingNewLine]\[IndentingNewLine]dim\  = \ 
+            lookup[timeSeries, 
+              GridDim]; \[IndentingNewLine]\[IndentingNewLine]val = \(lookup[
+                timeSeries, TimeSeries]\)[\([k]\)]; \[IndentingNewLine]grid = 
+            lookup[timeSeries, 
+              Grid]; \[IndentingNewLine]\[IndentingNewLine]grid\  = \ 
+            grid\  /. \ {i_, \ j_} \[Rule] \ {\ 
+                  i*dx, \((j - 1)\)*
+                    dy}; \[IndentingNewLine]\[IndentingNewLine]grid = 
+            Table[{t, 
+                p}, \[IndentingNewLine]Evaluate[{t, XMin, XMax + DX, DX} /. 
+                  Flatten@timeSeries], \[IndentingNewLine]Evaluate[{p, YMin, 
+                    YMax + DY, DY} /. 
+                  Flatten@
+                    timeSeries]]; \
+\[IndentingNewLine]\[IndentingNewLine]result = 
+            Table[Flatten@{grid[\([i, j]\)], \ 
+                  val[\([i, j]\)]}\ \ , \[IndentingNewLine]{i, 
+                1, \((dim[\([1]\)] + 1)\)}, \[IndentingNewLine]{j, 
+                1, \((dim[\([2]\)] + 
+                    1)\)}\ ]\[IndentingNewLine]];\)\)], "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["FlattenSliceList[slice_]", "Subsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(zero[x_] = 0\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(0\)], "Output"]
+}, Open  ]],
+
+Cell[BoxData[
+    \(\(FlattenSliceList[slice_] := 
+        Module[{result, dim, 
+            k}, \[IndentingNewLine]\[IndentingNewLine]dim\  = \ {Length@
+                slice, Length@
+                slice[\([1]\)]}; \[IndentingNewLine]Print["\<Input array has \
+dimensions \>", \ dim]; \[IndentingNewLine]\[IndentingNewLine]result = 
+            Array[zero, 
+              dim[\([1]\)]\ \ dim[\([2]\)]\ ]; \[IndentingNewLine]\
+\[IndentingNewLine]k = 1; \[IndentingNewLine]Do[
+            result[\([k]\)] = slice[\([i, j]\)]; 
+            k = k + 1;\ , \[IndentingNewLine]{i, 1, 
+              dim[\([1]\)]}, \[IndentingNewLine]{j, 1, 
+              dim[\([2]\)]}\ ]; \[IndentingNewLine]\[IndentingNewLine]result\
+\[IndentingNewLine]];\)\)], "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["SliceValues[slice_]", "Subsection"],
+
+Cell[BoxData[
+    \(SliceValues[slice_] := slice\  /. \ {x_, y_, z_} \[Rule] \ z\)], "Input",\
+
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["CombineColumns[list1_,list2_]", "Subsection"],
+
+Cell[BoxData[
+    \(\(CombineColumns[list1_, list2_] := 
+        Module[{len, 
+            lendiff}, \[IndentingNewLine]\[IndentingNewLine]lendiff = 
+            Length@list1 - Length@list2; \[IndentingNewLine]If[
+            lendiff\  < \ 0, \ 
+            Print["\<list 1 shorter by \>", \ \(-lendiff\), \ \
+"\<elements!\>"]]; \[IndentingNewLine]If[lendiff\  > \ 0, \ 
+            Print["\<list 1 longer by \>", \ 
+              lendiff, \ "\<elements!\>"]]; \[IndentingNewLine]\
+\[IndentingNewLine]len = 
+            Min[Length@list1, 
+              Length@list2]; \
+\[IndentingNewLine]\[IndentingNewLine]Table[{list1[\([i]\)], 
+              list2[\([i]\)]}, {i, 1, len}]\[IndentingNewLine]];\)\)], "Input",\
+
+  InitializationCell->True],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(CombineColumns[{1, 2, 3}, {4, 5, 6}]\)], "Input"],
+
+Cell[BoxData[
+    \({{1, 4}, {2, 5}, {3, 6}}\)], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Abs0DStructs[re_,im_]", "Subsection"],
+
+Cell[BoxData[
+    \(\(Abs0DStructs[re_, im_] := 
+        Module[{revals, imvals, reimvals, times, dt, 
+            result}, \[IndentingNewLine]\[IndentingNewLine]times = 
+            Map[First, re]; \[IndentingNewLine]revals = 
+            Map[Last, re]; \[IndentingNewLine]imvals = 
+            Map[Last, im]; \[IndentingNewLine]\[IndentingNewLine]reimvals = 
+            revals\  + \ I\ imvals; \[IndentingNewLine]reimvals = 
+            Abs@reimvals; \[IndentingNewLine]\[IndentingNewLine]result = 
+            CombineColumns[times, reimvals]\[IndentingNewLine]];\)\)], "Input",\
+
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(Abs0DStructs[reim_] := 
+        Module[{reimvals, times, dt, 
+            result}, \[IndentingNewLine]\[IndentingNewLine]times = 
+            Map[First, 
+              reim]; \[IndentingNewLine]\[IndentingNewLine]reimvals = 
+            Map[Last, reim]; \[IndentingNewLine]reimvals = 
+            Abs@reimvals; \[IndentingNewLine]\[IndentingNewLine]result = 
+            CombineColumns[times, reimvals]\[IndentingNewLine]];\)\)], "Input",\
+
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Arg0DStructs[re_,im_]", "Subsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(Arg0DStructs[re_, im_] := 
+        Module[{revals, imvals, reimvals, times, result, i, j, 
+            sign}, \[IndentingNewLine]\[IndentingNewLine]times = 
+            Map[First, re]; \[IndentingNewLine]revals = 
+            Map[Last, re]; \[IndentingNewLine]imvals = 
+            Map[Last, im]; \[IndentingNewLine]\[IndentingNewLine]reimvals = 
+            revals\  + \ I\ imvals; \[IndentingNewLine]reimvals = 
+            Arg@reimvals; \[IndentingNewLine]\[IndentingNewLine]Do[\
+\[IndentingNewLine]\[IndentingNewLine]If[\((\ 
+                  reimvals[\([i + 1]\)]\  - 
+                    reimvals[\([i]\)]\ )\) > \ \((3  \[Pi]/
+                      4)\), \[IndentingNewLine]\[IndentingNewLine] (*\ \
+\(Print["\<decrement   \>", \ 
+                    times[\([i]\)], "\<  \>", \ \((\ 
+                      reimvals[\([i + 1]\)]\  - 
+                        reimvals[\([i]\)]\ )\)];\)\ *) \[IndentingNewLine]\
+\[IndentingNewLine]\(Do[
+                  reimvals[\([j]\)] = \ reimvals[\([j]\)] - \ 2\ \[Pi], {j, 
+                    i + 1, Length@
+                      reimvals}];\)\[IndentingNewLine]]; \[IndentingNewLine]\
+\[IndentingNewLine]If[\ 
+              TrueQ[\((reimvals[\([i + 1]\)]\  - 
+                      reimvals[\([i]\)]\ )\) < \ \((\(-3\) \[Pi]/
+                        4)\)], \[IndentingNewLine]sign = 
+                1; \[IndentingNewLine] (*\ \(Print[\ "\<increment   \>", \ 
+                    times[\([i]\)]];\)\ *) \[IndentingNewLine]Do[
+                reimvals[\([j]\)] = \ reimvals[\([j]\)] + \ 2\ \[Pi], {j, 
+                  i + 1, Length@
+                    reimvals}];\[IndentingNewLine]];\[IndentingNewLine]\
+\[IndentingNewLine], \ {i, 1, 
+              Length@reimvals - 
+                1}]; \ \[IndentingNewLine]\[IndentingNewLine]result = 
+            CombineColumns[times, reimvals]\[IndentingNewLine]];\)\)], "Input",\
+
+  InitializationCell->True],
+
+Cell[BoxData[
+    RowBox[{\(General::"spell1"\), \(\(:\)\(\ \)\), "\<\"Possible spelling \
+error: new symbol name \\\"\\!\\(sign\\)\\\" is similar to existing symbol \\\
+\"\\!\\(Sign\\)\\\". \\!\\(\\*ButtonBox[\\\"More\[Ellipsis]\\\", \
+ButtonStyle->\\\"RefGuideLinkText\\\", ButtonFrame->None, \
+ButtonData:>\\\"General::spell1\\\"]\\)\"\>"}]], "Message"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Mult0DStructs[list1_,list2_]", "Subsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(Mult0DStructs[list1_, list2_] := 
+        Module[{vals1, vals2, vals, times, dt, 
+            result}, \[IndentingNewLine]\[IndentingNewLine]times = 
+            Map[First, list1]; \[IndentingNewLine]vals1 = 
+            Map[Last, list1]; \[IndentingNewLine]vals2 = 
+            Map[Last, list2]; \[IndentingNewLine]\[IndentingNewLine]vals = 
+            vals1\ *\ vals2; \[IndentingNewLine]\[IndentingNewLine]result = 
+            CombineColumns[times, vals]\[IndentingNewLine]];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    RowBox[{\(General::"spell1"\), \(\(:\)\(\ \)\), "\<\"Possible spelling \
+error: new symbol name \\\"\\!\\(vals\\)\\\" is similar to existing symbol \\\
+\"\\!\\(val\\)\\\". \\!\\(\\*ButtonBox[\\\"More\[Ellipsis]\\\", ButtonStyle->\
+\\\"RefGuideLinkText\\\", ButtonFrame->None, \
+ButtonData:>\\\"General::spell1\\\"]\\)\"\>"}]], "Message"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Add0DStructs[list1_,list2_]", "Subsection"],
+
+Cell[BoxData[
+    \(\(Add0DStructs[list1_, list2_] := 
+        Module[{vals1, vals2, vals, times, 
+            result}, \[IndentingNewLine]\[IndentingNewLine]times = 
+            Map[First, list1]; \[IndentingNewLine]vals1 = 
+            Map[Last, list1]; \[IndentingNewLine]vals2 = 
+            Map[Last, list2]; \[IndentingNewLine]\[IndentingNewLine]vals = 
+            vals1\  + \ vals2; \[IndentingNewLine]\[IndentingNewLine]result = 
+            CombineColumns[times, vals]\[IndentingNewLine]];\)\)], "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["WriteNRDA0D[data1_,data2_,name_]", "Subsection"],
+
+Cell[BoxData[
+    \(\(WriteNRDA0D[data1_, data2_, name_] := 
+        Module[{args1, args2, i, 
+            tab}, \[IndentingNewLine]\[IndentingNewLine]args1 = 
+            Map[First, data1]; \[IndentingNewLine]args2 = 
+            Map[First, data2]; \[IndentingNewLine]\[IndentingNewLine]If[
+            Length@data1 \[NotEqual] Length@data2, 
+            Print["\<data sets have unequal length!\>"]]; \[IndentingNewLine]\
+\[IndentingNewLine]If[
+            Chop@Total[\((args1 - args2)\)^2] > 
+              0, \(Print["\<arg mismatch: \>", 
+                Chop@Total[\((args1 - 
+                          args2)\)^2]];\)\[IndentingNewLine]]; \
+\[IndentingNewLine]\[IndentingNewLine]tab = 
+            Table[{args1[\([i]\)], Last@data1[\([i]\)], 
+                Last@data2[\([i]\)]}, {i, 1, 
+                Length@data1}]; \[IndentingNewLine]\[IndentingNewLine]Export[
+            ToString@name, 
+            tab, "\<Table\>"]; \
+\[IndentingNewLine]\[IndentingNewLine]Print["\<Wrote \>", 
+            N[ByteCount@tab/1024], "\< KByte of data to file \>", 
+            name];\[IndentingNewLine]];\)\)], "Input",
+  InitializationCell->True]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Time Integrators", "Section"],
+
+Cell[CellGroupData[{
+
+Cell["RK2Int[rhs_,dt_]", "Subsection"],
+
+Cell[BoxData[
+    \(\(RK2Int[rhs_, dt_] := 
+        Module[{i, \ sol}, \[IndentingNewLine]\[IndentingNewLine]sol\  = \ 
+            0\ *\ rhs; \  (*\ 
+            create\ array\ of\ correct\ dimensions\ *) \ \[IndentingNewLine]\
+\[IndentingNewLine]i\  = \ 1; \[IndentingNewLine]While[
+            i < \ Length@
+                rhs, \[IndentingNewLine]\[IndentingNewLine]sol[\([i + 1]\)] = 
+              sol[\([i]\)] + \((dt/2)\) \((rhs[\([i]\)] + 
+                      rhs[\([i + 
+                            1]\)])\); \[IndentingNewLine]\[IndentingNewLine]i \
+= i + 1;\[IndentingNewLine]]; \[IndentingNewLine]\[IndentingNewLine]sol\
+\[IndentingNewLine]];\)\)], "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["RK2Int2DStruct[struct_]", "Subsection"],
+
+Cell[BoxData[
+    \(\(RK2Int2DStruct[struct_] := 
+        Module[{vals, times, dt, 
+            result}, \[IndentingNewLine]\[IndentingNewLine]times = 
+            lookup[struct, Times]; \[IndentingNewLine]vals = 
+            lookup[struct, 
+              TimeSeries]; \[IndentingNewLine]\[IndentingNewLine]dt\  = \ 
+            times[\([2]\)] - 
+              times[\([1]\)]; \[IndentingNewLine]\[IndentingNewLine]result = 
+            RK2Int[vals, dt]; \[IndentingNewLine]\[IndentingNewLine]result = 
+            mapReplace[struct, TimeSeries, 
+              result]\[IndentingNewLine]];\)\)], "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["RK2Int0DStruct[struct_]", "Subsection"],
+
+Cell[BoxData[
+    \(\(RK2Int0DStruct[struct_] := 
+        Module[{vals, times, dt, 
+            result}, \[IndentingNewLine]\[IndentingNewLine]times = 
+            Map[First, struct]; \[IndentingNewLine]vals = 
+            Map[Last, struct]; \[IndentingNewLine]\[IndentingNewLine]dt\  = \ 
+            times[\([2]\)] - 
+              times[\([1]\)]; \[IndentingNewLine]\[IndentingNewLine]result = 
+            RK2Int[vals, dt]; \[IndentingNewLine]\[IndentingNewLine]result = 
+            CombineColumns[times, result]\[IndentingNewLine]];\)\)], "Input",
+  InitializationCell->True]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Surface Integration", "Section"],
+
+Cell[CellGroupData[{
+
+Cell["SurfaceIntegrate[timeSeries_]", "Subsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(SurfaceIntegrate[timeSeries_] := 
+        Module[{interp, result, steps, i, ts, integral, theta, 
+            phi}, \[IndentingNewLine]\[IndentingNewLine]result = {}; \
+\[IndentingNewLine]steps = 
+            Length@lookup[timeSeries, 
+                Times]; \[IndentingNewLine]\[IndentingNewLine]thetaMin = 
+            lookup[timeSeries, XMin]; \[IndentingNewLine]thetaMax = 
+            lookup[timeSeries, XMax]; \[IndentingNewLine]phiMin = 
+            lookup[timeSeries, YMin]; \[IndentingNewLine]phiMax = 
+            lookup[timeSeries, 
+              YMax]; \[IndentingNewLine]\[IndentingNewLine]i = 
+            1; \[IndentingNewLine]While[
+            i \[LessEqual] \ steps, \[IndentingNewLine]ts = 
+              GridSlice[timeSeries, i]; \[IndentingNewLine]interp = 
+              Interpolation[
+                Flatten[ts, 
+                  1]]; \[IndentingNewLine]\[IndentingNewLine]integral = 
+              N@Integrate[
+                  interp[theta, phi]\ Sin[theta], {theta, thetaMin, 
+                    thetaMax}, {phi, phiMin, 
+                    phiMax}]; \[IndentingNewLine]AppendTo[result, 
+              integral]; \[IndentingNewLine]\[IndentingNewLine]i = 
+              i + 1;\[IndentingNewLine]]; \[IndentingNewLine]result\
+\[IndentingNewLine]];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    RowBox[{\(General::"spell1"\), \(\(:\)\(\ \)\), "\<\"Possible spelling \
+error: new symbol name \\\"\\!\\(theta\\)\\\" is similar to existing symbol \
+\\\"\\!\\(dtheta\\)\\\". \\!\\(\\*ButtonBox[\\\"More\[Ellipsis]\\\", \
+ButtonStyle->\\\"RefGuideLinkText\\\", ButtonFrame->None, \
+ButtonData:>\\\"General::spell1\\\"]\\)\"\>"}]], "Message"]
+}, Open  ]]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Interpolation", "Section"],
+
+Cell[CellGroupData[{
+
+Cell["Interpolate0DSets[sets_,order_,t_]", "Subsection"],
+
+Cell[BoxData[
+    \(\(Interpolate0DSets[sets_, order_, t_] := 
+        Module[{len, i}, \[IndentingNewLine]\[IndentingNewLine]len\  = 
+            Length@sets; \
+\[IndentingNewLine]\[IndentingNewLine]Table[\(Interpolation[sets[\([i]\)], 
+                InterpolationOrder \[Rule] \ order]\)[t], {i, 1, 
+              len}]\[IndentingNewLine]];\)\)], "Input",
+  InitializationCell->True]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Convergence Tests", "Section"],
+
+Cell[CellGroupData[{
+
+Cell["ConvFact[integerList_,order_]", "Subsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(ConvFact[integerList_, order_] := 
+        Module[{sort}, \[IndentingNewLine]\[IndentingNewLine]sort = 
+            Sort@integerList; \[IndentingNewLine]\[IndentingNewLine]N@\((\((1\
+\  - \ \((sort[\([1]\)]/\ sort[\([2]\)])\)^
+                      order)\)/\ \((\ \((sort[\([1]\)]/\ sort[\([2]\)])\)^
+                      order - \ \((sort[\([1]\)]/\ sort[\([3]\)])\)^
+                      order)\))\)\[IndentingNewLine]];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    RowBox[{\(General::"spell1"\), \(\(:\)\(\ \)\), "\<\"Possible spelling \
+error: new symbol name \\\"\\!\\(sort\\)\\\" is similar to existing symbol \\\
+\"\\!\\(Sort\\)\\\". \\!\\(\\*ButtonBox[\\\"More\[Ellipsis]\\\", \
+ButtonStyle->\\\"RefGuideLinkText\\\", ButtonFrame->None, \
+ButtonData:>\\\"General::spell1\\\"]\\)\"\>"}]], "Message"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(ConvFact[{48, 64, 72}, 4]\)], "Input"],
+
+Cell[BoxData[
+    \(5.750507099391481`\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(ConvFact[{40, 48, 64}, 4]\)], "Input"],
+
+Cell[BoxData[
+    \(1.5705234285714287`\)], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Conv3Level0DSets[functions_,npoints_,order_]", "Subsection"],
+
+Cell[BoxData[
+    \(\(Conv3Level0DSets[functions_, npoints_, order_] := 
+        Module[{diff12, diff23, 
+            cf}, \[IndentingNewLine]\[IndentingNewLine]cf = 
+            ConvFact[npoints, 
+              order]; \[IndentingNewLine]\[IndentingNewLine]diff12 = 
+            functions[\([1]\)] - 
+              functions[\([2]\)]; \[IndentingNewLine]diff23 = 
+            functions[\([2]\)] - 
+              functions[\([3]\)]; \
+\[IndentingNewLine]\[IndentingNewLine]{diff12/cf, 
+            diff23}\[IndentingNewLine]];\)\)], "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Richardson0DFunctions[functions_,npoints_,order_]", "Subsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(y1\  - \ h1^n\ \((y1\  - \ y2)\)/\((h1^n\  - \ h2^n)\)\)], "Input"],
+
+Cell[BoxData[
+    \(y1 - \(h1\^n\ \((y1 - y2)\)\)\/\(h1\^n - h2\^n\)\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(% // Simplify\)], "Input"],
+
+Cell[BoxData[
+    \(\(\(-h2\^n\)\ y1 + h1\^n\ y2\)\/\(h1\^n - h2\^n\)\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(% /. \ h1\  \[Rule] \ L/N1\)], "Input"],
+
+Cell[BoxData[
+    \(\(\(-h2\^n\)\ y1 + \((L\/N1)\)\^n\ y2\)\/\(\(-h2\^n\) + \
+\((L\/N1)\)\^n\)\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(% /. \ h2\  \[Rule] \ L/N2\)], "Input"],
+
+Cell[BoxData[
+    \(\(\(-\((L\/N2)\)\^n\)\ y1 + \((L\/N1)\)\^n\ y2\)\/\(\((L\/N1)\)\^n - \
+\((L\/N2)\)\^n\)\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(% // FullSimplify\)], "Input"],
+
+Cell[BoxData[
+    \(y1 + \(\((L\/N1)\)\^n\ \((y1 - y2)\)\)\/\(\(-\((L\/N1)\)\^n\) + \
+\((L\/N2)\)\^n\)\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(% // PowerExpand\)], "Input"],
+
+Cell[BoxData[
+    \(y1 + \(L\^n\ N1\^\(-n\)\ \((y1 - y2)\)\)\/\(\(-L\^n\)\ N1\^\(-n\) + \
+L\^n\ N2\^\(-n\)\)\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(% // FullSimplify\)], "Input"],
+
+Cell[BoxData[
+    \(\(N1\^n\ y1 - N2\^n\ y2\)\/\(N1\^n - N2\^n\)\)], "Output"]
+}, Open  ]],
+
+Cell[BoxData[
+    \(\(Richardson0DFunctions[functions_, npoints_, order_] := 
+        Module[{}, \
+\[IndentingNewLine]\[IndentingNewLine]\((functions[\([1]\)]\ npoints[\([1]\)]^
+                    order\  - \ 
+                functions[\([2]\)]\ npoints[\([2]\)]^order)\)/\((\ 
+              npoints[\([1]\)]^order\  - \ 
+                npoints[\([2]\)]^order)\)\[IndentingNewLine]];\)\)], "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Richardson0DFunctionsError[functions_,npoints_,order_]", "Subsection"],
+
+Cell[BoxData[
+    \(\(Richardson0DFunctionsError[functions_, npoints_, order_] := 
+        Module[{}, \
+\[IndentingNewLine]\[IndentingNewLine]\((\((1/npoints[\([2]\)])\)\^order\ \((\
+\((1/npoints[\([2]\)])\) - \((1/
+                        npoints[\([3]\)])\))\)\ \
+\((1/npoints[\([3]\)])\)\^order\ \((functions[\([3]\)]\ \
+\((\(-\((1/npoints[\([1]\)])\)\^order\) + \((1/npoints[\([2]\)])\)\^order)\) \
++ functions[\([2]\)]\ \((\((1/npoints[\([1]\)])\)\^order - \((1/npoints[\([3]\
+\)])\)\^order)\) + 
+                    functions[\([1]\)]\ \((\(-\((1/npoints[\([2]\)])\)\^order\
+\) + \((1/npoints[\([3]\)])\)\^order)\))\))\)/\((\((\((1/npoints[\([2]\)])\)\^\
+order - \((1/npoints[\([3]\)])\)\^order)\)\ \
+\((\((1/npoints[\([2]\)])\)\^order\ \((\((1/npoints[\([2]\)])\) - \((1/
+                              npoints[\([3]\)])\))\)\ \
+\((1/npoints[\([3]\)])\)\^order + \((1/npoints[\([1]\)])\)\^\(1 + order\)\ \
+\((\((1/npoints[\([2]\)])\)\^order - \((1/npoints[\([3]\)])\)\^order)\) + \
+\((1/npoints[\([1]\)])\)\^order\ \((\(-\((1/npoints[\([2]\)])\)\^\(1 + \
+order\)\) + \((1/npoints[\([3]\)])\)\^\(1 + order\))\))\))\)\
+\[IndentingNewLine]];\)\)], "Input",
+  InitializationCell->True]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Radiation Quantities", "Section"],
+
+Cell[CellGroupData[{
+
+Cell["NewsFrom0DPsi4[repsi4_,impsi4_]", "Subsection"],
+
+Cell[BoxData[
+    \(\(NewsFrom0DPsi4[repsi4_, impsi4_] := 
+        Module[{ilist, im}, \[IndentingNewLine]\[IndentingNewLine]ilist = 
+            repsi4 /. \ {x_, y_} \[Rule] \ {x, 
+                  I}; \[IndentingNewLine]\[IndentingNewLine]im\  = \ 
+            Mult0DStructs[ilist, impsi4]; \[IndentingNewLine]psi4 = 
+            Add0DStructs[repsi4, 
+              im]; \[IndentingNewLine]\[IndentingNewLine]RK2Int0DStruct[
+            psi4]\[IndentingNewLine]];\)\)], "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["hFrom0DPsi4[repsi4_,impsi4_]", "Subsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(hFrom0DPsi4[repsi4_, impsi4_] := 
+        Module[{tmp, dt, offset, ilist, im, re, psi4, 
+            times}, \[IndentingNewLine]\[IndentingNewLine]avg[list_] := 
+            Total@list/
+              Length@list; \[IndentingNewLine]\[IndentingNewLine]times = 
+            Map[First, repsi4]; \[IndentingNewLine]\[IndentingNewLine]re = 
+            Map[Last, repsi4]; \[IndentingNewLine]im = 
+            Map[Last, impsi4]; \[IndentingNewLine]\[IndentingNewLine]psi4 = 
+            re\  + \ I\ im; \[IndentingNewLine]\[IndentingNewLine]dt = 
+            times[\([2]\)] - 
+              times[\([1]\)]; \[IndentingNewLine]\[IndentingNewLine]tmp = 
+            RK2Int[psi4, dt]; \[IndentingNewLine]\[IndentingNewLine]offset = 
+            avg@tmp; \[IndentingNewLine]tmp\  = \ 
+            tmp\  - \ offset; \[IndentingNewLine]tmp = 
+            RK2Int[tmp, dt]; \[IndentingNewLine]\[IndentingNewLine]offset = 
+            avg@tmp; \[IndentingNewLine]tmp = 
+            tmp\  - \ 
+              offset; \[IndentingNewLine]\[IndentingNewLine]CombineColumns[
+            times, tmp]\[IndentingNewLine]];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    RowBox[{\(General::"spell1"\), \(\(:\)\(\ \)\), "\<\"Possible spelling \
+error: new symbol name \\\"\\!\\(offset\\)\\\" is similar to existing symbol \
+\\\"\\!\\(Offset\\)\\\". \\!\\(\\*ButtonBox[\\\"More\[Ellipsis]\\\", \
+ButtonStyle->\\\"RefGuideLinkText\\\", ButtonFrame->None, \
+ButtonData:>\\\"General::spell1\\\"]\\)\"\>"}]], "Message"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["hFrom0DPsi4B[repsi4_,impsi4_]", "Subsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(hFrom0DPsi4B[repsi4_, impsi4_] := 
+        Module[{tmp, dt, offset, ilist, im, re, psi4, 
+            times}, \[IndentingNewLine]\[IndentingNewLine]avg[list_] := 
+            Total@list/
+              Length@list; \[IndentingNewLine]\[IndentingNewLine]times = 
+            Map[First, repsi4]; \[IndentingNewLine]\[IndentingNewLine]re = 
+            Map[Last, repsi4]; \[IndentingNewLine]im = 
+            Map[Last, impsi4]; \[IndentingNewLine]\[IndentingNewLine]psi4 = 
+            re\  + \ I\ im; \[IndentingNewLine]\[IndentingNewLine]dt = 
+            times[\([2]\)] - 
+              times[\([1]\)]; \[IndentingNewLine]\[IndentingNewLine]tmp = 
+            RK2Int[psi4, dt]; \[IndentingNewLine]\[IndentingNewLine]offset = 
+            avg@tmp; \[IndentingNewLine]tmp\  = \ 
+            tmp\  - \ offset; \[IndentingNewLine]tmp = 
+            RK2Int[tmp, dt]; \[IndentingNewLine]\[IndentingNewLine]offset = 
+            Last@tmp; \[IndentingNewLine]tmp = 
+            tmp\  - \ 
+              offset; \[IndentingNewLine]\[IndentingNewLine]CombineColumns[
+            times, tmp]\[IndentingNewLine]];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    RowBox[{\(General::"spell1"\), \(\(:\)\(\ \)\), "\<\"Possible spelling \
+error: new symbol name \\\"\\!\\(offset\\)\\\" is similar to existing symbol \
+\\\"\\!\\(Offset\\)\\\". \\!\\(\\*ButtonBox[\\\"More\[Ellipsis]\\\", \
+ButtonStyle->\\\"RefGuideLinkText\\\", ButtonFrame->None, \
+ButtonData:>\\\"General::spell1\\\"]\\)\"\>"}]], "Message"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["hFrom0DPsi4[repsi4_,impsi4_,Offset_?ListQ]", "Subsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(hFrom0DPsi4[repsi4_, impsi4_, Offset_?ListQ] := 
+        Module[{tmp, dt, offset, ilist, im, re, psi4, 
+            times}, \[IndentingNewLine]\[IndentingNewLine]avg[list_] := 
+            Total@list/
+              Length@list; \[IndentingNewLine]\[IndentingNewLine]times = 
+            Map[First, repsi4]; \[IndentingNewLine]\[IndentingNewLine]re = 
+            Map[Last, repsi4]; \[IndentingNewLine]im = 
+            Map[Last, impsi4]; \[IndentingNewLine]\[IndentingNewLine]psi4 = 
+            re\  + \ I\ im; \[IndentingNewLine]\[IndentingNewLine]dt = 
+            times[\([2]\)] - 
+              times[\([1]\)]; \[IndentingNewLine]\[IndentingNewLine]tmp = 
+            RK2Int[psi4, dt]; \[IndentingNewLine]\[IndentingNewLine]offset = 
+            If[Offset[\([1]\)], avg@tmp, 0]; \[IndentingNewLine]tmp\  = \ 
+            tmp\  - \ offset; \[IndentingNewLine]tmp = 
+            RK2Int[tmp, dt]; \[IndentingNewLine]\[IndentingNewLine]offset = 
+            If[Offset[\([2]\)], avg@tmp, 0]; \[IndentingNewLine]tmp = 
+            tmp\  - \ 
+              offset; \[IndentingNewLine]\[IndentingNewLine]CombineColumns[
+            times, tmp]\[IndentingNewLine]];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    RowBox[{\(General::"spell1"\), \(\(:\)\(\ \)\), "\<\"Possible spelling \
+error: new symbol name \\\"\\!\\(offset\\)\\\" is similar to existing symbol \
+\\\"\\!\\(Offset\\)\\\". \\!\\(\\*ButtonBox[\\\"More\[Ellipsis]\\\", \
+ButtonStyle->\\\"RefGuideLinkText\\\", ButtonFrame->None, \
+ButtonData:>\\\"General::spell1\\\"]\\)\"\>"}]], "Message"],
+
+Cell[BoxData[
+    RowBox[{\(General::"spell1"\), \(\(:\)\(\ \)\), "\<\"Possible spelling \
+error: new symbol name \\\"\\!\\(times\\)\\\" is similar to existing symbol \
+\\\"\\!\\(Times\\)\\\". \\!\\(\\*ButtonBox[\\\"More\[Ellipsis]\\\", \
+ButtonStyle->\\\"RefGuideLinkText\\\", ButtonFrame->None, \
+ButtonData:>\\\"General::spell1\\\"]\\)\"\>"}]], "Message"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+  "ADMFit1Res",
+  Cell[BoxData[
+      \(\([filesradii_\ , M_]\)\)], "Input"]
+}], "Subsection"],
+
+Cell[BoxData[
+    \(\(ADMFit1Res[filesradii_, M_] := 
+        Module[{items, filenames, radii, admData, i, mInitial, mLast, 
+            convTest, r1, r2, r3, m1, m2, m3, m1E, m2E, m3E, m12, m13, m23, 
+            m12E, m13E, m23E, mrad1, mrad2, mrad3, mrad12, mrad13, 
+            mrad23}, \[IndentingNewLine]\[IndentingNewLine]filenames = 
+            Map[First, filesradii]; \[IndentingNewLine]radii = 
+            Map[Last, 
+              filesradii]; \[IndentingNewLine]\[IndentingNewLine]items = 
+            Length@filenames; \[IndentingNewLine]\[IndentingNewLine]admData = 
+            Table[ReadADMData[filenames[\([i]\)]], {i, 1, 
+                items}]; \[IndentingNewLine]\[IndentingNewLine]mInitial = 
+            Table[First@\((MADM /. admData[\([i]\)])\), {i, 1, items}]/
+              M; \[IndentingNewLine]mLast = 
+            Table[Last@\((MADM /. admData[\([i]\)])\), {i, 1, items}]/
+              M; \[IndentingNewLine]\[IndentingNewLine]r1 = 
+            radii[\([items - 2]\)]; \[IndentingNewLine]r2 = 
+            radii[\([items - 1]\)]; \[IndentingNewLine]r3 = 
+            radii[\([items]\)]; \[IndentingNewLine]\[IndentingNewLine]m1 = 
+            mInitial[\([items - 2]\)]; \[IndentingNewLine]m2 = 
+            mInitial[\([items - 1]\)]; \[IndentingNewLine]m3 = 
+            mInitial[\([items]\)]; \[IndentingNewLine]\[IndentingNewLine]m1E \
+= mLast[\([items - 2]\)]; \[IndentingNewLine]m2E = 
+            mLast[\([items - 1]\)]; \[IndentingNewLine]m3E = 
+            mLast[\([items]\)]; \
+\[IndentingNewLine]\[IndentingNewLine]convTest = \((1 - \((r1/r2)\)^
+                      n)\)/\((\((r1/r2)\)^n - \((r1/r3)\)^
+                      n)\) \[Equal] \((m1 - m2)\)/\((m2 - 
+                    m3)\); \[IndentingNewLine]Print["\<Estimated radial \
+convergence factor for ADM mass = \>", 
+            FindRoot[
+              convTest, {n, 
+                1}]]; \[IndentingNewLine]\[IndentingNewLine]convTest = \((1 - \
+\((r1/r2)\)^n)\)/\((\((r1/r2)\)^n - \((r1/r3)\)^n)\) \[Equal] \((m1E - 
+                    m2E)\)/\((m2E - 
+                    m3E)\); \[IndentingNewLine]Print["\<Estimated radial \
+convergence factor for final Bondi mass = \>", 
+            FindRoot[
+              convTest, {n, 1}]]; \[IndentingNewLine]\[IndentingNewLine]m12 = 
+            Richardson0DFunctions[{m1, m2}, {r1, r2}, 
+              1]; \[IndentingNewLine]m13 = 
+            Richardson0DFunctions[{m1, m3}, {r1, r3}, 
+              1]; \[IndentingNewLine]m23 = 
+            Richardson0DFunctions[{m2, m3}, {r2, r3}, 
+              1]; \[IndentingNewLine]\[IndentingNewLine]m12E = 
+            Richardson0DFunctions[{m1E, m2E}, {r1, r2}, 
+              1]; \[IndentingNewLine]m13E = 
+            Richardson0DFunctions[{m1E, m3E}, {r1, r3}, 
+              1]; \[IndentingNewLine]m23E = 
+            Richardson0DFunctions[{m2E, m3E}, {r2, r3}, 
+              1]; \[IndentingNewLine]\[IndentingNewLine]Print["\<Results & \
+Richardson extrapolation for ADM mass:\>", \[IndentingNewLine]"\<\n 1: \>", 
+            m1, "\<\t 1-2: \>", m12, \[IndentingNewLine]"\<\n 2: \>", 
+            m2, "\<\t 1-3: \>", m13, \[IndentingNewLine]"\<\n 3: \>", 
+            m3, "\<\t 2-3: \>", m23, \[IndentingNewLine]"\<\n final: \>", \ 
+            m23, \ "\<\[PlusMinus]\>", \ 
+            Abs[m23 - m3], \ "\< relative error: \>", \ 
+            Abs[m23 - m3]/
+              m23\[IndentingNewLine]]; \
+\[IndentingNewLine]\[IndentingNewLine]Print["\<Results & Richardson \
+extrapolation for final Bondi mass:\>", "\<\n 1: \>", m1E, "\<\t 1-2: \>", 
+            m12E, \[IndentingNewLine]"\<\n 2: \>", m2E, "\<\t 1-3: \>", 
+            m13E, \[IndentingNewLine]"\<\n 3: \>", m3E, "\<\t 2-3: \>", 
+            m23E, \[IndentingNewLine]"\<\n final: \>", \ 
+            m23E, \ "\<\[PlusMinus]\>", \ 
+            Abs[m23E - m3E], \ "\< relative error: \>", \ 
+            Abs[m23E - m3E]/
+              m23E\[IndentingNewLine]]; \
+\[IndentingNewLine]\[IndentingNewLine]mrad1 = \((m1 - m1E)\)/
+              m1; \[IndentingNewLine]mrad2 = \((m2 - m2E)\)/
+              m2; \[IndentingNewLine]mrad3 = \((m3 - m3E)\)/
+              m3; \[IndentingNewLine]\[IndentingNewLine]convTest = \((1 - \
+\((r1/r2)\)^n)\)/\((\((r1/r2)\)^n - \((r1/r3)\)^n)\) \[Equal] \((mrad1 - 
+                    mrad2)\)/\((mrad2 - 
+                    mrad3)\); \[IndentingNewLine]Print["\<Estimated radial \
+convergence factor for radiated energy = \>", 
+            FindRoot[
+              convTest, {n, 
+                1}]]; \[IndentingNewLine]\[IndentingNewLine]mrad12 = 
+            Richardson0DFunctions[{mrad1, mrad2}, {r1, r2}, 
+              2]; \[IndentingNewLine]mrad13 = 
+            Richardson0DFunctions[{mrad1, mrad3}, {r1, r3}, 
+              2]; \[IndentingNewLine]mrad23 = 
+            Richardson0DFunctions[{mrad2, mrad3}, {r2, r3}, 
+              
+              2]; \[IndentingNewLine]\[IndentingNewLine]Print["\<Results & \
+Richardson extrapolation for radiated energies:\>", "\<\n 1: \>", 
+            mrad1, "\<\t 1-2: \>", mrad12, \[IndentingNewLine]"\<\n 2: \>", 
+            mrad2, "\<\t 1-3: \>", mrad13, \[IndentingNewLine]"\<\n 3: \>", 
+            mrad3, "\<\t 2-3: \>", 
+            mrad23, \[IndentingNewLine]"\<\n final: \>", \ 
+            mrad23, \ "\<\[PlusMinus]\>", \ 
+            Abs[mrad23 - mrad3], \ "\< relative error: \>", \ 
+            Abs[mrad23 - mrad3]/
+              mrad23\[IndentingNewLine]];\[IndentingNewLine]];\)\)], "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+  "ADMFit1Rad",
+  Cell[BoxData[
+      \(\([filesres_, order_, M_]\)\)], "Input"]
+}], "Subsection"],
+
+Cell[BoxData[
+    \(\(ADMFit1Rad[filesres_, order_, M_] := 
+        Module[{items, filenames, resolutions, admData, i, mInitial, mLast, 
+            convTest, r1, r2, r3, m1, m2, m3, m1E, m2E, m3E, m12, m13, m23, 
+            m12E, m13E, m23E, mrad1, mrad2, mrad3, mrad12, mrad13, 
+            mrad23}, \[IndentingNewLine]\[IndentingNewLine]filenames = 
+            Map[First, filesres]; \[IndentingNewLine]resolutions = 
+            Map[Last, 
+              filesres]; \[IndentingNewLine]\[IndentingNewLine]items = 
+            Length@filenames; \[IndentingNewLine]\[IndentingNewLine]admData = 
+            Table[ReadADMData[filenames[\([i]\)]], {i, 1, 
+                items}]; \[IndentingNewLine]\[IndentingNewLine]mInitial = 
+            Table[First@\((MADM /. admData[\([i]\)])\), {i, 1, items}]/
+              M; \[IndentingNewLine]mLast = 
+            Table[Last@\((MADM /. admData[\([i]\)])\), {i, 1, items}]/
+              M; \[IndentingNewLine]\[IndentingNewLine]r1 = 
+            resolutions[\([items - 2]\)]; \[IndentingNewLine]r2 = 
+            resolutions[\([items - 1]\)]; \[IndentingNewLine]r3 = 
+            resolutions[\([items]\)]; \
+\[IndentingNewLine]\[IndentingNewLine]m1 = 
+            mInitial[\([items - 2]\)]; \[IndentingNewLine]m2 = 
+            mInitial[\([items - 1]\)]; \[IndentingNewLine]m3 = 
+            mInitial[\([items]\)]; \[IndentingNewLine]\[IndentingNewLine]m1E \
+= mLast[\([items - 2]\)]; \[IndentingNewLine]m2E = 
+            mLast[\([items - 1]\)]; \[IndentingNewLine]m3E = 
+            mLast[\([items]\)]; \
+\[IndentingNewLine]\[IndentingNewLine]convTest = \((1 - \((r1/r2)\)^
+                      n)\)/\((\((r1/r2)\)^n - \((r1/r3)\)^
+                      n)\) \[Equal] \((m1 - m2)\)/\((m2 - 
+                    m3)\); \[IndentingNewLine]Print["\<Estimated convergence \
+factor for ADM mass = \>", 
+            FindRoot[
+              convTest, {n, 
+                2}]]; \[IndentingNewLine]\[IndentingNewLine]convTest = \((1 - \
+\((r1/r2)\)^n)\)/\((\((r1/r2)\)^n - \((r1/r3)\)^n)\) \[Equal] \((m1E - 
+                    m2E)\)/\((m2E - 
+                    m3E)\); \[IndentingNewLine]Print["\<Estimated radial \
+convergence factor for final Bondi mass = \>", 
+            FindRoot[
+              convTest, {n, 2}]]; \[IndentingNewLine]\[IndentingNewLine]m12 = 
+            Richardson0DFunctions[{m1, m2}, {r1, r2}, 
+              1]; \[IndentingNewLine]m13 = 
+            Richardson0DFunctions[{m1, m3}, {r1, r3}, 
+              1]; \[IndentingNewLine]m23 = 
+            Richardson0DFunctions[{m2, m3}, {r2, r3}, 
+              1]; \[IndentingNewLine]\[IndentingNewLine]m12E = 
+            Richardson0DFunctions[{m1E, m2E}, {r1, r2}, 
+              1]; \[IndentingNewLine]m13E = 
+            Richardson0DFunctions[{m1E, m3E}, {r1, r3}, 
+              1]; \[IndentingNewLine]m23E = 
+            Richardson0DFunctions[{m2E, m3E}, {r2, r3}, 
+              1]; \[IndentingNewLine]\[IndentingNewLine]Print["\<Results & \
+Richardson extrapolation for ADM mass:\>", \[IndentingNewLine]"\<\n 1: \>", 
+            m1, "\<\t 1-2: \>", m12, \[IndentingNewLine]"\<\n 2: \>", 
+            m2, "\<\t 1-3: \>", m13, \[IndentingNewLine]"\<\n 3: \>", 
+            m3, "\<\t 2-3: \>", m23, \[IndentingNewLine]"\<\n final: \>", \ 
+            m23, \ "\<\[PlusMinus]\>", \ 
+            Abs[m23 - m3], \ "\< relative error: \>", \ 
+            Abs[m23 - m3]/
+              m23\[IndentingNewLine]]; \
+\[IndentingNewLine]\[IndentingNewLine]Print["\<Results & Richardson \
+extrapolation for final Bondi mass:\>", "\<\n 1: \>", m1E, "\<\t 1-2: \>", 
+            m12E, \[IndentingNewLine]"\<\n 2: \>", m2E, "\<\t 1-3: \>", 
+            m13E, \[IndentingNewLine]"\<\n 3: \>", m3E, "\<\t 2-3: \>", 
+            m23E, \[IndentingNewLine]"\<\n final: \>", \ 
+            m23E, \ "\<\[PlusMinus]\>", \ 
+            Abs[m23E - m3E], \ "\< relative error: \>", \ 
+            Abs[m23E - m3E]/
+              m23E\[IndentingNewLine]]; \
+\[IndentingNewLine]\[IndentingNewLine]mrad1 = \((m1 - m1E)\)/
+              m1; \[IndentingNewLine]mrad2 = \((m2 - m2E)\)/
+              m2; \[IndentingNewLine]mrad3 = \((m3 - m3E)\)/
+              m3; \[IndentingNewLine]\[IndentingNewLine]convTest = \((1 - \
+\((r1/r2)\)^n)\)/\((\((r1/r2)\)^n - \((r1/r3)\)^n)\) \[Equal] \((mrad1 - 
+                    mrad2)\)/\((mrad2 - 
+                    mrad3)\); \[IndentingNewLine]Print["\<Estimated radial \
+convergence factor for radiated energy = \>", 
+            FindRoot[
+              convTest, {n, 
+                2}]]; \[IndentingNewLine]\[IndentingNewLine]mrad12 = 
+            Richardson0DFunctions[{mrad1, mrad2}, {r1, r2}, 
+              2]; \[IndentingNewLine]mrad13 = 
+            Richardson0DFunctions[{mrad1, mrad3}, {r1, r3}, 
+              2]; \[IndentingNewLine]mrad23 = 
+            Richardson0DFunctions[{mrad2, mrad3}, {r2, r3}, 
+              2]; \[IndentingNewLine]\[IndentingNewLine]Print["\<Results & \
+Richardson extrapolation for radiated energies:\>", "\<\n 1: \>", 
+            mrad1, "\<\t 1-2: \>", mrad12, \[IndentingNewLine]"\<\n 2: \>", 
+            mrad2, "\<\t 1-3: \>", mrad13, \[IndentingNewLine]"\<\n 3: \>", 
+            mrad3, "\<\t 2-3: \>", 
+            mrad23, \[IndentingNewLine]"\<\n final: \>", \ 
+            mrad23, \ "\<\[PlusMinus]\>", \ 
+            Abs[mrad23 - mrad3], \ "\< relative error: \>", \ 
+            Abs[mrad23 - mrad3]/mrad23];\[IndentingNewLine]];\)\)], "Input",
+  InitializationCell->True]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Data Analysis", "Section"],
+
+Cell[CellGroupData[{
+
+Cell["Overlap0DSets[function1_,function2_,minmax_]", "Subsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(Overlap0DSets[function1_, function2_, minmax_] := 
+        Module[{x, min, max}, \[IndentingNewLine]\[IndentingNewLine]x = 
+            minmax[\([1]\)]; \[IndentingNewLine]min = 
+            minmax[\([2]\)]; \[IndentingNewLine]max = 
+            minmax[\([3]\)]; \[IndentingNewLine]\[IndentingNewLine]NIntegrate[
+            function1*function2, {t, min, 
+              max}]\[IndentingNewLine]];\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    RowBox[{\(General::"spell1"\), \(\(:\)\(\ \)\), "\<\"Possible spelling \
+error: new symbol name \\\"\\!\\(min\\)\\\" is similar to existing symbol \
+\\\"\\!\\(Min\\)\\\". \\!\\(\\*ButtonBox[\\\"More\[Ellipsis]\\\", \
+ButtonStyle->\\\"RefGuideLinkText\\\", ButtonFrame->None, \
+ButtonData:>\\\"General::spell1\\\"]\\)\"\>"}]], "Message"],
+
+Cell[BoxData[
+    RowBox[{\(General::"spell1"\), \(\(:\)\(\ \)\), "\<\"Possible spelling \
+error: new symbol name \\\"\\!\\(max\\)\\\" is similar to existing symbol \
+\\\"\\!\\(Max\\)\\\". \\!\\(\\*ButtonBox[\\\"More\[Ellipsis]\\\", \
+ButtonStyle->\\\"RefGuideLinkText\\\", ButtonFrame->None, \
+ButtonData:>\\\"General::spell1\\\"]\\)\"\>"}]], "Message"]
+}, Open  ]]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["End Package", "Section"],
+
+Cell[BoxData[{
+    \(\(End[];\)\), "\[IndentingNewLine]", 
+    \(\(EndPackage[];\)\)}], "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Compare Time Integration Result with Exact Solution", "Section"],
+
+Cell[BoxData[
+    \(f[t_] := Sin[2\ \[Pi]\ t/17] Exp[\(-t\)/9]\)], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Y22 = 
+      ComplexExpand@\(Re@SphericalHarmonicY[2, 2, theta, phi]\)\)], "Input"],
+
+Cell[BoxData[
+    \(1\/4\ \@\(15\/\(2\ \[Pi]\)\)\ Cos[2\ phi]\ Sin[theta]\^2\)], "Output"]
+}, Open  ]],
+
+Cell[BoxData[
+    \(f22[theta_, phi_, t_] := 
+      Sin[2\ \[Pi]\ t/17] Exp[\(-t\)/9]\ Y22\)], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Plot[f[t], {t, 0, 50}]\)], "Input"],
+
+Cell[GraphicsData["PostScript", "\<\
+%!
+%%Creator: Mathematica
+%%AspectRatio: .61803 
+MathPictureStart
+/Mabs {
+Mgmatrix idtransform
+Mtmatrix dtransform
+} bind def
+/Mabsadd { Mabs
+3 -1 roll add
+3 1 roll add
+exch } bind def
+%% Graphics
+%%IncludeResource: font Courier
+%%IncludeFont: Courier
+/Courier findfont 10  scalefont  setfont
+% Scaling calculations
+0.0238095 0.0190476 0.282375 1.0556 [
+[.21429 .26987 -6 -9 ]
+[.21429 .26987 6 0 ]
+[.40476 .26987 -6 -9 ]
+[.40476 .26987 6 0 ]
+[.59524 .26987 -6 -9 ]
+[.59524 .26987 6 0 ]
+[.78571 .26987 -6 -9 ]
+[.78571 .26987 6 0 ]
+[.97619 .26987 -6 -9 ]
+[.97619 .26987 6 0 ]
+[.01131 .07126 -24 -4.5 ]
+[.01131 .07126 0 4.5 ]
+[.01131 .17681 -24 -4.5 ]
+[.01131 .17681 0 4.5 ]
+[.01131 .38793 -18 -4.5 ]
+[.01131 .38793 0 4.5 ]
+[.01131 .49349 -18 -4.5 ]
+[.01131 .49349 0 4.5 ]
+[.01131 .59905 -18 -4.5 ]
+[.01131 .59905 0 4.5 ]
+[ 0 0 0 0 ]
+[ 1 .61803 0 0 ]
+] MathScale
+% Start of Graphics
+1 setlinecap
+1 setlinejoin
+newpath
+0 g
+.25 Mabswid
+[ ] 0 setdash
+.21429 .28237 m
+.21429 .28862 L
+s
+[(10)] .21429 .26987 0 1 Mshowa
+.40476 .28237 m
+.40476 .28862 L
+s
+[(20)] .40476 .26987 0 1 Mshowa
+.59524 .28237 m
+.59524 .28862 L
+s
+[(30)] .59524 .26987 0 1 Mshowa
+.78571 .28237 m
+.78571 .28862 L
+s
+[(40)] .78571 .26987 0 1 Mshowa
+.97619 .28237 m
+.97619 .28862 L
+s
+[(50)] .97619 .26987 0 1 Mshowa
+.125 Mabswid
+.0619 .28237 m
+.0619 .28612 L
+s
+.1 .28237 m
+.1 .28612 L
+s
+.1381 .28237 m
+.1381 .28612 L
+s
+.17619 .28237 m
+.17619 .28612 L
+s
+.25238 .28237 m
+.25238 .28612 L
+s
+.29048 .28237 m
+.29048 .28612 L
+s
+.32857 .28237 m
+.32857 .28612 L
+s
+.36667 .28237 m
+.36667 .28612 L
+s
+.44286 .28237 m
+.44286 .28612 L
+s
+.48095 .28237 m
+.48095 .28612 L
+s
+.51905 .28237 m
+.51905 .28612 L
+s
+.55714 .28237 m
+.55714 .28612 L
+s
+.63333 .28237 m
+.63333 .28612 L
+s
+.67143 .28237 m
+.67143 .28612 L
+s
+.70952 .28237 m
+.70952 .28612 L
+s
+.74762 .28237 m
+.74762 .28612 L
+s
+.82381 .28237 m
+.82381 .28612 L
+s
+.8619 .28237 m
+.8619 .28612 L
+s
+.9 .28237 m
+.9 .28612 L
+s
+.9381 .28237 m
+.9381 .28612 L
+s
+.25 Mabswid
+0 .28237 m
+1 .28237 L
+s
+.02381 .07126 m
+.03006 .07126 L
+s
+[(-0.2)] .01131 .07126 1 0 Mshowa
+.02381 .17681 m
+.03006 .17681 L
+s
+[(-0.1)] .01131 .17681 1 0 Mshowa
+.02381 .38793 m
+.03006 .38793 L
+s
+[(0.1)] .01131 .38793 1 0 Mshowa
+.02381 .49349 m
+.03006 .49349 L
+s
+[(0.2)] .01131 .49349 1 0 Mshowa
+.02381 .59905 m
+.03006 .59905 L
+s
+[(0.3)] .01131 .59905 1 0 Mshowa
+.125 Mabswid
+.02381 .09237 m
+.02756 .09237 L
+s
+.02381 .11348 m
+.02756 .11348 L
+s
+.02381 .13459 m
+.02756 .13459 L
+s
+.02381 .1557 m
+.02756 .1557 L
+s
+.02381 .19793 m
+.02756 .19793 L
+s
+.02381 .21904 m
+.02756 .21904 L
+s
+.02381 .24015 m
+.02756 .24015 L
+s
+.02381 .26126 m
+.02756 .26126 L
+s
+.02381 .30349 m
+.02756 .30349 L
+s
+.02381 .3246 m
+.02756 .3246 L
+s
+.02381 .34571 m
+.02756 .34571 L
+s
+.02381 .36682 m
+.02756 .36682 L
+s
+.02381 .40905 m
+.02756 .40905 L
+s
+.02381 .43016 m
+.02756 .43016 L
+s
+.02381 .45127 m
+.02756 .45127 L
+s
+.02381 .47238 m
+.02756 .47238 L
+s
+.02381 .51461 m
+.02756 .51461 L
+s
+.02381 .53572 m
+.02756 .53572 L
+s
+.02381 .55683 m
+.02756 .55683 L
+s
+.02381 .57794 m
+.02756 .57794 L
+s
+.02381 .05014 m
+.02756 .05014 L
+s
+.02381 .02903 m
+.02756 .02903 L
+s
+.02381 .00792 m
+.02756 .00792 L
+s
+.25 Mabswid
+.02381 0 m
+.02381 .61803 L
+s
+0 0 m
+1 0 L
+1 .61803 L
+0 .61803 L
+closepath
+clip
+newpath
+.5 Mabswid
+.02381 .28238 m
+.03279 .45597 L
+s
+.03279 .45597 m
+.0425 .61803 L
+s
+.14859 .61803 m
+.16287 .48351 L
+.18427 .29397 L
+.19402 .21964 L
+.20452 .15108 L
+.21437 .09904 L
+.22354 .06186 L
+.22816 .04726 L
+.23311 .03473 L
+.23593 .02897 L
+.23859 .02446 L
+.24097 .02118 L
+.24358 .01837 L
+.24481 .01732 L
+.24614 .0164 L
+.24754 .01564 L
+.24884 .01514 L
+.25015 .01483 L
+.25138 .01472 L
+.25249 .01475 L
+.2537 .01495 L
+.25445 .01515 L
+.25515 .01539 L
+.25646 .01598 L
+.25787 .01681 L
+.2594 .01793 L
+.26215 .02054 L
+.26468 .02357 L
+.26939 .03076 L
+.27444 .04049 L
+.28354 .06269 L
+.30422 .12894 L
+.32407 .20155 L
+.34563 .27614 L
+.35569 .30613 L
+.36637 .33329 L
+.37637 .35384 L
+.38553 .36825 L
+.39011 .37385 L
+.39492 .37861 L
+.39976 .38222 L
+.40249 .38377 L
+.40504 .38488 L
+.40618 .38529 L
+.40743 .38566 L
+.40852 .38592 L
+.40968 .38615 L
+.41072 .3863 L
+.41187 .38641 L
+.41291 .38646 L
+Mistroke
+.41389 .38646 L
+.41511 .38641 L
+.41627 .38631 L
+.41731 .38617 L
+.41844 .38596 L
+.42098 .38531 L
+.42333 .38449 L
+.42795 .38229 L
+.43294 .37908 L
+.44197 .37135 L
+.46256 .3469 L
+.48219 .31921 L
+.50367 .28965 L
+.51358 .27761 L
+.52417 .26639 L
+.5341 .25768 L
+.54326 .25132 L
+.54813 .24862 L
+.55349 .24618 L
+.55888 .2443 L
+.56182 .24351 L
+.56458 .24291 L
+.56718 .24248 L
+.56847 .24231 L
+.56966 .24218 L
+.57082 .24207 L
+.57187 .242 L
+.57304 .24194 L
+.57429 .2419 L
+.57495 .2419 L
+.57564 .24189 L
+.57687 .24191 L
+.57756 .24193 L
+.57821 .24196 L
+.57967 .24204 L
+.58095 .24214 L
+.58211 .24225 L
+.58473 .24259 L
+.58702 .24296 L
+.58954 .24345 L
+.59465 .24471 L
+.60383 .24775 L
+.62459 .25735 L
+.66482 .27916 L
+.68331 .28752 L
+.69378 .29128 L
+.70352 .29405 L
+.71322 .29609 L
+.71865 .29692 L
+.72358 .29748 L
+Mistroke
+.72629 .29771 L
+.72879 .29787 L
+.73154 .29801 L
+.73292 .29805 L
+.7337 .29807 L
+.73444 .29809 L
+.73508 .2981 L
+.73577 .29811 L
+.73699 .29812 L
+.73768 .29812 L
+.73841 .29811 L
+.73973 .2981 L
+.74038 .29809 L
+.74107 .29807 L
+.74233 .29804 L
+.74468 .29795 L
+.74707 .29782 L
+.74962 .29765 L
+.75422 .29726 L
+.76468 .29599 L
+.77571 .29419 L
+.78576 .29226 L
+.82568 .28383 L
+.84395 .28057 L
+.85434 .27908 L
+.86408 .27797 L
+.87363 .27714 L
+.879 .2768 L
+.88391 .27656 L
+.88658 .27646 L
+.88906 .27639 L
+.89178 .27632 L
+.8933 .2763 L
+.89468 .27628 L
+.896 .27627 L
+.89722 .27626 L
+.89785 .27625 L
+.89855 .27625 L
+.89928 .27625 L
+.89996 .27625 L
+.90122 .27626 L
+.90236 .27626 L
+.90368 .27628 L
+.90493 .27629 L
+.9073 .27633 L
+.90952 .27638 L
+.91458 .27653 L
+.91951 .27672 L
+.92483 .27698 L
+.94325 .27819 L
+Mistroke
+.97619 .2809 L
+Mfstroke
+% End of Graphics
+MathPictureEnd
+\
+\>"], "Graphics",
+  ImageSize->{288, 177.938},
+  ImageMargins->{{43, 0}, {0, 0}},
+  ImageRegion->{{0, 1}, {0, 1}},
+  ImageCacheValid->False],
+
+Cell[BoxData[
+    TagBox[\(\[SkeletonIndicator]  Graphics  \[SkeletonIndicator]\),
+      False,
+      Editable->False]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(y[t] /. 
+      First@\(First@
+          DSolve[{\(y'\)[t] \[Equal] f[t], y[0] \[Equal] 0}, y[t], 
+            t]\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(153\ \[ExponentialE]\^\(\(-t\)/9\)\ \((18\ \[ExponentialE]\^\(t/9\)\ \
+\[Pi] - 18\ \[Pi]\ Cos[\(2\ \[Pi]\ t\)\/17] - 17\ Sin[\(2\ \[Pi]\ t\)\/17])\)\
+\)\/\(289 + 324\ \[Pi]\^2\)\)], "Output"]
+}, Open  ]],
+
+Cell[BoxData[
+    \(yanalytic[t_] := Evaluate@%\)], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(yanalytic[5]\)], "Input"],
+
+Cell[BoxData[
+    \(\(153\ \((18\ \[ExponentialE]\^\(5/9\)\ \[Pi] - 18\ \[Pi]\ Cos[\(10\ \
+\[Pi]\)\/17] - 17\ Sin[\(10\ \[Pi]\)\/17])\)\)\/\(\[ExponentialE]\^\(5/9\)\ \
+\((289 + 324\ \[Pi]\^2)\)\)\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(ynum = 
+      y /. First@
+          NDSolve[{\(y'\)[t] \[Equal] f[t], y[0] \[Equal] 0}, 
+            y, {t, 0, 50}]\)], "Input"],
+
+Cell[BoxData[
+    TagBox[\(InterpolatingFunction[{{0.`, 50.`}}, "<>"]\),
+      False,
+      Editable->False]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(accurateGraph = Plot[{ynum[t], yanalytic[t]}, {t, 0, 50}]\)], "Input"],
+
+Cell[GraphicsData["PostScript", "\<\
+%!
+%%Creator: Mathematica
+%%AspectRatio: .61803 
+MathPictureStart
+/Mabs {
+Mgmatrix idtransform
+Mtmatrix dtransform
+} bind def
+/Mabsadd { Mabs
+3 -1 roll add
+3 1 roll add
+exch } bind def
+%% Graphics
+%%IncludeResource: font Courier
+%%IncludeFont: Courier
+/Courier findfont 10  scalefont  setfont
+% Scaling calculations
+0.0238095 0.0190476 -0.361885 0.280064 [
+[.21429 .18574 -6 -9 ]
+[.21429 .18574 6 0 ]
+[.40476 .18574 -6 -9 ]
+[.40476 .18574 6 0 ]
+[.59524 .18574 -6 -9 ]
+[.59524 .18574 6 0 ]
+[.78571 .18574 -6 -9 ]
+[.78571 .18574 6 0 ]
+[.97619 .18574 -6 -9 ]
+[.97619 .18574 6 0 ]
+[.01131 .05821 -18 -4.5 ]
+[.01131 .05821 0 4.5 ]
+[.01131 .33828 -18 -4.5 ]
+[.01131 .33828 0 4.5 ]
+[.01131 .47831 -6 -4.5 ]
+[.01131 .47831 0 4.5 ]
+[ 0 0 0 0 ]
+[ 1 .61803 0 0 ]
+] MathScale
+% Start of Graphics
+1 setlinecap
+1 setlinejoin
+newpath
+0 g
+.25 Mabswid
+[ ] 0 setdash
+.21429 .19824 m
+.21429 .20449 L
+s
+[(10)] .21429 .18574 0 1 Mshowa
+.40476 .19824 m
+.40476 .20449 L
+s
+[(20)] .40476 .18574 0 1 Mshowa
+.59524 .19824 m
+.59524 .20449 L
+s
+[(30)] .59524 .18574 0 1 Mshowa
+.78571 .19824 m
+.78571 .20449 L
+s
+[(40)] .78571 .18574 0 1 Mshowa
+.97619 .19824 m
+.97619 .20449 L
+s
+[(50)] .97619 .18574 0 1 Mshowa
+.125 Mabswid
+.0619 .19824 m
+.0619 .20199 L
+s
+.1 .19824 m
+.1 .20199 L
+s
+.1381 .19824 m
+.1381 .20199 L
+s
+.17619 .19824 m
+.17619 .20199 L
+s
+.25238 .19824 m
+.25238 .20199 L
+s
+.29048 .19824 m
+.29048 .20199 L
+s
+.32857 .19824 m
+.32857 .20199 L
+s
+.36667 .19824 m
+.36667 .20199 L
+s
+.44286 .19824 m
+.44286 .20199 L
+s
+.48095 .19824 m
+.48095 .20199 L
+s
+.51905 .19824 m
+.51905 .20199 L
+s
+.55714 .19824 m
+.55714 .20199 L
+s
+.63333 .19824 m
+.63333 .20199 L
+s
+.67143 .19824 m
+.67143 .20199 L
+s
+.70952 .19824 m
+.70952 .20199 L
+s
+.74762 .19824 m
+.74762 .20199 L
+s
+.82381 .19824 m
+.82381 .20199 L
+s
+.8619 .19824 m
+.8619 .20199 L
+s
+.9 .19824 m
+.9 .20199 L
+s
+.9381 .19824 m
+.9381 .20199 L
+s
+.25 Mabswid
+0 .19824 m
+1 .19824 L
+s
+.02381 .05821 m
+.03006 .05821 L
+s
+[(1.5)] .01131 .05821 1 0 Mshowa
+.02381 .33828 m
+.03006 .33828 L
+s
+[(2.5)] .01131 .33828 1 0 Mshowa
+.02381 .47831 m
+.03006 .47831 L
+s
+[(3)] .01131 .47831 1 0 Mshowa
+.125 Mabswid
+.02381 .08622 m
+.02756 .08622 L
+s
+.02381 .11422 m
+.02756 .11422 L
+s
+.02381 .14223 m
+.02756 .14223 L
+s
+.02381 .17024 m
+.02756 .17024 L
+s
+.02381 .22625 m
+.02756 .22625 L
+s
+.02381 .25426 m
+.02756 .25426 L
+s
+.02381 .28226 m
+.02756 .28226 L
+s
+.02381 .31027 m
+.02756 .31027 L
+s
+.02381 .36628 m
+.02756 .36628 L
+s
+.02381 .39429 m
+.02756 .39429 L
+s
+.02381 .42229 m
+.02756 .42229 L
+s
+.02381 .4503 m
+.02756 .4503 L
+s
+.02381 .50631 m
+.02756 .50631 L
+s
+.02381 .53432 m
+.02756 .53432 L
+s
+.02381 .56233 m
+.02756 .56233 L
+s
+.02381 .59033 m
+.02756 .59033 L
+s
+.02381 .03021 m
+.02756 .03021 L
+s
+.02381 .0022 m
+.02756 .0022 L
+s
+.25 Mabswid
+.02381 0 m
+.02381 .61803 L
+s
+0 0 m
+1 0 L
+1 .61803 L
+0 .61803 L
+closepath
+clip
+newpath
+.5 Mabswid
+.08272 0 m
+.10458 .2011 L
+.12562 .37811 L
+.14487 .5004 L
+.15437 .54362 L
+.15939 .56165 L
+.16474 .57721 L
+.16988 .58865 L
+.17454 .59612 L
+.17679 .59876 L
+.17798 .5999 L
+.17923 .60093 L
+.18032 .60167 L
+.18152 .60233 L
+.18262 .60278 L
+.18364 .60308 L
+.1849 .60328 L
+.18554 .60332 L
+.18624 .60331 L
+.18748 .60315 L
+.18865 .60285 L
+.18931 .60261 L
+.19001 .60231 L
+.19127 .60165 L
+.19409 .59956 L
+.19654 .59711 L
+.19882 .59431 L
+.20399 .58623 L
+.21296 .56708 L
+.22255 .54067 L
+.26405 .39314 L
+.28485 .32345 L
+.29398 .29768 L
+.30403 .27369 L
+.31368 .25531 L
+.32271 .24242 L
+.3277 .2371 L
+.33225 .23333 L
+.33476 .23169 L
+.3375 .23025 L
+.34009 .22921 L
+.34124 .22886 L
+.34249 .22854 L
+.34379 .22828 L
+.34449 .22817 L
+.34515 .22809 L
+.34633 .22799 L
+.34759 .22796 L
+.3483 .22797 L
+.34907 .228 L
+Mistroke
+.34979 .22806 L
+.35047 .22813 L
+.35174 .22832 L
+.35309 .22859 L
+.35554 .22927 L
+.35783 .23011 L
+.36306 .23276 L
+.36774 .23593 L
+.37202 .23944 L
+.38168 .24913 L
+.42135 .30316 L
+.44136 .33027 L
+.45951 .3504 L
+.46963 .3591 L
+.47916 .36548 L
+.48405 .36804 L
+.48923 .37024 L
+.49193 .37118 L
+.4949 .37205 L
+.49761 .37269 L
+.50013 .37317 L
+.50263 .37352 L
+.50395 .37367 L
+.50536 .37379 L
+.50657 .37386 L
+.50771 .37391 L
+.50896 .37393 L
+.50967 .37393 L
+.51031 .37393 L
+.51143 .3739 L
+.51248 .37386 L
+.51362 .3738 L
+.51484 .3737 L
+.51734 .37344 L
+.51961 .37312 L
+.52477 .37211 L
+.53036 .37062 L
+.54052 .36699 L
+.56037 .35744 L
+.5814 .34572 L
+.60118 .33517 L
+.61926 .32713 L
+.62855 .32385 L
+.63868 .32101 L
+.64424 .31978 L
+.64939 .31886 L
+.65432 .31818 L
+.65957 .31764 L
+.66218 .31745 L
+.6636 .31737 L
+Mistroke
+.66493 .31731 L
+.66616 .31726 L
+.66728 .31722 L
+.66853 .31719 L
+.66921 .31718 L
+.66986 .31717 L
+.6705 .31717 L
+.67121 .31716 L
+.67194 .31717 L
+.67263 .31717 L
+.67387 .31718 L
+.67456 .3172 L
+.6752 .31721 L
+.67655 .31725 L
+.67802 .3173 L
+.68099 .31745 L
+.68364 .31763 L
+.68605 .31782 L
+.69145 .31836 L
+.70117 .31967 L
+.72037 .32319 L
+.74117 .32767 L
+.76067 .33177 L
+.77101 .3337 L
+.78211 .3355 L
+.79276 .33692 L
+.80248 .33792 L
+.80716 .3383 L
+.81226 .33864 L
+.81707 .33889 L
+.82153 .33906 L
+.82419 .33913 L
+.82663 .33918 L
+.82791 .3392 L
+.82931 .33922 L
+.83002 .33923 L
+.83077 .33923 L
+.83149 .33924 L
+.83214 .33924 L
+.83342 .33924 L
+.8346 .33924 L
+.83589 .33923 L
+.83654 .33923 L
+.83726 .33922 L
+.83847 .33921 L
+.83977 .33919 L
+.84211 .33915 L
+.84449 .33909 L
+.8471 .33902 L
+.85183 .33884 L
+Mistroke
+.86073 .3384 L
+.8804 .33705 L
+.90137 .3353 L
+.92133 .33366 L
+.94294 .33217 L
+.95136 .33172 L
+.96025 .33132 L
+.96785 .33106 L
+.97619 .33085 L
+Mfstroke
+.08272 0 m
+.10458 .2011 L
+.12562 .37811 L
+.14487 .5004 L
+.15437 .54362 L
+.15939 .56165 L
+.16474 .57721 L
+.16988 .58865 L
+.17454 .59612 L
+.17679 .59876 L
+.17798 .5999 L
+.17923 .60093 L
+.18032 .60168 L
+.18152 .60233 L
+.18262 .60278 L
+.18364 .60308 L
+.1849 .60328 L
+.18554 .60332 L
+.18624 .60331 L
+.18748 .60315 L
+.18865 .60285 L
+.18931 .60261 L
+.19001 .60231 L
+.19127 .60165 L
+.19409 .59956 L
+.19654 .59711 L
+.19882 .59431 L
+.20399 .58623 L
+.21296 .56708 L
+.22255 .54067 L
+.26405 .39314 L
+.28485 .32345 L
+.29398 .29768 L
+.30403 .27369 L
+.31368 .25531 L
+.32271 .24242 L
+.3277 .2371 L
+.33225 .23333 L
+.33476 .23169 L
+.3375 .23025 L
+.34009 .22921 L
+.34124 .22886 L
+.34249 .22853 L
+.34379 .22828 L
+.34449 .22817 L
+.34515 .22809 L
+.34633 .22799 L
+.34759 .22796 L
+.3483 .22797 L
+.34907 .228 L
+Mistroke
+.34979 .22806 L
+.35047 .22813 L
+.35174 .22832 L
+.35309 .22859 L
+.35554 .22927 L
+.35783 .23011 L
+.36306 .23276 L
+.36774 .23593 L
+.37202 .23944 L
+.38168 .24913 L
+.42135 .30316 L
+.44136 .33027 L
+.45951 .3504 L
+.46963 .3591 L
+.47916 .36548 L
+.48405 .36804 L
+.48923 .37024 L
+.49193 .37118 L
+.4949 .37205 L
+.49761 .37269 L
+.50013 .37317 L
+.50263 .37353 L
+.50395 .37367 L
+.50536 .37379 L
+.50657 .37386 L
+.50771 .37391 L
+.50896 .37393 L
+.50967 .37393 L
+.51031 .37393 L
+.51143 .3739 L
+.51248 .37386 L
+.51362 .3738 L
+.51484 .3737 L
+.51734 .37344 L
+.51961 .37312 L
+.52477 .37211 L
+.53036 .37062 L
+.54052 .36699 L
+.56037 .35744 L
+.5814 .34572 L
+.60118 .33517 L
+.61926 .32713 L
+.62855 .32385 L
+.63868 .32101 L
+.64424 .31978 L
+.64939 .31886 L
+.65432 .31818 L
+.65957 .31764 L
+.66218 .31745 L
+.6636 .31737 L
+Mistroke
+.66493 .31731 L
+.66616 .31726 L
+.66728 .31722 L
+.66853 .31719 L
+.66921 .31718 L
+.66986 .31717 L
+.6705 .31717 L
+.67121 .31716 L
+.67194 .31716 L
+.67263 .31717 L
+.67387 .31718 L
+.67456 .3172 L
+.6752 .31721 L
+.67655 .31725 L
+.67802 .3173 L
+.68099 .31745 L
+.68364 .31763 L
+.68605 .31782 L
+.69145 .31836 L
+.70117 .31967 L
+.72037 .32319 L
+.74117 .32767 L
+.76067 .33177 L
+.77101 .3337 L
+.78211 .33551 L
+.79276 .33692 L
+.80248 .33792 L
+.80716 .3383 L
+.81226 .33864 L
+.81707 .33889 L
+.82153 .33906 L
+.82419 .33913 L
+.82663 .33918 L
+.82791 .3392 L
+.82931 .33922 L
+.83002 .33923 L
+.83077 .33923 L
+.83149 .33924 L
+.83214 .33924 L
+.83342 .33924 L
+.8346 .33924 L
+.83589 .33923 L
+.83654 .33923 L
+.83726 .33922 L
+.83847 .33921 L
+.83977 .33919 L
+.84211 .33915 L
+.84449 .33909 L
+.8471 .33902 L
+.85183 .33884 L
+Mistroke
+.86073 .3384 L
+.8804 .33705 L
+.90137 .3353 L
+.92133 .33366 L
+.94294 .33217 L
+.95136 .33172 L
+.96025 .33132 L
+.96785 .33106 L
+.97619 .33085 L
+Mfstroke
+% End of Graphics
+MathPictureEnd
+\
+\>"], "Graphics",
+  ImageSize->{288, 177.938},
+  ImageMargins->{{43, 0}, {0, 0}},
+  ImageRegion->{{0, 1}, {0, 1}},
+  ImageCacheValid->False],
+
+Cell[BoxData[
+    TagBox[\(\[SkeletonIndicator]  Graphics  \[SkeletonIndicator]\),
+      False,
+      Editable->False]], "Output"]
+}, Open  ]],
+
+Cell[BoxData[
+    \(\(ftable = Table[N@f[t], {t, 0, 50, 50/300}];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(sol = RK2Int[ftable, 50/300];\)\)], "Input"],
+
+Cell[BoxData[
+    \(\(result = 
+        Table[{\((i - 1)\)*\((50/300)\), sol[\([i]\)]}, {i, 1, 
+            Length@ftable}];\)\)], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(ListPlot@result\)], "Input"],
+
+Cell[GraphicsData["PostScript", "\<\
+%!
+%%Creator: Mathematica
+%%AspectRatio: .61803 
+MathPictureStart
+/Mabs {
+Mgmatrix idtransform
+Mtmatrix dtransform
+} bind def
+/Mabsadd { Mabs
+3 -1 roll add
+3 1 roll add
+exch } bind def
+%% Graphics
+%%IncludeResource: font Courier
+%%IncludeFont: Courier
+/Courier findfont 10  scalefont  setfont
+% Scaling calculations
+0.0238095 0.0190476 -0.491807 0.317871 [
+[.21429 .13144 -6 -9 ]
+[.21429 .13144 6 0 ]
+[.40476 .13144 -6 -9 ]
+[.40476 .13144 6 0 ]
+[.59524 .13144 -6 -9 ]
+[.59524 .13144 6 0 ]
+[.78571 .13144 -6 -9 ]
+[.78571 .13144 6 0 ]
+[.97619 .13144 -6 -9 ]
+[.97619 .13144 6 0 ]
+[.01131 .06447 -24 -4.5 ]
+[.01131 .06447 0 4.5 ]
+[.01131 .2234 -24 -4.5 ]
+[.01131 .2234 0 4.5 ]
+[.01131 .30287 -18 -4.5 ]
+[.01131 .30287 0 4.5 ]
+[.01131 .38234 -24 -4.5 ]
+[.01131 .38234 0 4.5 ]
+[.01131 .46181 -6 -4.5 ]
+[.01131 .46181 0 4.5 ]
+[.01131 .54128 -24 -4.5 ]
+[.01131 .54128 0 4.5 ]
+[ 0 0 0 0 ]
+[ 1 .61803 0 0 ]
+] MathScale
+% Start of Graphics
+1 setlinecap
+1 setlinejoin
+newpath
+0 g
+.25 Mabswid
+[ ] 0 setdash
+.21429 .14394 m
+.21429 .15019 L
+s
+[(10)] .21429 .13144 0 1 Mshowa
+.40476 .14394 m
+.40476 .15019 L
+s
+[(20)] .40476 .13144 0 1 Mshowa
+.59524 .14394 m
+.59524 .15019 L
+s
+[(30)] .59524 .13144 0 1 Mshowa
+.78571 .14394 m
+.78571 .15019 L
+s
+[(40)] .78571 .13144 0 1 Mshowa
+.97619 .14394 m
+.97619 .15019 L
+s
+[(50)] .97619 .13144 0 1 Mshowa
+.125 Mabswid
+.0619 .14394 m
+.0619 .14769 L
+s
+.1 .14394 m
+.1 .14769 L
+s
+.1381 .14394 m
+.1381 .14769 L
+s
+.17619 .14394 m
+.17619 .14769 L
+s
+.25238 .14394 m
+.25238 .14769 L
+s
+.29048 .14394 m
+.29048 .14769 L
+s
+.32857 .14394 m
+.32857 .14769 L
+s
+.36667 .14394 m
+.36667 .14769 L
+s
+.44286 .14394 m
+.44286 .14769 L
+s
+.48095 .14394 m
+.48095 .14769 L
+s
+.51905 .14394 m
+.51905 .14769 L
+s
+.55714 .14394 m
+.55714 .14769 L
+s
+.63333 .14394 m
+.63333 .14769 L
+s
+.67143 .14394 m
+.67143 .14769 L
+s
+.70952 .14394 m
+.70952 .14769 L
+s
+.74762 .14394 m
+.74762 .14769 L
+s
+.82381 .14394 m
+.82381 .14769 L
+s
+.8619 .14394 m
+.8619 .14769 L
+s
+.9 .14394 m
+.9 .14769 L
+s
+.9381 .14394 m
+.9381 .14769 L
+s
+.25 Mabswid
+0 .14394 m
+1 .14394 L
+s
+.02381 .06447 m
+.03006 .06447 L
+s
+[(1.75)] .01131 .06447 1 0 Mshowa
+.02381 .2234 m
+.03006 .2234 L
+s
+[(2.25)] .01131 .2234 1 0 Mshowa
+.02381 .30287 m
+.03006 .30287 L
+s
+[(2.5)] .01131 .30287 1 0 Mshowa
+.02381 .38234 m
+.03006 .38234 L
+s
+[(2.75)] .01131 .38234 1 0 Mshowa
+.02381 .46181 m
+.03006 .46181 L
+s
+[(3)] .01131 .46181 1 0 Mshowa
+.02381 .54128 m
+.03006 .54128 L
+s
+[(3.25)] .01131 .54128 1 0 Mshowa
+.125 Mabswid
+.02381 .08036 m
+.02756 .08036 L
+s
+.02381 .09625 m
+.02756 .09625 L
+s
+.02381 .11215 m
+.02756 .11215 L
+s
+.02381 .12804 m
+.02756 .12804 L
+s
+.02381 .15983 m
+.02756 .15983 L
+s
+.02381 .17572 m
+.02756 .17572 L
+s
+.02381 .19162 m
+.02756 .19162 L
+s
+.02381 .20751 m
+.02756 .20751 L
+s
+.02381 .2393 m
+.02756 .2393 L
+s
+.02381 .25519 m
+.02756 .25519 L
+s
+.02381 .27108 m
+.02756 .27108 L
+s
+.02381 .28698 m
+.02756 .28698 L
+s
+.02381 .31876 m
+.02756 .31876 L
+s
+.02381 .33466 m
+.02756 .33466 L
+s
+.02381 .35055 m
+.02756 .35055 L
+s
+.02381 .36645 m
+.02756 .36645 L
+s
+.02381 .39823 m
+.02756 .39823 L
+s
+.02381 .41413 m
+.02756 .41413 L
+s
+.02381 .43002 m
+.02756 .43002 L
+s
+.02381 .44591 m
+.02756 .44591 L
+s
+.02381 .4777 m
+.02756 .4777 L
+s
+.02381 .49359 m
+.02756 .49359 L
+s
+.02381 .50949 m
+.02756 .50949 L
+s
+.02381 .52538 m
+.02756 .52538 L
+s
+.02381 .55717 m
+.02756 .55717 L
+s
+.02381 .57306 m
+.02756 .57306 L
+s
+.02381 .58896 m
+.02756 .58896 L
+s
+.02381 .60485 m
+.02756 .60485 L
+s
+.02381 .04857 m
+.02756 .04857 L
+s
+.02381 .03268 m
+.02756 .03268 L
+s
+.02381 .01679 m
+.02756 .01679 L
+s
+.02381 .00089 m
+.02756 .00089 L
+s
+.25 Mabswid
+.02381 0 m
+.02381 .61803 L
+s
+0 0 m
+1 0 L
+1 .61803 L
+0 .61803 L
+closepath
+clip
+newpath
+.008 w
+.09365 .03027 Mdot
+.09683 .06458 Mdot
+.1 .09859 Mdot
+.10317 .13217 Mdot
+.10635 .16519 Mdot
+.10952 .19755 Mdot
+.1127 .22913 Mdot
+.11587 .25984 Mdot
+.11905 .28958 Mdot
+.12222 .31827 Mdot
+.1254 .34583 Mdot
+.12857 .37219 Mdot
+.13175 .39728 Mdot
+.13492 .42105 Mdot
+.1381 .44345 Mdot
+.14127 .46445 Mdot
+.14444 .48399 Mdot
+.14762 .50207 Mdot
+.15079 .51865 Mdot
+.15397 .53373 Mdot
+.15714 .5473 Mdot
+.16032 .55936 Mdot
+.16349 .56991 Mdot
+.16667 .57898 Mdot
+.16984 .58656 Mdot
+.17302 .59269 Mdot
+.17619 .5974 Mdot
+.17937 .60071 Mdot
+.18254 .60267 Mdot
+.18571 .60332 Mdot
+.18889 .6027 Mdot
+.19206 .60085 Mdot
+.19524 .59784 Mdot
+.19841 .59372 Mdot
+.20159 .58854 Mdot
+.20476 .58236 Mdot
+.20794 .57525 Mdot
+.21111 .56727 Mdot
+.21429 .55847 Mdot
+.21746 .54894 Mdot
+.22063 .53872 Mdot
+.22381 .5279 Mdot
+.22698 .51653 Mdot
+.23016 .50468 Mdot
+.23333 .49241 Mdot
+.23651 .4798 Mdot
+.23968 .4669 Mdot
+.24286 .45378 Mdot
+.24603 .4405 Mdot
+.24921 .42712 Mdot
+.25238 .4137 Mdot
+.25556 .40029 Mdot
+.25873 .38694 Mdot
+.2619 .37372 Mdot
+.26508 .36066 Mdot
+.26825 .34781 Mdot
+.27143 .33523 Mdot
+.2746 .32295 Mdot
+.27778 .31101 Mdot
+.28095 .29944 Mdot
+.28413 .28828 Mdot
+.2873 .27756 Mdot
+.29048 .26731 Mdot
+.29365 .25756 Mdot
+.29683 .24831 Mdot
+.3 .2396 Mdot
+.30317 .23144 Mdot
+.30635 .22383 Mdot
+.30952 .2168 Mdot
+.3127 .21036 Mdot
+.31587 .20449 Mdot
+.31905 .19921 Mdot
+.32222 .19452 Mdot
+.3254 .19042 Mdot
+.32857 .1869 Mdot
+.33175 .18395 Mdot
+.33492 .18156 Mdot
+.3381 .17973 Mdot
+.34127 .17844 Mdot
+.34444 .17768 Mdot
+.34762 .17743 Mdot
+.35079 .17767 Mdot
+.35397 .17839 Mdot
+.35714 .17956 Mdot
+.36032 .18116 Mdot
+.36349 .18318 Mdot
+.36667 .18558 Mdot
+.36984 .18834 Mdot
+.37302 .19145 Mdot
+.37619 .19487 Mdot
+.37937 .19858 Mdot
+.38254 .20255 Mdot
+.38571 .20676 Mdot
+.38889 .21118 Mdot
+.39206 .21579 Mdot
+.39524 .22056 Mdot
+.39841 .22546 Mdot
+.40159 .23048 Mdot
+.40476 .23558 Mdot
+.40794 .24075 Mdot
+.41111 .24595 Mdot
+.41429 .25117 Mdot
+.41746 .25639 Mdot
+.42063 .26158 Mdot
+.42381 .26672 Mdot
+.42698 .2718 Mdot
+.43016 .27679 Mdot
+.43333 .28169 Mdot
+.43651 .28646 Mdot
+.43968 .29111 Mdot
+.44286 .29561 Mdot
+.44603 .29995 Mdot
+.44921 .30411 Mdot
+.45238 .3081 Mdot
+.45556 .31189 Mdot
+.45873 .31549 Mdot
+.4619 .31888 Mdot
+.46508 .32205 Mdot
+.46825 .32501 Mdot
+.47143 .32774 Mdot
+.4746 .33025 Mdot
+.47778 .33253 Mdot
+.48095 .33458 Mdot
+.48413 .33641 Mdot
+.4873 .338 Mdot
+.49048 .33937 Mdot
+.49365 .34052 Mdot
+.49683 .34145 Mdot
+.5 .34216 Mdot
+.50317 .34266 Mdot
+.50635 .34296 Mdot
+.50952 .34306 Mdot
+.5127 .34296 Mdot
+.51587 .34268 Mdot
+.51905 .34223 Mdot
+.52222 .3416 Mdot
+.5254 .34082 Mdot
+.52857 .33989 Mdot
+.53175 .33881 Mdot
+.53492 .3376 Mdot
+.5381 .33627 Mdot
+.54127 .33483 Mdot
+.54444 .33329 Mdot
+.54762 .33165 Mdot
+.55079 .32993 Mdot
+.55397 .32814 Mdot
+.55714 .32628 Mdot
+.56032 .32438 Mdot
+.56349 .32242 Mdot
+.56667 .32044 Mdot
+.56984 .31843 Mdot
+.57302 .31641 Mdot
+.57619 .31438 Mdot
+.57937 .31235 Mdot
+.58254 .31033 Mdot
+.58571 .30833 Mdot
+.58889 .30636 Mdot
+.59206 .30441 Mdot
+.59524 .30251 Mdot
+.59841 .30065 Mdot
+.60159 .29885 Mdot
+.60476 .2971 Mdot
+.60794 .29541 Mdot
+.61111 .29379 Mdot
+.61429 .29224 Mdot
+.61746 .29076 Mdot
+.62063 .28936 Mdot
+.62381 .28805 Mdot
+.62698 .28681 Mdot
+.63016 .28566 Mdot
+.63333 .2846 Mdot
+.63651 .28362 Mdot
+.63968 .28274 Mdot
+.64286 .28194 Mdot
+.64603 .28123 Mdot
+.64921 .28061 Mdot
+.65238 .28008 Mdot
+.65556 .27963 Mdot
+.65873 .27927 Mdot
+.6619 .27899 Mdot
+.66508 .2788 Mdot
+.66825 .27868 Mdot
+.67143 .27864 Mdot
+.6746 .27868 Mdot
+.67778 .27879 Mdot
+.68095 .27897 Mdot
+.68413 .27921 Mdot
+.6873 .27951 Mdot
+.69048 .27988 Mdot
+.69365 .2803 Mdot
+.69683 .28076 Mdot
+.7 .28128 Mdot
+.70317 .28184 Mdot
+.70635 .28244 Mdot
+.70952 .28308 Mdot
+.7127 .28375 Mdot
+.71587 .28445 Mdot
+.71905 .28517 Mdot
+.72222 .28591 Mdot
+.7254 .28667 Mdot
+.72857 .28744 Mdot
+.73175 .28822 Mdot
+.73492 .28901 Mdot
+.7381 .2898 Mdot
+.74127 .29059 Mdot
+.74444 .29137 Mdot
+.74762 .29215 Mdot
+.75079 .29292 Mdot
+.75397 .29367 Mdot
+.75714 .29441 Mdot
+.76032 .29513 Mdot
+.76349 .29584 Mdot
+.76667 .29652 Mdot
+.76984 .29717 Mdot
+.77302 .2978 Mdot
+.77619 .29841 Mdot
+.77937 .29898 Mdot
+.78254 .29952 Mdot
+.78571 .30004 Mdot
+.78889 .30052 Mdot
+.79206 .30096 Mdot
+.79524 .30138 Mdot
+.79841 .30176 Mdot
+.80159 .3021 Mdot
+.80476 .30241 Mdot
+.80794 .30269 Mdot
+.81111 .30293 Mdot
+.81429 .30314 Mdot
+.81746 .30331 Mdot
+.82063 .30345 Mdot
+.82381 .30356 Mdot
+.82698 .30363 Mdot
+.83016 .30368 Mdot
+.83333 .30369 Mdot
+.83651 .30368 Mdot
+.83968 .30364 Mdot
+.84286 .30357 Mdot
+.84603 .30347 Mdot
+.84921 .30336 Mdot
+.85238 .30321 Mdot
+.85556 .30305 Mdot
+.85873 .30287 Mdot
+.8619 .30267 Mdot
+.86508 .30245 Mdot
+.86825 .30222 Mdot
+.87143 .30197 Mdot
+.8746 .30171 Mdot
+.87778 .30144 Mdot
+.88095 .30116 Mdot
+.88413 .30087 Mdot
+.8873 .30057 Mdot
+.89048 .30027 Mdot
+.89365 .29997 Mdot
+.89683 .29966 Mdot
+.9 .29936 Mdot
+.90317 .29905 Mdot
+.90635 .29874 Mdot
+.90952 .29844 Mdot
+.9127 .29814 Mdot
+.91587 .29785 Mdot
+.91905 .29756 Mdot
+.92222 .29728 Mdot
+.9254 .29701 Mdot
+.92857 .29674 Mdot
+.93175 .29649 Mdot
+.93492 .29624 Mdot
+.9381 .29601 Mdot
+.94127 .29578 Mdot
+.94444 .29557 Mdot
+.94762 .29537 Mdot
+.95079 .29519 Mdot
+.95397 .29501 Mdot
+.95714 .29485 Mdot
+.96032 .29471 Mdot
+.96349 .29457 Mdot
+.96667 .29445 Mdot
+.96984 .29434 Mdot
+.97302 .29425 Mdot
+.97619 .29417 Mdot
+% End of Graphics
+MathPictureEnd
+\
+\>"], "Graphics",
+  ImageSize->{288, 177.938},
+  ImageMargins->{{43, 0}, {0, 0}},
+  ImageRegion->{{0, 1}, {0, 1}},
+  ImageCacheValid->False],
+
+Cell[BoxData[
+    TagBox[\(\[SkeletonIndicator]  Graphics  \[SkeletonIndicator]\),
+      False,
+      Editable->False]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Show[accurateGraph, %]\)], "Input"],
+
+Cell[GraphicsData["PostScript", "\<\
+%!
+%%Creator: Mathematica
+%%AspectRatio: .61803 
+MathPictureStart
+/Mabs {
+Mgmatrix idtransform
+Mtmatrix dtransform
+} bind def
+/Mabsadd { Mabs
+3 -1 roll add
+3 1 roll add
+exch } bind def
+%% Graphics
+%%IncludeResource: font Courier
+%%IncludeFont: Courier
+/Courier findfont 10  scalefont  setfont
+% Scaling calculations
+0.0238095 0.0190476 -0.401167 0.291462 [
+[.21429 .16926 -6 -9 ]
+[.21429 .16926 6 0 ]
+[.40476 .16926 -6 -9 ]
+[.40476 .16926 6 0 ]
+[.59524 .16926 -6 -9 ]
+[.59524 .16926 6 0 ]
+[.78571 .16926 -6 -9 ]
+[.78571 .16926 6 0 ]
+[.97619 .16926 -6 -9 ]
+[.97619 .16926 6 0 ]
+[.01131 .03603 -18 -4.5 ]
+[.01131 .03603 0 4.5 ]
+[.01131 .32749 -18 -4.5 ]
+[.01131 .32749 0 4.5 ]
+[.01131 .47322 -6 -4.5 ]
+[.01131 .47322 0 4.5 ]
+[ 0 0 0 0 ]
+[ 1 .61803 0 0 ]
+] MathScale
+% Start of Graphics
+1 setlinecap
+1 setlinejoin
+newpath
+0 g
+.25 Mabswid
+[ ] 0 setdash
+.21429 .18176 m
+.21429 .18801 L
+s
+[(10)] .21429 .16926 0 1 Mshowa
+.40476 .18176 m
+.40476 .18801 L
+s
+[(20)] .40476 .16926 0 1 Mshowa
+.59524 .18176 m
+.59524 .18801 L
+s
+[(30)] .59524 .16926 0 1 Mshowa
+.78571 .18176 m
+.78571 .18801 L
+s
+[(40)] .78571 .16926 0 1 Mshowa
+.97619 .18176 m
+.97619 .18801 L
+s
+[(50)] .97619 .16926 0 1 Mshowa
+.125 Mabswid
+.0619 .18176 m
+.0619 .18551 L
+s
+.1 .18176 m
+.1 .18551 L
+s
+.1381 .18176 m
+.1381 .18551 L
+s
+.17619 .18176 m
+.17619 .18551 L
+s
+.25238 .18176 m
+.25238 .18551 L
+s
+.29048 .18176 m
+.29048 .18551 L
+s
+.32857 .18176 m
+.32857 .18551 L
+s
+.36667 .18176 m
+.36667 .18551 L
+s
+.44286 .18176 m
+.44286 .18551 L
+s
+.48095 .18176 m
+.48095 .18551 L
+s
+.51905 .18176 m
+.51905 .18551 L
+s
+.55714 .18176 m
+.55714 .18551 L
+s
+.63333 .18176 m
+.63333 .18551 L
+s
+.67143 .18176 m
+.67143 .18551 L
+s
+.70952 .18176 m
+.70952 .18551 L
+s
+.74762 .18176 m
+.74762 .18551 L
+s
+.82381 .18176 m
+.82381 .18551 L
+s
+.8619 .18176 m
+.8619 .18551 L
+s
+.9 .18176 m
+.9 .18551 L
+s
+.9381 .18176 m
+.9381 .18551 L
+s
+.25 Mabswid
+0 .18176 m
+1 .18176 L
+s
+.02381 .03603 m
+.03006 .03603 L
+s
+[(1.5)] .01131 .03603 1 0 Mshowa
+.02381 .32749 m
+.03006 .32749 L
+s
+[(2.5)] .01131 .32749 1 0 Mshowa
+.02381 .47322 m
+.03006 .47322 L
+s
+[(3)] .01131 .47322 1 0 Mshowa
+.125 Mabswid
+.02381 .06517 m
+.02756 .06517 L
+s
+.02381 .09432 m
+.02756 .09432 L
+s
+.02381 .12346 m
+.02756 .12346 L
+s
+.02381 .15261 m
+.02756 .15261 L
+s
+.02381 .2109 m
+.02756 .2109 L
+s
+.02381 .24005 m
+.02756 .24005 L
+s
+.02381 .2692 m
+.02756 .2692 L
+s
+.02381 .29834 m
+.02756 .29834 L
+s
+.02381 .35663 m
+.02756 .35663 L
+s
+.02381 .38578 m
+.02756 .38578 L
+s
+.02381 .41493 m
+.02756 .41493 L
+s
+.02381 .44407 m
+.02756 .44407 L
+s
+.02381 .50237 m
+.02756 .50237 L
+s
+.02381 .53151 m
+.02756 .53151 L
+s
+.02381 .56066 m
+.02756 .56066 L
+s
+.02381 .5898 m
+.02756 .5898 L
+s
+.02381 .00688 m
+.02756 .00688 L
+s
+.25 Mabswid
+.02381 0 m
+.02381 .61803 L
+s
+0 0 m
+1 0 L
+1 .61803 L
+0 .61803 L
+closepath
+clip
+newpath
+.5 Mabswid
+.08529 0 m
+.10458 .18473 L
+.12562 .36895 L
+.14487 .49621 L
+.15437 .54119 L
+.15939 .55995 L
+.16474 .57615 L
+.16988 .58805 L
+.17454 .59582 L
+.17679 .59857 L
+.17798 .59976 L
+.17923 .60083 L
+.18032 .60161 L
+.18152 .60229 L
+.18262 .60276 L
+.18364 .60307 L
+.1849 .60328 L
+.18554 .60332 L
+.18624 .6033 L
+.18748 .60314 L
+.18865 .60283 L
+.18931 .60258 L
+.19001 .60227 L
+.19127 .60158 L
+.19409 .59941 L
+.19654 .59686 L
+.19882 .59395 L
+.20399 .58554 L
+.21296 .56561 L
+.22255 .53812 L
+.26405 .38459 L
+.28485 .31206 L
+.29398 .28525 L
+.30403 .26027 L
+.31368 .24114 L
+.32271 .22773 L
+.3277 .22219 L
+.33225 .21827 L
+.33476 .21656 L
+.3375 .21506 L
+.34009 .21399 L
+.34124 .21362 L
+.34249 .21328 L
+.34379 .21302 L
+.34449 .2129 L
+.34515 .21282 L
+.34633 .21272 L
+.34759 .21268 L
+.3483 .21269 L
+.34907 .21273 L
+Mistroke
+.34979 .21279 L
+.35047 .21286 L
+.35174 .21306 L
+.35309 .21334 L
+.35554 .21404 L
+.35783 .21492 L
+.36306 .21768 L
+.36774 .22098 L
+.37202 .22463 L
+.38168 .23472 L
+.42135 .29095 L
+.44136 .31916 L
+.45951 .34011 L
+.46963 .34916 L
+.47916 .3558 L
+.48405 .35847 L
+.48923 .36075 L
+.49193 .36173 L
+.4949 .36263 L
+.49761 .36331 L
+.50013 .3638 L
+.50263 .36417 L
+.50395 .36432 L
+.50536 .36444 L
+.50657 .36452 L
+.50771 .36457 L
+.50896 .3646 L
+.50967 .3646 L
+.51031 .36459 L
+.51143 .36457 L
+.51248 .36452 L
+.51362 .36445 L
+.51484 .36436 L
+.51734 .36408 L
+.51961 .36375 L
+.52477 .3627 L
+.53036 .36115 L
+.54052 .35737 L
+.56037 .34743 L
+.5814 .33524 L
+.60118 .32425 L
+.61926 .31589 L
+.62855 .31248 L
+.63868 .30952 L
+.64424 .30825 L
+.64939 .30729 L
+.65432 .30657 L
+.65957 .30602 L
+.66218 .30582 L
+.6636 .30573 L
+Mistroke
+.66493 .30566 L
+.66616 .30561 L
+.66728 .30558 L
+.66853 .30555 L
+.66921 .30553 L
+.66986 .30553 L
+.6705 .30552 L
+.67121 .30552 L
+.67194 .30552 L
+.67263 .30552 L
+.67387 .30554 L
+.67456 .30555 L
+.6752 .30557 L
+.67655 .30561 L
+.67802 .30566 L
+.68099 .30582 L
+.68364 .306 L
+.68605 .3062 L
+.69145 .30676 L
+.70117 .30812 L
+.72037 .31178 L
+.74117 .31645 L
+.76067 .32072 L
+.77101 .32273 L
+.78211 .32461 L
+.79276 .32608 L
+.80248 .32712 L
+.80716 .32751 L
+.81226 .32787 L
+.81707 .32812 L
+.82153 .3283 L
+.82419 .32838 L
+.82663 .32843 L
+.82791 .32845 L
+.82931 .32847 L
+.83002 .32848 L
+.83077 .32849 L
+.83149 .32849 L
+.83214 .32849 L
+.83342 .32849 L
+.8346 .32849 L
+.83589 .32849 L
+.83654 .32848 L
+.83726 .32847 L
+.83847 .32846 L
+.83977 .32844 L
+.84211 .3284 L
+.84449 .32834 L
+.8471 .32826 L
+.85183 .32808 L
+Mistroke
+.86073 .32762 L
+.8804 .32621 L
+.90137 .32439 L
+.92133 .32268 L
+.94294 .32114 L
+.95136 .32066 L
+.96025 .32025 L
+.96785 .31998 L
+.97619 .31976 L
+Mfstroke
+.08529 0 m
+.10458 .18474 L
+.12562 .36895 L
+.14487 .49621 L
+.15437 .54119 L
+.15939 .55995 L
+.16474 .57615 L
+.16988 .58805 L
+.17454 .59582 L
+.17679 .59857 L
+.17798 .59976 L
+.17923 .60083 L
+.18032 .60161 L
+.18152 .60229 L
+.18262 .60276 L
+.18364 .60307 L
+.1849 .60328 L
+.18554 .60332 L
+.18624 .6033 L
+.18748 .60314 L
+.18865 .60283 L
+.18931 .60258 L
+.19001 .60227 L
+.19127 .60158 L
+.19409 .59941 L
+.19654 .59686 L
+.19882 .59395 L
+.20399 .58554 L
+.21296 .56561 L
+.22255 .53812 L
+.26405 .38459 L
+.28485 .31206 L
+.29398 .28524 L
+.30403 .26027 L
+.31368 .24114 L
+.32271 .22773 L
+.3277 .22219 L
+.33225 .21827 L
+.33476 .21656 L
+.3375 .21506 L
+.34009 .21399 L
+.34124 .21362 L
+.34249 .21328 L
+.34379 .21301 L
+.34449 .2129 L
+.34515 .21282 L
+.34633 .21272 L
+.34759 .21268 L
+.3483 .21269 L
+.34907 .21273 L
+Mistroke
+.34979 .21279 L
+.35047 .21286 L
+.35174 .21305 L
+.35309 .21334 L
+.35554 .21404 L
+.35783 .21492 L
+.36306 .21768 L
+.36774 .22098 L
+.37202 .22463 L
+.38168 .23472 L
+.42135 .29095 L
+.44136 .31916 L
+.45951 .34011 L
+.46963 .34916 L
+.47916 .3558 L
+.48405 .35847 L
+.48923 .36076 L
+.49193 .36173 L
+.4949 .36264 L
+.49761 .36331 L
+.50013 .3638 L
+.50263 .36417 L
+.50395 .36432 L
+.50536 .36444 L
+.50657 .36452 L
+.50771 .36457 L
+.50896 .3646 L
+.50967 .3646 L
+.51031 .36459 L
+.51143 .36457 L
+.51248 .36452 L
+.51362 .36445 L
+.51484 .36436 L
+.51734 .36408 L
+.51961 .36375 L
+.52477 .3627 L
+.53036 .36115 L
+.54052 .35737 L
+.56037 .34743 L
+.5814 .33524 L
+.60118 .32425 L
+.61926 .31589 L
+.62855 .31248 L
+.63868 .30952 L
+.64424 .30824 L
+.64939 .30729 L
+.65432 .30657 L
+.65957 .30602 L
+.66218 .30582 L
+.6636 .30573 L
+Mistroke
+.66493 .30566 L
+.66616 .30561 L
+.66728 .30558 L
+.66853 .30555 L
+.66921 .30553 L
+.66986 .30553 L
+.6705 .30552 L
+.67121 .30552 L
+.67194 .30552 L
+.67263 .30552 L
+.67387 .30554 L
+.67456 .30555 L
+.6752 .30557 L
+.67655 .3056 L
+.67802 .30566 L
+.68099 .30582 L
+.68364 .306 L
+.68605 .3062 L
+.69145 .30676 L
+.70117 .30812 L
+.72037 .31178 L
+.74117 .31645 L
+.76067 .32072 L
+.77101 .32273 L
+.78211 .32461 L
+.79276 .32608 L
+.80248 .32712 L
+.80716 .32751 L
+.81226 .32787 L
+.81707 .32813 L
+.82153 .3283 L
+.82419 .32838 L
+.82663 .32843 L
+.82791 .32845 L
+.82931 .32847 L
+.83002 .32848 L
+.83077 .32849 L
+.83149 .32849 L
+.83214 .32849 L
+.83342 .32849 L
+.8346 .32849 L
+.83589 .32849 L
+.83654 .32848 L
+.83726 .32847 L
+.83847 .32846 L
+.83977 .32844 L
+.84211 .3284 L
+.84449 .32834 L
+.8471 .32826 L
+.85183 .32808 L
+Mistroke
+.86073 .32762 L
+.8804 .32621 L
+.90137 .32439 L
+.92133 .32268 L
+.94294 .32114 L
+.95136 .32066 L
+.96025 .32025 L
+.96785 .31998 L
+.97619 .31976 L
+Mfstroke
+.008 w
+.0873 .01426 Mdot
+.09048 .04591 Mdot
+.09365 .07753 Mdot
+.09683 .109 Mdot
+.1 .14018 Mdot
+.10317 .17097 Mdot
+.10635 .20125 Mdot
+.10952 .23092 Mdot
+.1127 .25988 Mdot
+.11587 .28803 Mdot
+.11905 .3153 Mdot
+.12222 .34161 Mdot
+.1254 .36688 Mdot
+.12857 .39105 Mdot
+.13175 .41405 Mdot
+.13492 .43585 Mdot
+.1381 .45639 Mdot
+.14127 .47564 Mdot
+.14444 .49356 Mdot
+.14762 .51014 Mdot
+.15079 .52534 Mdot
+.15397 .53917 Mdot
+.15714 .55161 Mdot
+.16032 .56267 Mdot
+.16349 .57235 Mdot
+.16667 .58065 Mdot
+.16984 .58761 Mdot
+.17302 .59323 Mdot
+.17619 .59755 Mdot
+.17937 .60059 Mdot
+.18254 .60238 Mdot
+.18571 .60297 Mdot
+.18889 .6024 Mdot
+.19206 .60071 Mdot
+.19524 .59795 Mdot
+.19841 .59417 Mdot
+.20159 .58942 Mdot
+.20476 .58376 Mdot
+.20794 .57724 Mdot
+.21111 .56992 Mdot
+.21429 .56185 Mdot
+.21746 .55311 Mdot
+.22063 .54374 Mdot
+.22381 .53382 Mdot
+.22698 .52339 Mdot
+.23016 .51253 Mdot
+.23333 .50128 Mdot
+.23651 .48972 Mdot
+.23968 .47789 Mdot
+.24286 .46586 Mdot
+.24603 .45369 Mdot
+.24921 .44142 Mdot
+.25238 .42911 Mdot
+.25556 .41681 Mdot
+.25873 .40457 Mdot
+.2619 .39245 Mdot
+.26508 .38047 Mdot
+.26825 .3687 Mdot
+.27143 .35716 Mdot
+.2746 .3459 Mdot
+.27778 .33495 Mdot
+.28095 .32434 Mdot
+.28413 .31411 Mdot
+.2873 .30428 Mdot
+.29048 .29489 Mdot
+.29365 .28594 Mdot
+.29683 .27746 Mdot
+.3 .26947 Mdot
+.30317 .26199 Mdot
+.30635 .25502 Mdot
+.30952 .24857 Mdot
+.3127 .24266 Mdot
+.31587 .23728 Mdot
+.31905 .23244 Mdot
+.32222 .22814 Mdot
+.3254 .22438 Mdot
+.32857 .22115 Mdot
+.33175 .21844 Mdot
+.33492 .21626 Mdot
+.3381 .21458 Mdot
+.34127 .2134 Mdot
+.34444 .2127 Mdot
+.34762 .21247 Mdot
+.35079 .21269 Mdot
+.35397 .21335 Mdot
+.35714 .21442 Mdot
+.36032 .21589 Mdot
+.36349 .21774 Mdot
+.36667 .21994 Mdot
+.36984 .22248 Mdot
+.37302 .22532 Mdot
+.37619 .22846 Mdot
+.37937 .23186 Mdot
+.38254 .2355 Mdot
+.38571 .23936 Mdot
+.38889 .24342 Mdot
+.39206 .24764 Mdot
+.39524 .25202 Mdot
+.39841 .25651 Mdot
+.40159 .26111 Mdot
+.40476 .26579 Mdot
+.40794 .27053 Mdot
+.41111 .2753 Mdot
+.41429 .28008 Mdot
+.41746 .28487 Mdot
+.42063 .28963 Mdot
+.42381 .29434 Mdot
+.42698 .299 Mdot
+.43016 .30358 Mdot
+.43333 .30806 Mdot
+.43651 .31244 Mdot
+.43968 .3167 Mdot
+.44286 .32083 Mdot
+.44603 .32481 Mdot
+.44921 .32863 Mdot
+.45238 .33228 Mdot
+.45556 .33576 Mdot
+.45873 .33906 Mdot
+.4619 .34217 Mdot
+.46508 .34508 Mdot
+.46825 .34779 Mdot
+.47143 .35029 Mdot
+.4746 .35259 Mdot
+.47778 .35468 Mdot
+.48095 .35657 Mdot
+.48413 .35824 Mdot
+.4873 .3597 Mdot
+.49048 .36096 Mdot
+.49365 .36201 Mdot
+.49683 .36286 Mdot
+.5 .36351 Mdot
+.50317 .36397 Mdot
+.50635 .36424 Mdot
+.50952 .36433 Mdot
+.5127 .36425 Mdot
+.51587 .36399 Mdot
+.51905 .36357 Mdot
+.52222 .363 Mdot
+.5254 .36228 Mdot
+.52857 .36143 Mdot
+.53175 .36044 Mdot
+.53492 .35933 Mdot
+.5381 .35812 Mdot
+.54127 .35679 Mdot
+.54444 .35538 Mdot
+.54762 .35388 Mdot
+.55079 .3523 Mdot
+.55397 .35066 Mdot
+.55714 .34895 Mdot
+.56032 .34721 Mdot
+.56349 .34542 Mdot
+.56667 .3436 Mdot
+.56984 .34176 Mdot
+.57302 .3399 Mdot
+.57619 .33804 Mdot
+.57937 .33618 Mdot
+.58254 .33433 Mdot
+.58571 .33249 Mdot
+.58889 .33068 Mdot
+.59206 .3289 Mdot
+.59524 .32716 Mdot
+.59841 .32545 Mdot
+.60159 .3238 Mdot
+.60476 .32219 Mdot
+.60794 .32065 Mdot
+.61111 .31916 Mdot
+.61429 .31774 Mdot
+.61746 .31639 Mdot
+.62063 .3151 Mdot
+.62381 .3139 Mdot
+.62698 .31276 Mdot
+.63016 .31171 Mdot
+.63333 .31073 Mdot
+.63651 .30984 Mdot
+.63968 .30903 Mdot
+.64286 .3083 Mdot
+.64603 .30764 Mdot
+.64921 .30708 Mdot
+.65238 .30659 Mdot
+.65556 .30618 Mdot
+.65873 .30585 Mdot
+.6619 .30559 Mdot
+.66508 .30541 Mdot
+.66825 .30531 Mdot
+.67143 .30527 Mdot
+.6746 .30531 Mdot
+.67778 .30541 Mdot
+.68095 .30557 Mdot
+.68413 .30579 Mdot
+.6873 .30607 Mdot
+.69048 .3064 Mdot
+.69365 .30679 Mdot
+.69683 .30722 Mdot
+.7 .30769 Mdot
+.70317 .30821 Mdot
+.70635 .30876 Mdot
+.70952 .30934 Mdot
+.7127 .30995 Mdot
+.71587 .31059 Mdot
+.71905 .31126 Mdot
+.72222 .31194 Mdot
+.7254 .31263 Mdot
+.72857 .31334 Mdot
+.73175 .31405 Mdot
+.73492 .31478 Mdot
+.7381 .3155 Mdot
+.74127 .31622 Mdot
+.74444 .31694 Mdot
+.74762 .31766 Mdot
+.75079 .31836 Mdot
+.75397 .31905 Mdot
+.75714 .31973 Mdot
+.76032 .32039 Mdot
+.76349 .32104 Mdot
+.76667 .32166 Mdot
+.76984 .32226 Mdot
+.77302 .32284 Mdot
+.77619 .32339 Mdot
+.77937 .32392 Mdot
+.78254 .32442 Mdot
+.78571 .32489 Mdot
+.78889 .32533 Mdot
+.79206 .32574 Mdot
+.79524 .32612 Mdot
+.79841 .32647 Mdot
+.80159 .32678 Mdot
+.80476 .32707 Mdot
+.80794 .32732 Mdot
+.81111 .32754 Mdot
+.81429 .32773 Mdot
+.81746 .32789 Mdot
+.82063 .32802 Mdot
+.82381 .32812 Mdot
+.82698 .32819 Mdot
+.83016 .32823 Mdot
+.83333 .32824 Mdot
+.83651 .32823 Mdot
+.83968 .32819 Mdot
+.84286 .32813 Mdot
+.84603 .32804 Mdot
+.84921 .32793 Mdot
+.85238 .3278 Mdot
+.85556 .32765 Mdot
+.85873 .32749 Mdot
+.8619 .3273 Mdot
+.86508 .3271 Mdot
+.86825 .32689 Mdot
+.87143 .32666 Mdot
+.8746 .32642 Mdot
+.87778 .32617 Mdot
+.88095 .32592 Mdot
+.88413 .32565 Mdot
+.8873 .32538 Mdot
+.89048 .32511 Mdot
+.89365 .32483 Mdot
+.89683 .32455 Mdot
+.9 .32427 Mdot
+.90317 .32398 Mdot
+.90635 .3237 Mdot
+.90952 .32343 Mdot
+.9127 .32315 Mdot
+.91587 .32288 Mdot
+.91905 .32262 Mdot
+.92222 .32236 Mdot
+.9254 .32211 Mdot
+.92857 .32187 Mdot
+.93175 .32164 Mdot
+.93492 .32141 Mdot
+.9381 .3212 Mdot
+.94127 .32099 Mdot
+.94444 .3208 Mdot
+.94762 .32061 Mdot
+.95079 .32044 Mdot
+.95397 .32028 Mdot
+.95714 .32014 Mdot
+.96032 .32 Mdot
+.96349 .31988 Mdot
+.96667 .31977 Mdot
+.96984 .31967 Mdot
+.97302 .31958 Mdot
+.97619 .31951 Mdot
+% End of Graphics
+MathPictureEnd
+\
+\>"], "Graphics",
+  ImageSize->{288, 177.938},
+  ImageMargins->{{43, 0}, {0, 0}},
+  ImageRegion->{{0, 1}, {0, 1}},
+  ImageCacheValid->False],
+
+Cell[BoxData[
+    TagBox[\(\[SkeletonIndicator]  Graphics  \[SkeletonIndicator]\),
+      False,
+      Editable->False]], "Output"]
+}, Open  ]]
+}, Closed]]
+}, Open  ]]
+},
+FrontEndVersion->"5.2 for X",
+ScreenRectangle->{{0, 1400}, {0, 1050}},
+AutoGeneratedPackage->Automatic,
+WindowSize->{1008, 967},
+WindowMargins->{{Automatic, 159}, {Automatic, 0}},
+ShowSelection->True
+]
+
+(*******************************************************************
+Cached data follows.  If you edit this Notebook file directly, not
+using Mathematica, you must remove the line containing CacheID at
+the top of  the file.  The cache data will then be recreated when
+you save this file from within Mathematica.
+*******************************************************************)
+
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+
+(*NotebookFileOutline
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[1776, 53, 35, 0, 98, "Title"],
+Cell[1814, 55, 105, 3, 80, "Subtitle"],
+Cell[1922, 60, 61, 1, 45, "Subtitle"],
+Cell[1986, 63, 91, 2, 55, "Input"],
+
+Cell[CellGroupData[{
+Cell[2102, 69, 23, 0, 74, "Section"],
+Cell[2128, 71, 83, 1, 37, "SmallText"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[2248, 77, 27, 0, 44, "Section"],
+Cell[2278, 79, 201, 5, 62, "SmallText"],
+Cell[2482, 86, 165, 3, 32, "Input"],
+
+Cell[CellGroupData[{
+Cell[2672, 93, 82, 1, 32, "Input"],
+Cell[2757, 96, 70, 1, 32, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[2864, 102, 48, 1, 32, "Input"],
+Cell[2915, 105, 354, 11, 79, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[3306, 121, 48, 1, 32, "Input"],
+Cell[3357, 124, 37, 1, 32, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[3431, 130, 89, 1, 32, "Input"],
+Cell[3523, 133, 70, 1, 32, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[3630, 139, 48, 1, 32, "Input"],
+Cell[3681, 142, 354, 11, 79, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[4072, 158, 48, 1, 32, "Input"],
+Cell[4123, 161, 37, 1, 32, "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[4209, 168, 45, 0, 44, "Section"],
+
+Cell[CellGroupData[{
+Cell[4279, 172, 937, 20, 423, "Input",
+  InitializationCell->True],
+Cell[5219, 194, 354, 5, 20, "Message"],
+Cell[5576, 201, 355, 5, 20, "Message"],
+Cell[5934, 208, 355, 5, 20, "Message"],
+Cell[6292, 215, 354, 5, 20, "Message"],
+Cell[6649, 222, 354, 5, 20, "Message"],
+Cell[7006, 229, 357, 5, 20, "Message"]
+}, Open  ]],
+Cell[7378, 237, 41, 1, 32, "Input"],
+Cell[7422, 240, 167, 3, 55, "Input",
+  InitializationCell->True],
+Cell[7592, 245, 41, 1, 32, "Input"],
+
+Cell[CellGroupData[{
+Cell[7658, 250, 9623, 162, 4011, "Input",
+  InitializationCell->True],
+Cell[17284, 414, 134, 2, 55, "Output"],
+Cell[17421, 418, 118, 2, 55, "Output"],
+Cell[17542, 422, 82, 1, 32, "Output"],
+Cell[17627, 425, 138, 2, 55, "Output"],
+Cell[17768, 429, 193, 3, 55, "Output"],
+Cell[17964, 434, 104, 2, 32, "Output"],
+Cell[18071, 438, 101, 2, 32, "Output"],
+Cell[18175, 442, 163, 2, 55, "Output"],
+Cell[18341, 446, 155, 2, 55, "Output"],
+Cell[18499, 450, 117, 2, 32, "Output"],
+Cell[18619, 454, 136, 2, 55, "Output"],
+Cell[18758, 458, 136, 2, 55, "Output"],
+Cell[18897, 462, 137, 2, 55, "Output"],
+Cell[19037, 466, 327, 4, 101, "Output"],
+Cell[19367, 472, 281, 4, 78, "Output"],
+Cell[19651, 478, 360, 5, 101, "Output"],
+Cell[20014, 485, 287, 4, 43, "Output"],
+Cell[20304, 491, 250, 3, 43, "Output"],
+Cell[20557, 496, 133, 2, 27, "Output"],
+Cell[20693, 500, 134, 2, 27, "Output"],
+Cell[20830, 504, 191, 3, 43, "Output"],
+Cell[21024, 509, 204, 3, 43, "Output"],
+Cell[21231, 514, 203, 3, 43, "Output"],
+Cell[21437, 519, 146, 2, 27, "Output"],
+Cell[21586, 523, 137, 2, 27, "Output"],
+Cell[21726, 527, 342, 5, 59, "Output"],
+Cell[22071, 534, 273, 4, 43, "Output"],
+Cell[22347, 540, 205, 3, 43, "Output"]
+}, Open  ]],
+Cell[22567, 546, 88, 2, 27, "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[22692, 553, 67, 0, 44, "Section"],
+
+Cell[CellGroupData[{
+Cell[22784, 557, 43, 0, 38, "Subsection"],
+
+Cell[CellGroupData[{
+Cell[22852, 561, 6004, 106, 1826, "Input",
+  InitializationCell->True],
+Cell[28859, 669, 360, 5, 20, "Message"],
+Cell[29222, 676, 362, 5, 20, "Message"],
+Cell[29587, 683, 356, 5, 20, "Message"],
+Cell[29946, 690, 333, 5, 20, "Message"]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[30328, 701, 50, 0, 30, "Subsection"],
+
+Cell[CellGroupData[{
+Cell[30403, 705, 6302, 112, 1987, "Input",
+  InitializationCell->True],
+Cell[36708, 819, 360, 5, 20, "Message"],
+Cell[37071, 826, 362, 5, 20, "Message"],
+Cell[37436, 833, 356, 5, 20, "Message"],
+Cell[37795, 840, 333, 5, 20, "Message"]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[38177, 851, 56, 0, 30, "Subsection"],
+Cell[38236, 853, 396, 7, 147, "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[38669, 865, 58, 0, 30, "Subsection"],
+Cell[38730, 867, 408, 7, 107, "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[39175, 879, 40, 0, 30, "Subsection"],
+Cell[39218, 881, 1875, 32, 722, "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[41130, 918, 44, 0, 30, "Subsection"],
+Cell[41177, 920, 1850, 32, 745, "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[43064, 957, 46, 0, 30, "Subsection"],
+Cell[43113, 959, 1261, 23, 584, "Input",
+  InitializationCell->True],
+Cell[44377, 984, 1571, 29, 699, "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[45985, 1018, 47, 0, 30, "Subsection"],
+Cell[46035, 1020, 1583, 27, 630, "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[47655, 1052, 45, 0, 30, "Subsection"],
+Cell[47703, 1054, 1452, 26, 584, "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[49192, 1085, 49, 0, 30, "Subsection"],
+Cell[49244, 1087, 1314, 23, 561, "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[50595, 1115, 41, 0, 30, "Subsection"],
+Cell[50639, 1117, 394, 8, 147, "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[51070, 1130, 40, 0, 30, "Subsection"],
+Cell[51113, 1132, 1399, 25, 584, "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[52549, 1162, 43, 0, 30, "Subsection"],
+Cell[52595, 1164, 1309, 23, 395, "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[53941, 1192, 66, 0, 30, "Subsection"],
+Cell[54010, 1194, 1282, 26, 423, "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[55329, 1225, 47, 0, 30, "Subsection"],
+
+Cell[CellGroupData[{
+Cell[55401, 1229, 1288, 23, 607, "Input",
+  InitializationCell->True],
+Cell[56692, 1254, 360, 5, 20, "Message"]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[57101, 1265, 52, 0, 30, "Subsection"],
+Cell[57156, 1267, 374, 7, 124, "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[57567, 1279, 47, 0, 30, "Subsection"],
+Cell[57617, 1281, 1411, 27, 492, "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[59065, 1313, 46, 0, 30, "Subsection"],
+
+Cell[CellGroupData[{
+Cell[59136, 1317, 73, 2, 32, "Input",
+  InitializationCell->True],
+Cell[59212, 1321, 35, 1, 70, "Output"]
+}, Open  ]],
+Cell[59262, 1325, 779, 15, 331, "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[60078, 1345, 41, 0, 30, "Subsection"],
+Cell[60122, 1347, 123, 3, 32, "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[60282, 1355, 51, 0, 30, "Subsection"],
+Cell[60336, 1357, 741, 16, 239, "Input",
+  InitializationCell->True],
+
+Cell[CellGroupData[{
+Cell[61102, 1377, 69, 1, 32, "Input"],
+Cell[61174, 1380, 58, 1, 70, "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[61281, 1387, 43, 0, 30, "Subsection"],
+Cell[61327, 1389, 611, 11, 262, "Input",
+  InitializationCell->True],
+Cell[61941, 1402, 490, 10, 216, "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[62468, 1417, 43, 0, 30, "Subsection"],
+
+Cell[CellGroupData[{
+Cell[62536, 1421, 1921, 35, 699, "Input",
+  InitializationCell->True],
+Cell[64460, 1458, 356, 5, 20, "Message"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[64865, 1469, 50, 0, 30, "Subsection"],
+
+Cell[CellGroupData[{
+Cell[64940, 1473, 545, 9, 262, "Input",
+  InitializationCell->True],
+Cell[65488, 1484, 355, 5, 70, "Message"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[65892, 1495, 49, 0, 30, "Subsection"],
+Cell[65944, 1497, 542, 9, 262, "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[66523, 1511, 54, 0, 30, "Subsection"],
+Cell[66580, 1513, 1142, 22, 446, "Input",
+  InitializationCell->True]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[67771, 1541, 35, 0, 44, "Section"],
+
+Cell[CellGroupData[{
+Cell[67831, 1545, 38, 0, 38, "Subsection"],
+Cell[67872, 1547, 700, 13, 331, "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[68609, 1565, 45, 0, 30, "Subsection"],
+Cell[68657, 1567, 632, 12, 262, "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[69326, 1584, 45, 0, 30, "Subsection"],
+Cell[69374, 1586, 581, 10, 262, "Input",
+  InitializationCell->True]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[70004, 1602, 38, 0, 44, "Section"],
+
+Cell[CellGroupData[{
+Cell[70067, 1606, 51, 0, 38, "Subsection"],
+
+Cell[CellGroupData[{
+Cell[70143, 1610, 1343, 25, 561, "Input",
+  InitializationCell->True],
+Cell[71489, 1637, 359, 5, 70, "Message"]
+}, Open  ]]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[71909, 1649, 32, 0, 44, "Section"],
+
+Cell[CellGroupData[{
+Cell[71966, 1653, 56, 0, 38, "Subsection"],
+Cell[72025, 1655, 387, 7, 147, "Input",
+  InitializationCell->True]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[72461, 1668, 36, 0, 44, "Section"],
+
+Cell[CellGroupData[{
+Cell[72522, 1672, 51, 0, 38, "Subsection"],
+
+Cell[CellGroupData[{
+Cell[72598, 1676, 490, 8, 170, "Input",
+  InitializationCell->True],
+Cell[73091, 1686, 356, 5, 70, "Message"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[73484, 1696, 58, 1, 32, "Input"],
+Cell[73545, 1699, 52, 1, 70, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[73634, 1705, 58, 1, 32, "Input"],
+Cell[73695, 1708, 53, 1, 70, "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[73797, 1715, 66, 0, 30, "Subsection"],
+Cell[73866, 1717, 569, 12, 239, "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[74472, 1734, 71, 0, 30, "Subsection"],
+
+Cell[CellGroupData[{
+Cell[74568, 1738, 87, 1, 32, "Input"],
+Cell[74658, 1741, 82, 1, 54, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[74777, 1747, 46, 1, 32, "Input"],
+Cell[74826, 1750, 83, 1, 54, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[74946, 1756, 59, 1, 32, "Input"],
+Cell[75008, 1759, 108, 2, 71, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[75153, 1766, 59, 1, 32, "Input"],
+Cell[75215, 1769, 121, 2, 71, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[75373, 1776, 50, 1, 32, "Input"],
+Cell[75426, 1779, 116, 2, 71, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[75579, 1786, 49, 1, 32, "Input"],
+Cell[75631, 1789, 122, 2, 54, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[75790, 1796, 50, 1, 32, "Input"],
+Cell[75843, 1799, 78, 1, 54, "Output"]
+}, Open  ]],
+Cell[75936, 1803, 428, 8, 124, "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[76401, 1816, 76, 0, 30, "Subsection"],
+Cell[76480, 1818, 1187, 20, 403, "Input",
+  InitializationCell->True]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[77716, 1844, 39, 0, 44, "Section"],
+
+Cell[CellGroupData[{
+Cell[77780, 1848, 53, 0, 38, "Subsection"],
+Cell[77836, 1850, 509, 9, 216, "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[78382, 1864, 50, 0, 30, "Subsection"],
+
+Cell[CellGroupData[{
+Cell[78457, 1868, 1163, 20, 395, "Input",
+  InitializationCell->True],
+Cell[79623, 1890, 360, 5, 20, "Message"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[80032, 1901, 51, 0, 30, "Subsection"],
+
+Cell[CellGroupData[{
+Cell[80108, 1905, 1165, 20, 395, "Input",
+  InitializationCell->True],
+Cell[81276, 1927, 360, 5, 20, "Message"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[81685, 1938, 64, 0, 38, "Subsection"],
+
+Cell[CellGroupData[{
+Cell[81774, 1942, 1226, 20, 584, "Input",
+  InitializationCell->True],
+Cell[83003, 1964, 360, 5, 20, "Message"],
+Cell[83366, 1971, 358, 5, 20, "Message"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[83773, 1982, 110, 4, 30, "Subsection"],
+Cell[83886, 1988, 5476, 95, 1849, "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[89399, 2088, 114, 4, 30, "Subsection"],
+Cell[89516, 2094, 5454, 94, 1826, "Input",
+  InitializationCell->True]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[95019, 2194, 32, 0, 44, "Section"],
+
+Cell[CellGroupData[{
+Cell[95076, 2198, 66, 0, 38, "Subsection"],
+
+Cell[CellGroupData[{
+Cell[95167, 2202, 461, 8, 216, "Input",
+  InitializationCell->True],
+Cell[95631, 2212, 354, 5, 20, "Message"],
+Cell[95988, 2219, 354, 5, 20, "Message"]
+}, Open  ]]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[96403, 2231, 30, 0, 44, "Section"],
+Cell[96436, 2233, 124, 3, 55, "Input",
+  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[96597, 2241, 70, 0, 44, "Section"],
+Cell[96670, 2243, 75, 1, 32, "Input"],
+
+Cell[CellGroupData[{
+Cell[96770, 2248, 103, 2, 32, "Input"],
+Cell[96876, 2252, 90, 1, 70, "Output"]
+}, Open  ]],
+Cell[96981, 2256, 103, 2, 32, "Input"],
+
+Cell[CellGroupData[{
+Cell[97109, 2262, 55, 1, 32, "Input"],
+Cell[97167, 2265, 5925, 404, 70, 5802, 400, "GraphicsData", "PostScript", \
+"Graphics",
+  ImageCacheValid->False],
+Cell[103095, 2671, 130, 3, 70, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[103262, 2679, 147, 4, 32, "Input"],
+Cell[103412, 2685, 213, 3, 70, "Output"]
+}, Open  ]],
+Cell[103640, 2691, 60, 1, 32, "Input"],
+
+Cell[CellGroupData[{
+Cell[103725, 2696, 45, 1, 32, "Input"],
+Cell[103773, 2699, 210, 3, 70, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[104020, 2707, 148, 4, 32, "Input"],
+Cell[104171, 2713, 120, 3, 70, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[104328, 2721, 90, 1, 32, "Input"],
+Cell[104421, 2724, 8114, 542, 70, 7991, 538, "GraphicsData", "PostScript", \
+"Graphics",
+  ImageCacheValid->False],
+Cell[112538, 3268, 130, 3, 70, "Output"]
+}, Open  ]],
+Cell[112683, 3274, 80, 1, 32, "Input"],
+Cell[112766, 3277, 66, 1, 32, "Input"],
+Cell[112835, 3280, 139, 3, 32, "Input"],
+
+Cell[CellGroupData[{
+Cell[112999, 3287, 48, 1, 32, "Input"],
+Cell[113050, 3290, 9074, 555, 70, 8951, 551, "GraphicsData", "PostScript", \
+"Graphics",
+  ImageCacheValid->False],
+Cell[122127, 3847, 130, 3, 70, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[122294, 3855, 55, 1, 32, "Input"],
+Cell[122352, 3858, 13353, 821, 70, 13230, 817, "GraphicsData", "PostScript", \
+"Graphics",
+  ImageCacheValid->False],
+Cell[135708, 4681, 130, 3, 70, "Output"]
+}, Open  ]]
+}, Closed]]
+}, Open  ]]
+}
+]
+*)
+
+
+
+(*******************************************************************
+End of Mathematica Notebook file.
+*******************************************************************)
+

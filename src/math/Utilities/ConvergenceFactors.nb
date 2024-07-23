@@ -1,0 +1,830 @@
+(************** Content-type: application/mathematica **************
+                     CreatedBy='Mathematica 5.2'
+
+                    Mathematica-Compatible Notebook
+
+This notebook can be used with any Mathematica-compatible
+application, such as Mathematica, MathReader or Publicon. The data
+for the notebook starts with the line containing stars above.
+
+To get the notebook into a Mathematica-compatible application, do
+one of the following:
+
+* Save the data starting with the line of stars above into a file
+  with a name ending in .nb, then open the file inside the
+  application;
+
+* Copy the data starting with the line of stars above to the
+  clipboard, then use the Paste menu command inside the application.
+
+Data for notebooks contains only printable 7-bit ASCII and can be
+sent directly in email or through ftp in text mode.  Newlines can be
+CR, LF or CRLF (Unix, Macintosh or MS-DOS style).
+
+NOTE: If you modify the data for this notebook not in a Mathematica-
+compatible application, you must delete the line below containing
+the word CacheID, otherwise Mathematica-compatible applications may
+try to use invalid cache data.
+
+For more information on notebooks and Mathematica-compatible 
+applications, contact Wolfram Research:
+  web: http://www.wolfram.com
+  email: info@wolfram.com
+  phone: +1-217-398-0700 (U.S.)
+
+Notebook reader applications are available free of charge from 
+Wolfram Research.
+*******************************************************************)
+
+(*CacheID: 232*)
+
+
+(*NotebookFileLineBreakTest
+NotebookFileLineBreakTest*)
+(*NotebookOptionsPosition[     26830,        701]*)
+(*NotebookOutlinePosition[     27501,        725]*)
+(*  CellTagsIndexPosition[     27457,        721]*)
+(*WindowFrame->Normal*)
+
+
+
+Notebook[{
+Cell[BoxData[
+    \(\(\( (*\ 
+      convergence\ factors\ *) \)\(\[IndentingNewLine]\)\(\[IndentingNewLine]\
+\)\(\(cf[order_, hcoarse_, hmedium_, hfine_] := 
+      Module[{xxx}, 
+        xxx = \((hcoarse^order - hmedium^order)\)/\((hmedium^order - 
+                hfine^order)\); \[IndentingNewLine]\ \ {xxx, 
+          N[xxx, 4]}]\)\(\[IndentingNewLine]\)
+    \)\)\)], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(\( (*\ 
+      various\ common\ combinations\ *) \)\(\[IndentingNewLine]\)\(\
+\[IndentingNewLine]\)\(cf[2, 1/64, 1/128, 1/256]\[IndentingNewLine]
+    cf[2, 1/64, 1/96, 1/128]\[IndentingNewLine]
+    cf[2, 1/64, 1/80, 1/96]\)\)\)], "Input"],
+
+Cell[BoxData[
+    \({4, 4.`3.9999999999999996}\)], "Output"],
+
+Cell[BoxData[
+    \({20\/7, 2.8571428571428571429`4.000000000000001}\)], "Output"],
+
+Cell[BoxData[
+    \({81\/44, 1.8409090909090909091`3.9999999999999996}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(\( (*\ 
+      various\ common\ combinations\ *) \)\(\[IndentingNewLine]\)\(\
+\[IndentingNewLine]\)\(cf[4, 1/64, 1/128, 1/256]\[IndentingNewLine]
+    cf[4, 1/64, 1/96, 1/128]\[IndentingNewLine]
+    cf[4, 1/64, 1/80, 1/96]\[IndentingNewLine]\[IndentingNewLine]
+    cf[4, 1/21, 1/24, 1/27]\)\)\)], "Input"],
+
+Cell[BoxData[
+    \({16, 16.`3.9999999999999996}\)], "Output"],
+
+Cell[BoxData[
+    \({208\/35, 5.9428571428571428571`3.9999999999999982}\)], "Output"],
+
+Cell[BoxData[
+    \({29889\/10736, 2.7839977645305514158`4.000000000000001}\)], "Output"],
+
+Cell[BoxData[
+    \({2224179\/1183693, 
+      1.8790167720853295576`3.9999999999999982}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(\( (*\ 
+      convenient\ grid\ parameters\ *) \)\(\[IndentingNewLine]\)\(\(heading1\ \
+ = \ {{"\<n\>", "\<hmax\>", "\<hmax\>", \ "\<hmin\>", "\<hmin\>", "\<hmin\>", \
+\ "\<rmin\>", \ "\<rmax\>"}};\)\[IndentingNewLine]
+    \(heading2 = {{"\<level\>", "\<h\>", "\<r\>", "\<dtmin\>"}};\)\
+\[IndentingNewLine]
+    \(courant\  = \ 0.25;\)\[IndentingNewLine]
+    \(denom\  = \ 32;\)\[IndentingNewLine]
+    parofn1[n_, h_, l_] := \ 
+      Module[{hf = h/2^l}, {n, h, N[h, 6], hf, 
+          StringJoin[ToString[N[denom\ hf, 6]], "\</\>", ToString[denom]], 
+          N[hf], hf\ n/2.0, h\ n/2.0}]\[IndentingNewLine]
+    parofn[nn_, h_, l_] := 
+      Module[{gg = nn /. List -> GCD}, \[IndentingNewLine]Print[
+          TableForm[
+            Join[heading1, 
+              Table[parofn1[nn[\([i]\)], h\ nn[\([1]\)]/nn[\([i]\)], l], {i, 
+                  1, Length[
+                    nn]}]]]]; \[IndentingNewLine]Print["\<\>"]; \
+\[IndentingNewLine]Print[
+          TableForm[
+            Join[heading2, 
+                Table[{i, h/2.0^i, nn[\([1]\)] h/2.0^\((i + 1)\), 
+                    courant\ nn[\([1]\)] \(h/2.0^i\)/gg}, {i, 0, 
+                    l}]]\[Transpose] ]]; \[IndentingNewLine]Print["\<\>"];\
+\[IndentingNewLine]]\[IndentingNewLine]\[IndentingNewLine]
+    parofn[{40, 48, 64, 80, 96, 128}, 24, 9]\)\)\)], "Input"],
+
+Cell[BoxData[
+    TagBox[GridBox[{
+          {"\<\"n\"\>", "\<\"hmax\"\>", "\<\"hmax\"\>", "\<\"hmin\"\>", \
+"\<\"hmin\"\>", "\<\"hmin\"\>", "\<\"rmin\"\>", "\<\"rmax\"\>"},
+          {"40", "24", "24.`6.", \(3\/64\), "\<\"1.50000/32\"\>", "0.046875`",
+             "0.9375`", "480.`"},
+          {"48", "20", 
+            "20.`6.000000000000002", \(5\/128\), "\<\"1.25000/32\"\>", 
+            "0.0390625`", "0.9375`", "480.`"},
+          {"64", "15", "15.`6.", \(15\/512\), "\<\"0.937500/32\"\>", 
+            "0.029296875`", "0.9375`", "480.`"},
+          {"80", "12", "12.`6.", \(3\/128\), "\<\"0.750000/32\"\>", 
+            "0.0234375`", "0.9375`", "480.`"},
+          {"96", "10", 
+            "10.`6.000000000000002", \(5\/256\), "\<\"0.625000/32\"\>", 
+            "0.01953125`", "0.9375`", "480.`"},
+          {"128", \(15\/2\), "7.5`6.", \(15\/1024\), "\<\"0.468750/32\"\>", 
+            "0.0146484375`", "0.9375`", "480.`"}
+          },
+        RowSpacings->1,
+        ColumnSpacings->3,
+        RowAlignments->Baseline,
+        ColumnAlignments->{Left}],
+      Function[ BoxForm`e$, 
+        TableForm[ BoxForm`e$]]]], "Print"],
+
+Cell[BoxData[
+    \(\*"\<\"\"\>"\)], "Print"],
+
+Cell[BoxData[
+    TagBox[GridBox[{
+          {"\<\"level\"\>", "0", "1", "2", "3", "4", "5", "6", "7", "8", 
+            "9"},
+          {"\<\"h\"\>", "24", "12.`", "6.`", "3.`", "1.5`", "0.75`", "0.375`",
+             "0.1875`", "0.09375`", "0.046875`"},
+          {"\<\"r\"\>", "480.`", "240.`", "120.`", "60.`", "30.`", "15.`", 
+            "7.5`", "3.75`", "1.875`", "0.9375`"},
+          {"\<\"dtmin\"\>", "30.`", "15.`", "7.5`", "3.75`", "1.875`", 
+            "0.9375`", "0.46875`", "0.234375`", "0.1171875`", "0.05859375`"}
+          },
+        RowSpacings->1,
+        ColumnSpacings->3,
+        RowAlignments->Baseline,
+        ColumnAlignments->{Left}],
+      Function[ BoxForm`e$, 
+        TableForm[ BoxForm`e$]]]], "Print"],
+
+Cell[BoxData[
+    \(\*"\<\"\"\>"\)], "Print"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(\(denom = 32;\)\), "\[IndentingNewLine]", 
+    \(parofn[{64, 80, 96, 112, 128}, 24, 9]\)}], "Input"],
+
+Cell[BoxData[
+    TagBox[GridBox[{
+          {"\<\"n\"\>", "\<\"hmax\"\>", "\<\"hmax\"\>", "\<\"hmin\"\>", \
+"\<\"hmin\"\>", "\<\"hmin\"\>", "\<\"rmin\"\>", "\<\"rmax\"\>"},
+          {"64", "24", "24.`6.", \(3\/64\), "\<\"1.50000/32\"\>", "0.046875`",
+             "1.5`", "768.`"},
+          {"80", \(96\/5\), 
+            "19.2`5.999999999999999", \(3\/80\), "\<\"1.20000/32\"\>", 
+            "0.0375`", "1.5`", "768.`"},
+          {"96", "16", 
+            "16.`5.999999999999999", \(1\/32\), "\<\"1.00000/32\"\>", 
+            "0.03125`", "1.5`", "768.`"},
+          {"112", \(96\/7\), 
+            "13.7142857142857142857`6.", \(3\/112\), "\<\"0.857143/32\"\>", 
+            "0.026785714285714284`", "1.5`", "768.`"},
+          {"128", "12", "12.`6.", \(3\/128\), "\<\"0.750000/32\"\>", 
+            "0.0234375`", "1.5`", "768.`"}
+          },
+        RowSpacings->1,
+        ColumnSpacings->3,
+        RowAlignments->Baseline,
+        ColumnAlignments->{Left}],
+      Function[ BoxForm`e$, 
+        TableForm[ BoxForm`e$]]]], "Print"],
+
+Cell[BoxData[
+    \(\*"\<\"\"\>"\)], "Print"],
+
+Cell[BoxData[
+    TagBox[GridBox[{
+          {"\<\"level\"\>", "0", "1", "2", "3", "4", "5", "6", "7", "8", 
+            "9"},
+          {"\<\"h\"\>", "24", "12.`", "6.`", "3.`", "1.5`", "0.75`", "0.375`",
+             "0.1875`", "0.09375`", "0.046875`"},
+          {"\<\"r\"\>", "768.`", "384.`", "192.`", "96.`", "48.`", "24.`", 
+            "12.`", "6.`", "3.`", "1.5`"},
+          {"\<\"dtmin\"\>", "24.`", "12.`", "6.`", "3.`", "1.5`", "0.75`", 
+            "0.375`", "0.1875`", "0.09375`", "0.046875`"}
+          },
+        RowSpacings->1,
+        ColumnSpacings->3,
+        RowAlignments->Baseline,
+        ColumnAlignments->{Left}],
+      Function[ BoxForm`e$, 
+        TableForm[ BoxForm`e$]]]], "Print"],
+
+Cell[BoxData[
+    \(\*"\<\"\"\>"\)], "Print"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(\(denom = 32;\)\), "\[IndentingNewLine]", 
+    \(parofn[{64, 80, 96, 112, 128}, 21, 9]\)}], "Input"],
+
+Cell[BoxData[
+    TagBox[GridBox[{
+          {"\<\"n\"\>", "\<\"hmax\"\>", "\<\"hmax\"\>", "\<\"hmin\"\>", \
+"\<\"hmin\"\>", "\<\"hmin\"\>", "\<\"rmin\"\>", "\<\"rmax\"\>"},
+          {"64", "21", 
+            "21.`5.999999999999999", \(21\/512\), "\<\"1.31250/32\"\>", 
+            "0.041015625`", "1.3125`", "672.`"},
+          {"80", \(84\/5\), 
+            "16.8`5.999999999999999", \(21\/640\), "\<\"1.05000/32\"\>", 
+            "0.0328125`", "1.3125`", "672.`"},
+          {"96", "14", 
+            "14.`6.000000000000002", \(7\/256\), "\<\"0.875000/32\"\>", 
+            "0.02734375`", "1.3125`", "672.`"},
+          {"112", "12", "12.`6.", \(3\/128\), "\<\"0.750000/32\"\>", 
+            "0.0234375`", "1.3125`", "672.`"},
+          {"128", \(21\/2\), 
+            "10.5`5.999999999999999", \(21\/1024\), "\<\"0.656250/32\"\>", 
+            "0.0205078125`", "1.3125`", "672.`"}
+          },
+        RowSpacings->1,
+        ColumnSpacings->3,
+        RowAlignments->Baseline,
+        ColumnAlignments->{Left}],
+      Function[ BoxForm`e$, 
+        TableForm[ BoxForm`e$]]]], "Print"],
+
+Cell[BoxData[
+    \(\*"\<\"\"\>"\)], "Print"],
+
+Cell[BoxData[
+    TagBox[GridBox[{
+          {"\<\"level\"\>", "0", "1", "2", "3", "4", "5", "6", "7", "8", 
+            "9"},
+          {"\<\"h\"\>", "21", "10.5`", "5.25`", "2.625`", "1.3125`", 
+            "0.65625`", "0.328125`", "0.1640625`", "0.08203125`", 
+            "0.041015625`"},
+          {"\<\"r\"\>", "672.`", "336.`", "168.`", "84.`", "42.`", "21.`", 
+            "10.5`", "5.25`", "2.625`", "1.3125`"},
+          {"\<\"dtmin\"\>", "21.`", "10.5`", "5.25`", "2.625`", "1.3125`", 
+            "0.65625`", "0.328125`", "0.1640625`", "0.08203125`", 
+            "0.041015625`"}
+          },
+        RowSpacings->1,
+        ColumnSpacings->3,
+        RowAlignments->Baseline,
+        ColumnAlignments->{Left}],
+      Function[ BoxForm`e$, 
+        TableForm[ BoxForm`e$]]]], "Print"],
+
+Cell[BoxData[
+    \(\*"\<\"\"\>"\)], "Print"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(denom = 21; \ \ \ \  (*\ try\ 21, \ 24, \ 
+      27\ *) \[IndentingNewLine]parofn[{64, 80, 96, 112, 128}, 42*3/10, 
+      8]\)], "Input"],
+
+Cell[BoxData[
+    TagBox[GridBox[{
+          {"\<\"n\"\>", "\<\"hmax\"\>", "\<\"hmax\"\>", "\<\"hmin\"\>", \
+"\<\"hmin\"\>", "\<\"hmin\"\>", "\<\"rmin\"\>", "\<\"rmax\"\>"},
+          {"64", \(63\/5\), 
+            "12.6`5.999999999999999", \(63\/1280\), "\<\"1.03359/21\"\>", 
+            "0.04921875`", "1.575`", "403.2`"},
+          {"80", \(252\/25\), 
+            "10.08`6.000000000000002", \(63\/1600\), "\<\"0.826875/21\"\>", 
+            "0.039375`", "1.575`", "403.2`"},
+          {"96", \(42\/5\), 
+            "8.4`5.999999999999999", \(21\/640\), "\<\"0.689062/21\"\>", 
+            "0.0328125`", "1.5750000000000002`", "403.20000000000005`"},
+          {"112", \(36\/5\), "7.2`6.", \(9\/320\), "\<\"0.590625/21\"\>", 
+            "0.028125`", "1.575`", "403.2`"},
+          {"128", \(63\/10\), 
+            "6.3`5.999999999999999", \(63\/2560\), "\<\"0.516797/21\"\>", 
+            "0.024609375`", "1.575`", "403.2`"}
+          },
+        RowSpacings->1,
+        ColumnSpacings->3,
+        RowAlignments->Baseline,
+        ColumnAlignments->{Left}],
+      Function[ BoxForm`e$, 
+        TableForm[ BoxForm`e$]]]], "Print"],
+
+Cell[BoxData[
+    \(\*"\<\"\"\>"\)], "Print"],
+
+Cell[BoxData[
+    TagBox[GridBox[{
+          {"\<\"level\"\>", "0", "1", "2", "3", "4", "5", "6", "7", "8"},
+          {"\<\"h\"\>", \(63\/5\), "6.3`", "3.15`", "1.575`", "0.7875`", 
+            "0.39375`", "0.196875`", "0.0984375`", "0.04921875`"},
+          {"\<\"r\"\>", "403.2`", "201.6`", "100.8`", "50.4`", "25.2`", 
+            "12.6`", "6.3`", "3.15`", "1.575`"},
+          {"\<\"dtmin\"\>", "12.6`", "6.3`", "3.15`", "1.575`", "0.7875`", 
+            "0.39375`", "0.196875`", "0.0984375`", "0.04921875`"}
+          },
+        RowSpacings->1,
+        ColumnSpacings->3,
+        RowAlignments->Baseline,
+        ColumnAlignments->{Left}],
+      Function[ BoxForm`e$, 
+        TableForm[ BoxForm`e$]]]], "Print"],
+
+Cell[BoxData[
+    \(\*"\<\"\"\>"\)], "Print"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(\(denom = 1;\)\ \), "\[IndentingNewLine]", 
+    \(parofn[{32, 40, 48}, 10, 8]\)}], "Input"],
+
+Cell[BoxData[
+    TagBox[GridBox[{
+          {"\<\"n\"\>", "\<\"hmax\"\>", "\<\"hmax\"\>", "\<\"hmin\"\>", \
+"\<\"hmin\"\>", "\<\"hmin\"\>", "\<\"rmin\"\>", "\<\"rmax\"\>"},
+          {"32", "10", 
+            "10.`6.000000000000002", \(5\/128\), "\<\"0.0390625/1\"\>", 
+            "0.0390625`", "0.625`", "160.`"},
+          {"40", "8", 
+            "8.`5.999999999999999", \(1\/32\), "\<\"0.0312500/1\"\>", 
+            "0.03125`", "0.625`", "160.`"},
+          {"48", \(20\/3\), 
+            "6.6666666666666666667`6.000000000000002", \(5\/192\), \
+"\<\"0.0260417/1\"\>", "0.026041666666666668`", "0.625`", "160.`"}
+          },
+        RowSpacings->1,
+        ColumnSpacings->3,
+        RowAlignments->Baseline,
+        ColumnAlignments->{Left}],
+      Function[ BoxForm`e$, 
+        TableForm[ BoxForm`e$]]]], "Print"],
+
+Cell[BoxData[
+    \(\*"\<\"\"\>"\)], "Print"],
+
+Cell[BoxData[
+    TagBox[GridBox[{
+          {"\<\"level\"\>", "0", "1", "2", "3", "4", "5", "6", "7", "8"},
+          {"\<\"h\"\>", "10", "5.`", "2.5`", "1.25`", "0.625`", "0.3125`", 
+            "0.15625`", "0.078125`", "0.0390625`"},
+          {"\<\"r\"\>", "160.`", "80.`", "40.`", "20.`", "10.`", "5.`", 
+            "2.5`", "1.25`", "0.625`"},
+          {"\<\"dtmin\"\>", "10.`", "5.`", "2.5`", "1.25`", "0.625`", 
+            "0.3125`", "0.15625`", "0.078125`", "0.0390625`"}
+          },
+        RowSpacings->1,
+        ColumnSpacings->3,
+        RowAlignments->Baseline,
+        ColumnAlignments->{Left}],
+      Function[ BoxForm`e$, 
+        TableForm[ BoxForm`e$]]]], "Print"],
+
+Cell[BoxData[
+    \(\*"\<\"\"\>"\)], "Print"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(\(denom = 1;\)\ \), "\[IndentingNewLine]", 
+    \(parofn[{32, 36, 40, 44, 48, 52, 56}, 8, 8]\)}], "Input"],
+
+Cell[BoxData[
+    TagBox[GridBox[{
+          {"\<\"n\"\>", "\<\"hmax\"\>", "\<\"hmax\"\>", "\<\"hmin\"\>", \
+"\<\"hmin\"\>", "\<\"hmin\"\>", "\<\"rmin\"\>", "\<\"rmax\"\>"},
+          {"32", "8", 
+            "8.`5.999999999999999", \(1\/32\), "\<\"0.0312500/1\"\>", 
+            "0.03125`", "0.5`", "128.`"},
+          {"36", \(64\/9\), 
+            "7.1111111111111111111`5.999999999999998", \(1\/36\), \
+"\<\"0.0277778/1\"\>", "0.027777777777777776`", "0.5`", "128.`"},
+          {"40", \(32\/5\), 
+            "6.4`5.999999999999999", \(1\/40\), "\<\"0.0250000/1\"\>", 
+            "0.025`", "0.5`", "128.`"},
+          {"44", \(64\/11\), 
+            "5.8181818181818181818`5.999999999999999", \(1\/44\), \
+"\<\"0.0227273/1\"\>", "0.022727272727272728`", "0.5`", "128.`"},
+          {"48", \(16\/3\), 
+            "5.3333333333333333333`6.", \(1\/48\), "\<\"0.0208333/1\"\>", 
+            "0.020833333333333332`", "0.5`", "128.`"},
+          {"52", \(64\/13\), 
+            "4.9230769230769230769`5.999999999999999", \(1\/52\), \
+"\<\"0.0192308/1\"\>", "0.019230769230769232`", "0.5`", "128.`"},
+          {"56", \(32\/7\), 
+            "4.5714285714285714286`5.999999999999999", \(1\/56\), \
+"\<\"0.0178571/1\"\>", "0.017857142857142856`", "0.5`", "128.`"}
+          },
+        RowSpacings->1,
+        ColumnSpacings->3,
+        RowAlignments->Baseline,
+        ColumnAlignments->{Left}],
+      Function[ BoxForm`e$, 
+        TableForm[ BoxForm`e$]]]], "Print"],
+
+Cell[BoxData[
+    \(\*"\<\"\"\>"\)], "Print"],
+
+Cell[BoxData[
+    TagBox[GridBox[{
+          {"\<\"level\"\>", "0", "1", "2", "3", "4", "5", "6", "7", "8"},
+          {"\<\"h\"\>", "8", "4.`", "2.`", "1.`", "0.5`", "0.25`", "0.125`", 
+            "0.0625`", "0.03125`"},
+          {"\<\"r\"\>", "128.`", "64.`", "32.`", "16.`", "8.`", "4.`", "2.`", 
+            "1.`", "0.5`"},
+          {"\<\"dtmin\"\>", "16.`", "8.`", "4.`", "2.`", "1.`", "0.5`", 
+            "0.25`", "0.125`", "0.0625`"}
+          },
+        RowSpacings->1,
+        ColumnSpacings->3,
+        RowAlignments->Baseline,
+        ColumnAlignments->{Left}],
+      Function[ BoxForm`e$, 
+        TableForm[ BoxForm`e$]]]], "Print"],
+
+Cell[BoxData[
+    \(\*"\<\"\"\>"\)], "Print"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(\( (*\ 
+      grid\ size\ varying\ with\ level\ *) \)\(\[IndentingNewLine]\)\(\
+\[IndentingNewLine]\)\(sizeoflevel[lmax_, hmax_, nnn_]\  := \ 
+      Module[{s, t}, \[IndentingNewLine]nn = 
+          Table[nnn[\([i]\)] + 12, {i, 1, 
+              Length[nnn]}]; \[IndentingNewLine]s = 
+          Sum[nn[\([i]\)]^3, {i, 1, 
+              Length[nn]}]; \[IndentingNewLine] (*\(\(+Sum[
+                nn[\([i]\)]^3, {i, Length[nn] - 2, 
+                  Length[nn]}]\);\)*) \[IndentingNewLine]t = 
+          Table[If[i <= lbo, 1, 2^\((i - lbo)\)], {i, 0, 
+              lmax}]; \[IndentingNewLine]m = 
+          Table[Round[1000.0*nn[\([i + 1]\)]^3/s]/10.0, {i, 0, 
+              lmax}]; \[IndentingNewLine]stm = 
+          Sum[m[\([i]\)] t[\([i]\)], {i, 1, 
+              Length[t]}]; \[IndentingNewLine]Print[
+          TableForm[
+            Join[{{"\<level\>", "\<n\>", "\<mem\>", "\<steps\>", "\<flops\>", \
+"\<h\>", "\<r\>"}}, \[IndentingNewLine]Table[{i, \[IndentingNewLine]nn[\([i + 
+                        1]\)], \[IndentingNewLine]m[\([i + 
+                        1]\)], \[IndentingNewLine]t[\([i + 
+                        1]\)], \[IndentingNewLine]Round[
+                      1000\ m[\([i + 1]\)] t[\([i + 1]\)]/stm]/
+                    10. , \[IndentingNewLine]hmax/2.0^i, 
+                  nn[\([i + 1]\)]\ hmax/
+                      2.0^\((i + 1)\)}, \[IndentingNewLine]{i, 0, 
+                  lmax}]\[IndentingNewLine]]]]; \
+\[IndentingNewLine]Print["\<points: \>", s, "\<  flops: \>", \ 
+          Sum[nn[\([i + 1]\)]^3  t[\([i + 1]\)], {i, 0, 
+              lmax}]];\[IndentingNewLine]]\[IndentingNewLine]\
+\[IndentingNewLine]
+    \(n\  = \ 40;\)\[IndentingNewLine]
+    \(lbo = 2;\)\[IndentingNewLine]
+    sizeoflevel[8, 
+      6.4, {2  n, 2  n, 2  n, 2  n, n, n, n, n, n}]\)\)\)], "Input"],
+
+Cell[BoxData[
+    TagBox[GridBox[{
+          {"\<\"level\"\>", "\<\"n\"\>", "\<\"mem\"\>", "\<\"steps\"\>", \
+"\<\"flops\"\>", "\<\"h\"\>", "\<\"r\"\>"},
+          {"0", "92", "20.400000000000002`", "1", "3.6`", "6.4`", 
+            "294.40000000000003`"},
+          {"1", "92", "20.400000000000002`", "1", "3.6`", "3.2`", 
+            "147.20000000000002`"},
+          {"2", "92", "20.400000000000002`", "1", "3.6`", "1.6`", 
+            "73.60000000000001`"},
+          {"3", "92", "20.400000000000002`", "2", "7.300000000000001`", 
+            "0.8`", "36.800000000000004`"},
+          {"4", "52", "3.7`", "4", "2.6`", "0.4`", "10.4`"},
+          {"5", "52", "3.7`", "8", "5.300000000000001`", "0.2`", "5.2`"},
+          {"6", "52", "3.7`", "16", "10.600000000000001`", "0.1`", "2.6`"},
+          {"7", "52", "3.7`", "32", "21.1`", "0.05`", "1.3`"},
+          {"8", "52", "3.7`", "64", "42.2`", "0.025`", "0.65`"}
+          },
+        RowSpacings->1,
+        ColumnSpacings->3,
+        RowAlignments->Baseline,
+        ColumnAlignments->{Left}],
+      Function[ BoxForm`e$, 
+        TableForm[ BoxForm`e$]]]], "Print"],
+
+Cell[BoxData[
+    InterpretationBox[\("points: "\[InvisibleSpace]3817792\[InvisibleSpace]"  \
+flops: "\[InvisibleSpace]21328832\),
+      SequenceForm[ "points: ", 3817792, "  flops: ", 21328832],
+      Editable->False]], "Print"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(sizeoflevel[10, 
+      16, {n, 3  n/2, 2  n, 3  n, 14  n/4, n, n, n, n, n, n, n}]\)], "Input"],
+
+Cell[BoxData[
+    TagBox[GridBox[{
+          {"\<\"level\"\>", "\<\"n\"\>", "\<\"mem\"\>", "\<\"steps\"\>", \
+"\<\"flops\"\>", "\<\"h\"\>", "\<\"r\"\>"},
+          {"0", "44", "1.9000000000000001`", "1", "0.2`", "16", "352.`"},
+          {"1", "60", "4.800000000000001`", "1", "0.4`", "8.`", "240.`"},
+          {"2", "76", "9.700000000000001`", "1", "0.8`", "4.`", "152.`"},
+          {"3", "108", "28.`", "2", "4.7`", "2.`", "108.`"},
+          {"4", "124", "42.300000000000004`", "4", "14.100000000000001`", 
+            "1.`", "62.`"},
+          {"5", "44", "1.9000000000000001`", "8", "1.3`", "0.5`", "11.`"},
+          {"6", "44", "1.9000000000000001`", "16", "2.5`", "0.25`", "5.5`"},
+          {"7", "44", "1.9000000000000001`", "32", "5.1000000000000005`", 
+            "0.125`", "2.75`"},
+          {"8", "44", "1.9000000000000001`", "64", "10.100000000000001`", 
+            "0.0625`", "1.375`"},
+          {"9", "44", "1.9000000000000001`", "128", "20.3`", "0.03125`", 
+            "0.6875`"},
+          {"10", "44", "1.9000000000000001`", "256", "40.6`", "0.015625`", 
+            "0.34375`"}
+          },
+        RowSpacings->1,
+        ColumnSpacings->3,
+        RowAlignments->Baseline,
+        ColumnAlignments->{Left}],
+      Function[ BoxForm`e$, 
+        TableForm[ BoxForm`e$]]]], "Print"],
+
+Cell[BoxData[
+    InterpretationBox[\("points: "\[InvisibleSpace]4502784\[InvisibleSpace]"  \
+flops: "\[InvisibleSpace]53818816\),
+      SequenceForm[ "points: ", 4502784, "  flops: ", 53818816],
+      Editable->False]], "Print"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(sizeoflevel[9, 
+      6.4, {2  n, 2  n, 3  n, 7  n/2, 4  n, n, n, n, n, n, n}]\)], "Input"],
+
+Cell[BoxData[
+    TagBox[GridBox[{
+          {"\<\"level\"\>", "\<\"n\"\>", "\<\"mem\"\>", "\<\"steps\"\>", \
+"\<\"flops\"\>", "\<\"h\"\>", "\<\"r\"\>"},
+          {"0", "92", "5.9`", "1", "1.2000000000000002`", "6.4`", 
+            "294.40000000000003`"},
+          {"1", "92", "5.9`", "1", "1.2000000000000002`", "3.2`", 
+            "147.20000000000002`"},
+          {"2", "132", "17.3`", "1", "3.4000000000000004`", "1.6`", 
+            "105.60000000000001`"},
+          {"3", "152", "26.400000000000002`", "2", "10.4`", "0.8`", 
+            "60.800000000000004`"},
+          {"4", "172", "38.300000000000004`", "4", "30.200000000000003`", 
+            "0.4`", "34.4`"},
+          {"5", "52", "1.1`", "8", "1.7000000000000002`", "0.2`", "5.2`"},
+          {"6", "52", "1.1`", "16", "3.5`", "0.1`", "2.6`"},
+          {"7", "52", "1.1`", "32", "6.9`", "0.05`", "1.3`"},
+          {"8", "52", "1.1`", "64", "13.9`", "0.025`", "0.65`"},
+          {"9", "52", "1.1`", "128", "27.700000000000003`", "0.0125`", 
+            "0.325`"}
+          },
+        RowSpacings->1,
+        ColumnSpacings->3,
+        RowAlignments->Baseline,
+        ColumnAlignments->{Left}],
+      Function[ BoxForm`e$, 
+        TableForm[ BoxForm`e$]]]], "Print"],
+
+Cell[BoxData[
+    InterpretationBox[\("points: "\[InvisibleSpace]13301248\[InvisibleSpace]" \
+ flops: "\[InvisibleSpace]66105536\),
+      SequenceForm[ "points: ", 13301248, "  flops: ", 66105536],
+      Editable->False]], "Print"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(sizeoflevel[9, 
+      8, {2  n, 2  n, 3  n, 7  n/2, 4  n, 3  n, 2  n, 3  n/2, 3  n/2, 
+        n}]\)], "Input"],
+
+Cell[BoxData[
+    TagBox[GridBox[{
+          {"\<\"level\"\>", "\<\"n\"\>", "\<\"mem\"\>", "\<\"steps\"\>", \
+"\<\"flops\"\>", "\<\"h\"\>", "\<\"r\"\>"},
+          {"0", "76", "4.9`", "1", "0.7000000000000001`", "8", "304.`"},
+          {"1", "76", "4.9`", "1", "0.7000000000000001`", "4.`", "152.`"},
+          {"2", "108", "14.`", "1", "1.9000000000000001`", "2.`", "108.`"},
+          {"3", "124", "21.200000000000003`", "2", "5.9`", "1.`", "62.`"},
+          {"4", "140", "30.5`", "4", "16.8`", "0.5`", "35.`"},
+          {"5", "108", "14.`", "8", "15.5`", "0.25`", "13.5`"},
+          {"6", "76", "4.9`", "16", "10.8`", "0.125`", "4.75`"},
+          {"7", "60", "2.4000000000000004`", "32", "10.600000000000001`", 
+            "0.0625`", "1.875`"},
+          {"8", "60", "2.4000000000000004`", "64", "21.200000000000003`", 
+            "0.03125`", "0.9375`"},
+          {"9", "44", "0.9`", "128", "15.9`", "0.015625`", "0.34375`"}
+          },
+        RowSpacings->1,
+        ColumnSpacings->3,
+        RowAlignments->Baseline,
+        ColumnAlignments->{Left}],
+      Function[ BoxForm`e$, 
+        TableForm[ BoxForm`e$]]]], "Print"],
+
+Cell[BoxData[
+    InterpretationBox[\("points: "\[InvisibleSpace]9004160\[InvisibleSpace]"  \
+flops: "\[InvisibleSpace]65667776\),
+      SequenceForm[ "points: ", 9004160, "  flops: ", 65667776],
+      Editable->False]], "Print"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(sizeoflevel[10, 
+      16, {n, 3  n/2, 2  n, 5  n/2, 13  n/4, 4  n, n, n, n, n, n, 
+        n}]\)], "Input"],
+
+Cell[BoxData[
+    TagBox[GridBox[{
+          {"\<\"level\"\>", "\<\"n\"\>", "\<\"mem\"\>", "\<\"steps\"\>", \
+"\<\"flops\"\>", "\<\"h\"\>", "\<\"r\"\>"},
+          {"0", "44", "1.3`", "1", "0.1`", "16", "352.`"},
+          {"1", "60", "3.4000000000000004`", "1", "0.30000000000000004`", 
+            "8.`", "240.`"},
+          {"2", "76", "6.9`", "1", "0.6000000000000001`", "4.`", "152.`"},
+          {"3", "92", "12.3`", "2", "2.2`", "2.`", "92.`"},
+          {"4", "116", "24.6`", "4", "8.700000000000001`", "1.`", "58.`"},
+          {"5", "140", "43.300000000000004`", "8", "30.8`", "0.5`", "35.`"},
+          {"6", "44", "1.3`", "16", "1.8`", "0.25`", "5.5`"},
+          {"7", "44", "1.3`", "32", "3.7`", "0.125`", "2.75`"},
+          {"8", "44", "1.3`", "64", "7.4`", "0.0625`", "1.375`"},
+          {"9", "44", "1.3`", "128", "14.8`", "0.03125`", "0.6875`"},
+          {"10", "44", "1.3`", "256", "29.6`", "0.015625`", "0.34375`"}
+          },
+        RowSpacings->1,
+        ColumnSpacings->3,
+        RowAlignments->Baseline,
+        ColumnAlignments->{Left}],
+      Function[ BoxForm`e$, 
+        TableForm[ BoxForm`e$]]]], "Print"],
+
+Cell[BoxData[
+    InterpretationBox[\("points: "\[InvisibleSpace]6334848\[InvisibleSpace]"  \
+flops: "\[InvisibleSpace]72744384\),
+      SequenceForm[ "points: ", 6334848, "  flops: ", 72744384],
+      Editable->False]], "Print"]
+}, Open  ]]
+}, Open  ]]
+},
+FrontEndVersion->"5.2 for X",
+ScreenRectangle->{{0, 1400}, {0, 1050}},
+CellGrouping->Manual,
+WindowSize->{723, 817},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+ShowSelection->True
+]
+
+(*******************************************************************
+Cached data follows.  If you edit this Notebook file directly, not
+using Mathematica, you must remove the line containing CacheID at
+the top of  the file.  The cache data will then be recreated when
+you save this file from within Mathematica.
+*******************************************************************)
+
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+
+(*NotebookFileOutline
+Notebook[{
+Cell[1754, 51, 379, 8, 107, "Input"],
+
+Cell[CellGroupData[{
+Cell[2158, 63, 259, 5, 91, "Input"],
+Cell[2420, 70, 60, 1, 27, "Output"],
+Cell[2483, 73, 82, 1, 45, "Output"],
+Cell[2568, 76, 84, 1, 45, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[2689, 82, 325, 6, 123, "Input"],
+Cell[3017, 90, 62, 1, 27, "Output"],
+Cell[3082, 93, 85, 1, 45, "Output"],
+Cell[3170, 96, 89, 1, 45, "Output"],
+Cell[3262, 99, 101, 2, 45, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[3400, 106, 1350, 27, 363, "Input"],
+Cell[4753, 135, 1140, 24, 185, "Print"],
+Cell[5896, 161, 45, 1, 23, "Print"],
+Cell[5944, 164, 736, 16, 77, "Print"],
+Cell[6683, 182, 45, 1, 23, "Print"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[6765, 188, 121, 2, 43, "Input"],
+Cell[6889, 192, 1042, 23, 157, "Print"],
+Cell[7934, 217, 45, 1, 23, "Print"],
+Cell[7982, 220, 713, 16, 77, "Print"],
+Cell[8698, 238, 45, 1, 23, "Print"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[8780, 244, 121, 2, 43, "Input"],
+Cell[8904, 248, 1091, 24, 157, "Print"],
+Cell[9998, 274, 45, 1, 23, "Print"],
+Cell[10046, 277, 796, 18, 77, "Print"],
+Cell[10845, 297, 45, 1, 23, "Print"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[10927, 303, 157, 3, 43, "Input"],
+Cell[11087, 308, 1135, 24, 157, "Print"],
+Cell[12225, 334, 45, 1, 23, "Print"],
+Cell[12273, 337, 718, 15, 85, "Print"],
+Cell[12994, 354, 45, 1, 23, "Print"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[13076, 360, 112, 2, 43, "Input"],
+Cell[13191, 364, 824, 19, 103, "Print"],
+Cell[14018, 385, 45, 1, 23, "Print"],
+Cell[14066, 388, 687, 15, 77, "Print"],
+Cell[14756, 405, 45, 1, 23, "Print"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[14838, 411, 127, 2, 43, "Input"],
+Cell[14968, 415, 1467, 31, 211, "Print"],
+Cell[16438, 448, 45, 1, 23, "Print"],
+Cell[16486, 451, 649, 15, 77, "Print"],
+Cell[17138, 468, 45, 1, 23, "Print"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[17220, 474, 1836, 35, 395, "Input"],
+Cell[19059, 511, 1121, 23, 185, "Print"],
+Cell[20183, 536, 229, 4, 23, "Print"],
+
+Cell[CellGroupData[{
+Cell[20437, 544, 114, 2, 27, "Input"],
+Cell[20554, 548, 1310, 26, 221, "Print"],
+Cell[21867, 576, 229, 4, 23, "Print"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[22133, 585, 111, 2, 27, "Input"],
+Cell[22247, 589, 1236, 26, 203, "Print"],
+Cell[23486, 617, 231, 4, 23, "Print"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[23754, 626, 131, 3, 27, "Input"],
+Cell[23888, 631, 1140, 22, 203, "Print"],
+Cell[25031, 655, 229, 4, 23, "Print"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[25297, 664, 128, 3, 27, "Input"],
+Cell[25428, 669, 1142, 22, 221, "Print"],
+Cell[26573, 693, 229, 4, 23, "Print"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+
+
+(*******************************************************************
+End of Mathematica Notebook file.
+*******************************************************************)
+
