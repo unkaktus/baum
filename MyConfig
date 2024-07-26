@@ -16,6 +16,7 @@ projects += src/projects/hydroanalysis
 
 projects += src/projects/fuka_reader
 projects += src/projects/tracer
+projects += src/projects/BBIDdataReader
 
 # name and directory for the executable
 EXEC = bam
