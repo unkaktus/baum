@@ -1,0 +1,171 @@
+# mth 05/2012
+# parameter file for solving TOV binary
+
+physics = adm bssn Gauge matter grhd eos BBIDdataReader multigrid
+
+
+amr_verbose = all
+stdout_verbose = dtdxdiss outtime speed
+#storage_verbose = yes
+
+
+#############################################################################
+# initial data
+
+#initial_file  = /data/nmol/bam/src/projects/matter/id/modelA0.64.ini
+mass1         = 1
+mass2         = 0
+
+px1           = 0
+px2           = 0
+
+my1           = 0 
+my2           = 0
+
+BBID_modus              = NS
+BBID_solve              = yes
+BBID_itmax              = 100
+BBID_tolerance          = 1e-9
+BBID_solve_itmax		= 1
+
+BBID_tov_hc				= 0.1
+BBID_tov_integrate 		= h
+
+ 
+mg_verbose              = yes       # no, some, yes
+mg_size_nmin            = 14
+#mg_vcycle_nmax			= 2
+mg_exact_nmin           = 150
+mg_exact_nmax           = 1000
+
+
+
+
+
+############################################################################
+# basic setup
+
+order_centered              = 2
+order_advection             = 2
+advection_lopsided6         = 2
+advection_lopsided          = 1
+
+order_dissipation           = 0
+dissipation_factor          = 0.5
+dissipation_factor_shells   = 0.1
+
+bampi_timer_on              = yes
+bampi_lowlatency            = yes
+bampi_nghosts               = 6
+order_RP                    = 4
+amr_nbuffer                 = 4
+
+amr_lmax                    = 0
+nxyz                        = 50
+amr_move_lcube              = 0
+#amr_move_nxyz               = 50
+
+
+
+dxyz                        = 0.7
+amr_bo_dxmax                = 1.0 *56/48
+
+amr                         = bo newfmr move
+amr_fmr                     = nestedboxes
+grid                        = box
+
+
+
+
+
+############################################################################
+# hydro
+
+hrsc_nghosts		    	= 4
+hrsc_rec		   			= WENOZ
+hrsc_TVD_limiter	    	= MC2
+hrsc_rec_metric		    	= LAG4
+hrsc_flux		   			= LLF
+
+eos            		= poly
+eos_Gamma				= 2.
+eos_K		    		= 100
+
+grhd_C2P		    		= p_root
+grhd_C2P_NewtonRaphsonTR    = 0.000000000001
+grhd_C2P_NewtonRaphsonNR    = 100
+
+grhd_vmax		    		= 0.999
+grhd_Wlor_max		    	= 1e5
+
+grhd_use_atmosphere	   	 	= yes
+grhd_use_atmosphere	    	= ColdStatic
+grhd_atm_factor		    	= 100
+grhd_atm_level		    	= 0.0000000001
+
+grhd_use_atmosphere_mask    = no
+grhd_use_atmosphere_prerhs  = yes
+grhd_use_atmosphere_postrhs = no
+
+
+
+
+#############################################################################
+# evolution
+
+evolution_method        = rk
+evolution_method_rk     = rk3
+dtfac                   = 0.25
+finaltime               = 0
+
+bssn_normalizedetg      = yes
+bssn_subtractA          = yes
+bssn_chi_div_floor      = 1e-5
+
+bssn_initial_lapse		= donothing
+bssn_initial_shift      = donothing
+bssn_lapse              = 1+log withshift
+bssn_shift              = withoutB withShiftadv
+bssn_shiftalphapower    = 0.0
+bssn_shiftdriver        = 2.0
+bssn_shiftgammacoeff    = 1.0
+
+punctures_lapse         = psiBL^(-2)
+
+
+
+
+#############################################################################
+# output
+
+0doutiter               = 1
+#0douttime               = 0.5 *56/48
+0doutput                = alpha bssn_chi bssn_K  ham  grhd_D 
+
+1doutiter               = 1
+1douttime               = 0.125 #0.5 *56/48
+1doutput                = BBID_eta alpha betax bssn_gxx bssn_K bssn_chi bssn_Axx bssn_trA bssn_detg   ham momx   adm_gxx adm_Kxx adm_detg adm_rho adm_Sx adm_SSxx   grhd_rho grhd_epsl grhd_p grhd_vx grhd_v2  grhd_D grhd_Sx grhd_Tau 
+1doutinterpolate        = no
+1doutputall             = yes
+
+2doutiter               = 1
+2douttime               = 0.125 #0.5 *56/48
+2doutput                = alpha bssn_chi bssn_K  ham  grhd_D grhd_rho grhd_v2
+2dformat                = vtk binary float
+2doutinterpolate        = yes
+
+#############################################################################
+# boundary
+
+boundary                = radiative
+
+
+############################################################################
+# gauge
+
+Gauge                   = moving_puncture
+
+
+
+
+

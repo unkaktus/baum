@@ -1,0 +1,167 @@
+# parameter file for computing M Vs R diagram
+# sly eos 
+# sbernuz 10/2012
+
+physics = adm bssn matter grhd eos BBIDdataReader
+
+#stdout_flush = yes
+#storage_verbose = yes
+
+
+#############################################################################
+# initial data
+
+# do you want to compute/check first a sequence ?
+BBID_tov_MvsR	   = no
+BBID_tov_N	   = 100
+BBID_tov_rho0  	   = 1.e-3
+BBID_tov_drho  	   = 1.02
+#BBID_tov_rho0  	   = 1e-5
+#BBID_tov_drho  	   = 1.1
+
+BBID_tov_file = tov_MvsR.dat
+
+# compute TOV
+BBID_tov_integrate = p	
+BBID_tov_npts	   = 10000
+#BBID_tov_rhoc	   = 0.00128      # 1.4 Mo model poly eos
+BBID_tov_rhoc1	   = 1.400241e-03 # 1.35 model sly eos
+BBID_tov_R01	   = 10
+
+mass1         = 1
+
+
+#############################################################################
+# eos
+
+#eos                         = poly
+eos                         = pwp
+
+eos_Gamma                   = 2
+eos_K                       = 100
+
+eos_tab_file		     = /data/bernuzzi/3Dmatter/BAM/12.04/bam/src/projects/eos/tab/pwpfits/eos_sly.pwp
+
+
+############################################################################
+# checkpointing
+
+#checkpoint                  = yes
+#checkpoint_dt               = 100.0
+#checkpoint_variables        = all
+
+
+############################################################################
+# grid setup
+
+order_centered              = 4
+order_advection             = 4
+advection_lopsided6         = 2
+advection_lopsided          = 1
+
+order_dissipation           = 6
+dissipation_factor          = 0.5
+dissipation_factor_shells   = 0.1
+
+bampi_timer_on              = yes
+bampi_lowlatency            = yes
+bampi_nghosts               = 6
+order_RP                    = 6
+order_RP_shells             = 6
+amr_nbuffer                 = 6
+
+amr_lmax                    = 0
+nxyz                        = 64
+amr_move_lcube              = 0
+amr_move_nxyz               = 64
+
+amr_shells_nr		    = 81
+amr_shells_nphi		    = 20
+
+dxyz                        = 0.25
+amr_bo_dxmax                = 0.2 
+
+amr                         = bo newfmr move
+amr_fmr                     = nestedboxes
+grid                        = box octant #bitant shells
+
+amr_shells_stagger = no
+
+
+#############################################################################
+# evolution
+
+evolution_method        = rk
+evolution_method_rk     = rk3
+dtfac                   = 0.25
+
+finaltime               = 2000
+
+bssn_normalizedetg      = yes
+bssn_subtractA          = yes
+bssn_chi_div_floor      = 1e-5
+
+bssn_initial_lapse	= donothing
+bssn_initial_shift      = zero
+bssn_lapse              = 1+log withshift
+bssn_shift              = gamma0 withGadv withBadv withShiftadv
+bssn_shiftalphapower    = 0.0
+bssn_shiftdriver        = 0.3
+bssn_shiftgammacoeff    = 0.75
+
+punctures_lapse         = psiBL^(-2)
+
+
+#############################################################################
+# hydro
+
+grhd_C2P		    = p_root
+grhd_C2P_NewtonRaphsonTR    = 1e-8
+grhd_C2P_NewtonRaphsonNR    = 100
+
+grhd_vmax                   = 0.99
+grhd_Wlor_max		    = 1e8
+
+grhd_use_atmosphere	    = ColdStatic
+grhd_atm_factor		    = 100
+grhd_atm_level		    = 1e-9
+grhd_use_atmosphere_mask    = yes
+
+hrsc_nghosts		    = 4
+hrsc_rec		    = WENOZ
+hrsc_TVD_limiter	    = MC2
+hrsc_rec_metric		    = LAG4
+hrsc_flux		    = LLF 
+
+
+#############################################################################
+# output
+
+#0doutiter               = 1
+0douttime               = 0.5
+0doutput                = alpha adm_rho   ham momx  grhd_rho grhd_D
+
+#1doutiter               = 100
+1douttime               = 2.0
+1doutput                = alpha betax bssn_gxx bssn_K bssn_chi bssn_Axx bssn_trA bssn_detg  ham momx  adm_gxx adm_Kxx adm_detg adm_rho adm_Sx adm_SSxx   grhd_rho grhd_epsl grhd_p grhd_vx grhd_v2  grhd_D grhd_Sx grhd_Tau 
+1doutinterpolate        = yes
+1doutputall             = yes
+
+2douttime               = 20
+2doutput                = alpha betax bssn_chi bssn_K   ham momx rpsi4 ipsi4  grhd_rho grhd_epsl grhd_p grhd_vx grhd_v2  grhd_D
+2dformat                = vtk binary float
+2doutputmode            = xy xz yz
+2doutinterpolate        = no
+2doutputall             = yes
+
+# For now the string for the 2doutputr parameter is not used, just make
+# sure, it is non-empty!
+#2doutputr               = sphere_data
+
+
+#############################################################################
+# boundary
+
+boundary                = radiative
+
+

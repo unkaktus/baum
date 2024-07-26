@@ -1,0 +1,302 @@
+# parameter file for equal-mass binary made of superposed boosted TOV 
+# sly (or poly) eos
+# ./qpbam 16 quad TOV_binary_boost.par
+# sbernuz 10/2012
+
+physics = adm bssn Gauge matter eos grhd BBIDdataReader Invariants # AHmod
+
+
+#############################################################################
+# initial data
+
+# compute TOV
+BBID_tov_integrate = p	
+BBID_tov_npts	   = 10000
+
+#BBID_tov_rhoc1	   = 0.00128      # 1.4 Mo model poly eos
+#BBID_tov_rhoc2	   = 0.00128      # 1.4 Mo model poly eos
+
+BBID_tov_rhoc1	   = 1.400241e-03 # 1.35 model sly eos
+BBID_tov_rhoc2	   = 1.400241e-03 # 1.35 model sly eos
+
+BBID_tov_R01	   = 10
+BBID_tov_R02	   = 10
+
+# alternative: specify a data file (from spherstar)
+#initial_file  = /home/mth/Dokumente/projects/bam/bam_12.04/src/projects/matter/id/modelA0.64.ini
+
+# set masses
+mass1         = 1
+mass2         = 1
+
+# positions and momenta for boost
+px1           = +12   
+px2           = -12
+
+my1           = 0.177
+my2           = -0.177
+
+amr_verbose = all
+
+stdout_verbose = dtdxdiss outtime speed
+
+# do you want to compute/check first a sequence ?
+BBID_tov_MvsR = no
+BBID_tov_rho0 = 4e-4
+BBID_tov_drho = 1.1
+#BBID_tov_rho0 = 1.e-3 # better par for sly
+#BBID_tov_drho = 1.02
+BBID_tov_N    = 120
+BBID_tov_file = tov_MvsR.dat
+
+
+############################################################################
+# eos
+
+#eos                    = poly
+eos_K		       = 100
+
+eos                    = pwp
+eos_tab_file	       = /home/bernuzzi/BAM/12.04/bam/src/projects/eos/tab/pwpfits/eos_sly.pwp
+
+eos_Gamma	       = 2
+
+
+############################################################################
+# checkpointing
+
+checkpoint              = yes
+checkpoint_dt           = 100
+checkpoint_variables    = all
+
+
+############################################################################
+# basic setup
+
+order_centered              = 4
+order_advection             = 4
+advection_lopsided6         = 2
+advection_lopsided          = 1
+
+order_dissipation           = 6
+dissipation_factor          = 0.1
+
+# for shells
+#dissipation_factor          = 0.5
+#dissipation_factor_shells   = 0.1
+
+bampi_timer_on              = yes
+bampi_lowlatency            = yes
+bampi_nghosts               = 6
+order_RP                    = 6
+order_RP_shells             = 6
+amr_nbuffer                 = 6
+
+# note: these grid settings are for sly eos !
+
+# heavy setup  (wip)
+#amr_lmax                    = 3  # 4
+#nxyz                        = 64*1.5
+#amr_move_lcube              = 1
+#amr_move_nxyz               = 64 
+#dxyz                        = 2.0 # 4.0
+#amr_bo_dxmax                = 1.0
+
+# light setup 
+amr_lmax                    = 3  
+nxyz                        = 40*1.5 
+amr_move_lcube              = 1
+amr_move_nxyz               = 40  
+dxyz                        = 3.2 
+amr_bo_dxmax                = 1.0
+
+
+#amr_shells_nr		    = 
+#amr_shells_nphi 	    = 32
+
+
+amr                         = bo newfmr move
+amr_fmr                     = nestedboxes
+grid                        = box bitant # shells 
+
+
+############################################################################
+# hydro
+
+hrsc_nghosts		    = 4
+hrsc_rec		    = WENOZ
+hrsc_TVD_limiter	    = MC2
+hrsc_rec_metric		    = LAG4
+hrsc_flux		    = LLF
+
+grhd_C2P		    = p_root
+grhd_C2P_NewtonRaphsonTR    = 0.000000000001
+grhd_C2P_NewtonRaphsonNR    = 100
+
+grhd_vmax		    = 0.999
+grhd_Wlor_max		    = 1e5
+
+grhd_use_atmosphere	    = yes
+grhd_use_atmosphere	    = ColdStatic
+grhd_atm_factor		    = 100
+grhd_atm_level		    = 0.0000000001
+
+grhd_use_atmosphere_mask    = no
+grhd_use_atmosphere_prerhs  = yes
+grhd_use_atmosphere_postrhs = no
+
+
+
+#############################################################################
+# evolution
+
+evolution_method        = rk
+evolution_method_rk     = rk4g
+
+dtfac                   = 0.25
+finaltime 		= 900
+
+bssn_normalizedetg      = yes
+bssn_subtractA          = yes
+
+z4_normalizedetg        = yes
+z4_subtractA            = yes
+
+bssn_chi_div_floor      = 1e-5
+
+z4_chi_div_floor        = 1e-5
+
+bssn_initial_lapse	= donothing
+bssn_initial_shift      = zero
+bssn_lapse              = 1+log withshift
+bssn_shift              = withoutB withShiftadv
+bssn_shiftalphapower    = 0.0
+bssn_shiftdriver        = 2.0
+bssn_shiftgammacoeff    = 1.0
+
+z4_initial_lapse       = donothing
+z4_initial_shift       = zero
+z4_lapse               = 1+log withshift
+z4_shift               = withShiftadv 
+z4_shiftdriver         = 2.0
+
+z4_kappa1              = 0.02
+z4_kappa2              = 0.0
+
+punctures_lapse         = psiBL^(-2)
+
+
+#############################################################################
+# output
+
+#0doutiter               = 1
+0douttime               = 5
+0doutput                = alpha bssn_chi bssn_K ham momx grhd_D grhd_rho grhd_p
+
+#1doutiter               = 1
+1douttime               = 10
+1doutput                = alpha betax ham momx grhd_rho flagprolong rpsi4 flagrestrict
+1doutinterpolate        = yes
+1doutputall             = yes
+
+#2doutiter               = 1
+2douttime               = 10
+2doutput                = alpha bssn_chi bssn_K ham momx grhd_D grhd_Sx grhd_Tau grhd_rho grhd_p grhd_vx grhd_v2
+2dformat                = vtk binary float
+2doutinterpolate        = yes
+
+# For now the string for the 2doutputr parameter is not used, just make
+# sure, it is non-empty!
+#2doutputr               = sphere_data
+
+
+#############################################################################
+# boundary
+
+boundary                = radiative 
+
+############################################################################
+# gauge
+
+Gauge                   = moving_puncture
+
+compute_moving_puncture_distance = line
+
+
+#############################################################################
+# invariants
+
+ntheta                      = 47
+nphi                        = 46
+invariants_compute_modes    = yes
+invariants_modes_r          = 60 80 90 100 125 150 
+invariants_modes_lmin       = 0
+invariants_modes_lmax       = 4
+invariants_energy_r         = 60 80 90 100 125 150 
+gauss_codacci_mainardi      = standard
+invariants_order            = 4
+
+
+#############################################################################
+#ADM Mass
+
+ADM_mass_ncircles     = 101
+ADM_mass_npoints      = 80
+ADM_mass_lmin         = 1
+ADM_mass_lmax         = 3
+ADM_mass_r            = 60 80 90 100 125 150 
+
+
+#######################################################
+# AH finder
+
+ahf_verbose     = yes
+ahf_ntheta      = 50
+ahf_nphi         = 50
+ahf_nhorizons   = 2
+ahf_common      = yes
+ahf_flow_iter   = 500
+ahf_mass_tol    = 1.0e-08
+ahf_hmean_tol   = 100.0
+ahf_time        = 1
+ahf_output      = yes
+ahf_output_xyt  = yes
+
+# (better use AHmod !)
+
+AHmod_verbose     = yes
+
+AHmod_ntheta      = 30
+AHmod_nphi        = 60
+
+AHmod_nhorizons   = 1
+AHmod_searchMTS   = 1  0.0  20000.0  0
+AHmod_uselast     = yes
+AHmod_initial_guess_expand = 1.0
+AHmod_LevelOffset = 1
+AHmod_UseOptimalLevel = no
+
+AHmod_flow_iter   = 500
+AHmod_mass_tol    = 1.0e-04
+AHmod_hmean_tol   = 100.0
+
+AHmod_time        = 0.5*10
+
+AHmod_output      = yes
+AHmod_output_xyt  = yes
+AHmod_output_lm   = yes
+
+
+#############################################################################
+# invariants
+
+ntheta                      = 47
+nphi                        = 46
+invariants_compute_modes    = yes
+invariants_modes_r          = 60 80 90 100 125 150 
+invariants_modes_lmin       = 0
+invariants_modes_lmax       = 4
+invariants_energy_r         = 60 80 90 100 125 150 
+gauss_codacci_mainardi      = standard
+invariants_order            = 4
+
