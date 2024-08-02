@@ -101,7 +101,7 @@ bam: .bamauto
 	mkdir -p $(PROJECTDIR); 
 	for X in $(libnames); do mkdir -p lib/obj/$$X; done
 	for X in $(libpaths); do $(MAKE) -C $$X; done
-	echo "BAUM war gebaut."
+	echo "BAUM wurde gebaut."
 
 # --------------------------------------------------------------------------
 # other targets 
