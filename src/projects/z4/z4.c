@@ -279,17 +279,27 @@ int z4_startup(tL *level)
   // for debug reasons in movepunc_N
   enablevar(level,Ind("z4_Zx"));
 
-
-  /* it is not quite clear yet where to set initial gauge */
+  double *alpha = level->v[Ind("alpha")];
   if (Getv("z4_initial_lapse", "one")) {
-    double *alpha = level->v[Ind("alpha")];
-
-    forallpoints(level, i) 
-      alpha[i] = 1;
-
-    printf("  set lapse to one\n");
-  } else 
+      bampi_openmp_start
+      forallpoints_ijk_openmp(level) {
+        alpha[ijk] = 1.;
+      }
+      endfor_ijk_openmp
+      bampi_openmp_stop
+      printf("  set lapse to one\n");
+  } else if (Getv("z4_initial_lapse", "precollapsed")) {
+      double *bssn_chi = level->v[Ind("adm_gxx")];
+      bampi_openmp_start
+      forallpoints_ijk_openmp(level) {
+        alpha[ijk] = 1./sqrt(bssn_chi[ijk]);
+      }
+      endfor_ijk_openmp
+      bampi_openmp_stop
+    printf("  set lapse to precollapsed lapse\n");
+  } else {
     printf("  left lapse unchanged\n");
+  }
 
   if (Getv("z4_initial_shift", "zero")) {
     double *betax = level->v[Ind("betax")];
