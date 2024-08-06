@@ -691,6 +691,7 @@ void compute_energy(tL *level, int n0,int nr, double *rlist, char *outdir)
   double *integrand_dPydt = PtrEnable(level, "integrand_dPydt");
   double *integrand_dPzdt = PtrEnable(level, "integrand_dPzdt");
   double *integrand_dJzdt = PtrEnable(level, "integrand_dJzdt");
+  double *integrand_One = PtrEnable(level, "integrand_One");
   double *dint_rpsi4dphi = PtrEnable(level, "dint_rpsi4dphi");
   double *dint_ipsi4dphi = PtrEnable(level, "dint_ipsi4dphi");
   double *dint2_rpsi4dphi = PtrEnable(level, "dint2_rpsi4dphi");
@@ -744,6 +745,8 @@ void compute_energy(tL *level, int n0,int nr, double *rlist, char *outdir)
   double *Pz      = &store[nrmax*(i++)];
   double *Jz      = &store[nrmax*(i++)];
   double *t_prev  = &store[nrmax*(i++)];
+
+  double *AverageLapse  = &store[nrmax*(i++)];
 
   //if (nr >= nrmax) errorexiti("compute_energy: nr >= %d", nrmax);
   if (nvars * nrmax > level->npoints)
@@ -918,6 +921,8 @@ void compute_energy(tL *level, int n0,int nr, double *rlist, char *outdir)
     
     integrand_dJzdt[ijk] = (dint2_rpsi4dphi[ijk]*int_rpsi4[ijk] + dint2_ipsi4dphi[ijk]*int_ipsi4[ijk]);
     
+    integrand_One[ijk] = 1.0;  // For calculating averages
+
     // symmetry stuff
     if (bitant) 
         integrand_dPzdt[ijk] = 0.0;
@@ -927,7 +932,7 @@ void compute_energy(tL *level, int n0,int nr, double *rlist, char *outdir)
     
   } endfor_ijk;
   
-  
+
   
   /* integrate over sphere for each radii */
   for (i = n0; i < nr; i++){
@@ -941,6 +946,10 @@ void compute_energy(tL *level, int n0,int nr, double *rlist, char *outdir)
     dPydt = r*r/(16.*PI)*integral_over_sphere(level, X0, Y0, Z0, ntheta, nphi, r, Ind("integrand_dPydt"), order);
     dPzdt = r*r/(16.*PI)*integral_over_sphere(level, X0, Y0, Z0, ntheta, nphi, r, Ind("integrand_dPzdt"), order);
     dJzdt = r*r/(16.*PI)*integral_over_sphere(level, X0, Y0, Z0, ntheta, nphi, r, Ind("integrand_dJzdt"), order);
+
+    double avg_lapse = integral_over_sphere(level, X0, Y0, Z0, ntheta, nphi, r, Ind("alpha"), order);
+    double sphere_norm = integral_over_sphere(level, X0, Y0, Z0, ntheta, nphi, r, Ind("integrand_One"), order);
+    AverageLapse[i] = avg_lapse/sphere_norm;
     
     Energy[i] += dt/2.0*(dEdt_p[i]  + dEdt); 
     Px[i]     += dt/2.0*(dPxdt_p[i] + dPxdt); 
@@ -969,7 +978,11 @@ void compute_energy(tL *level, int n0,int nr, double *rlist, char *outdir)
       sprintf(name8, "%s/Pz_%s.l%d", outdir,rname,l);
       sprintf(name9, "%s/dJzdt_%s.l%d", outdir,rname,l);
       sprintf(name10, "%s/Jz_%s.l%d", outdir,rname,l);
-  
+
+      char AverageLapseFilename[255];
+      sprintf(AverageLapseFilename, "%s/AverageLapse_%s.l%d", outdir, rname, l);
+
+
       fp1 = fopen(name1, "ab");
       fp2 = fopen(name2, "ab");
       fp3 = fopen(name3, "ab");
@@ -980,6 +993,8 @@ void compute_energy(tL *level, int n0,int nr, double *rlist, char *outdir)
       fp8 = fopen(name8, "ab");
       fp9 = fopen(name9, "ab");
       fp10 = fopen(name10, "ab");
+
+      FILE *fp_AverageLapse = fopen(AverageLapseFilename, "ab");
       
       if (PR) printf("  write: %s\n", name1);
   
@@ -997,6 +1012,8 @@ void compute_energy(tL *level, int n0,int nr, double *rlist, char *outdir)
       fprintf(fp8, "%14.6e%14.6e\n", level->time, Pz[i]);
       fprintf(fp9, "%14.6e%14.6e\n", level->time, -dJzdt);
       fprintf(fp10, "%14.6e%14.6e\n", level->time, -Jz[i]);
+
+      fprintf(fp_AverageLapse, "%14.6e%14.6e\n", level->time, AverageLapse[i]);
   
       fclose(fp1);
       fclose(fp2);
@@ -1008,6 +1025,8 @@ void compute_energy(tL *level, int n0,int nr, double *rlist, char *outdir)
       fclose(fp8);
       fclose(fp9);
       fclose(fp10);
+
+      fclose(fp_AverageLapse);
   
       if (!rotant) {
           double px = Px[i]/4;
