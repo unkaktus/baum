@@ -697,6 +697,13 @@ void compute_energy(tL *level, int n0,int nr, double *rlist, char *outdir)
   double *dint2_rpsi4dphi = PtrEnable(level, "dint2_rpsi4dphi");
   double *dint2_ipsi4dphi = PtrEnable(level, "dint2_ipsi4dphi");
 
+  double *adm_gxx = Ptr(level, "adm_gxx");
+  double *adm_gxy = Ptr(level, "adm_gxy");
+  double *adm_gxz = Ptr(level, "adm_gxz");
+  double *adm_gyy = Ptr(level, "adm_gyy");
+  double *adm_gyz = Ptr(level, "adm_gyz");
+  double *adm_gzz = Ptr(level, "adm_gzz");
+  double *integrand_dA = PtrEnable(level, "integrand_dA");
   
   double t_new,dt;
   double x,y,z, r;
@@ -732,7 +739,7 @@ void compute_energy(tL *level, int n0,int nr, double *rlist, char *outdir)
   */
   double *store = PtrEnable(level, "invariants_storage"); 
   int nrmax = 10; /* <<<< SERIOUS PROBLEM */
-  int nvars = 12;
+  int nvars = 13;
   int i = 0;
   double *dEdt_p  = &store[nrmax*(i++)];
   double *dPxdt_p = &store[nrmax*(i++)];
@@ -747,6 +754,7 @@ void compute_energy(tL *level, int n0,int nr, double *rlist, char *outdir)
   double *t_prev  = &store[nrmax*(i++)];
 
   double *AverageLapse  = &store[nrmax*(i++)];
+  double *ArealRadius   = &store[nrmax*(i++)];
 
   //if (nr >= nrmax) errorexiti("compute_energy: nr >= %d", nrmax);
   if (nvars * nrmax > level->npoints)
@@ -895,9 +903,7 @@ void compute_energy(tL *level, int n0,int nr, double *rlist, char *outdir)
   bampi_vlsynchronize(vl);
   set_boundary_symmetry(level, vl);
   vlfree(vl);
-  
-  
-  
+
   /* now comute all the integrands */
   forallpoints_ijk(level) {
 
@@ -922,6 +928,13 @@ void compute_energy(tL *level, int n0,int nr, double *rlist, char *outdir)
     integrand_dJzdt[ijk] = (dint2_rpsi4dphi[ijk]*int_rpsi4[ijk] + dint2_ipsi4dphi[ijk]*int_ipsi4[ijk]);
     
     integrand_One[ijk] = 1.0;  // For calculating averages
+
+    double rad_xy = sqrt(x*x + y*y);
+    double gamma_thetattheta = pow(rad_xy,-2) * (pow(x,2)*pow(z,2)*adm_gxx[ijk] +2*x*y*pow(z,2)*adm_gxy[ijk] - 2*x*z*pow(rad_xy,2)*adm_gxz[ijk] + pow(y,2)*pow(z,2)*adm_gyy[ijk] - 2*y*z*pow(rad_xy,2)*adm_gyz[ijk] + pow(rad_xy,4)*adm_gzz[ijk]);
+    double gamma_phiphi = pow(y,2)*adm_gxx[ijk] - 2*x*y*adm_gxy[ijk] + pow(x,2)*adm_gyy[ijk];
+
+    integrand_dA[ijk] = sqrt(gamma_thetattheta*gamma_phiphi);
+    integrand_dA[ijk] /= sintheta; // Integration has extra factor of sin(theta)
 
     // symmetry stuff
     if (bitant) 
@@ -950,6 +963,9 @@ void compute_energy(tL *level, int n0,int nr, double *rlist, char *outdir)
     double avg_lapse = integral_over_sphere(level, X0, Y0, Z0, ntheta, nphi, r, Ind("alpha"), order);
     double sphere_norm = integral_over_sphere(level, X0, Y0, Z0, ntheta, nphi, r, Ind("integrand_One"), order);
     AverageLapse[i] = avg_lapse/sphere_norm;
+
+    double sphere_surface_area = integral_over_sphere(level, X0, Y0, Z0, ntheta, nphi, r, Ind("integrand_dA"), order);
+    ArealRadius[i] = sqrt(sphere_surface_area/(4.*PI));
     
     Energy[i] += dt/2.0*(dEdt_p[i]  + dEdt); 
     Px[i]     += dt/2.0*(dPxdt_p[i] + dPxdt); 
@@ -981,7 +997,8 @@ void compute_energy(tL *level, int n0,int nr, double *rlist, char *outdir)
 
       char AverageLapseFilename[255];
       sprintf(AverageLapseFilename, "%s/AverageLapse_%s.l%d", outdir, rname, l);
-
+      char ArealRadiusFilename[255];
+      sprintf(ArealRadiusFilename, "%s/ArealRadius_%s.l%d", outdir, rname, l);
 
       fp1 = fopen(name1, "ab");
       fp2 = fopen(name2, "ab");
@@ -995,6 +1012,7 @@ void compute_energy(tL *level, int n0,int nr, double *rlist, char *outdir)
       fp10 = fopen(name10, "ab");
 
       FILE *fp_AverageLapse = fopen(AverageLapseFilename, "ab");
+      FILE *fp_ArealRadius = fopen(ArealRadiusFilename, "ab");
       
       if (PR) printf("  write: %s\n", name1);
   
@@ -1014,6 +1032,7 @@ void compute_energy(tL *level, int n0,int nr, double *rlist, char *outdir)
       fprintf(fp10, "%14.6e%14.6e\n", level->time, -Jz[i]);
 
       fprintf(fp_AverageLapse, "%14.6e%14.6e\n", level->time, AverageLapse[i]);
+      fprintf(fp_ArealRadius, "%14.6e%14.6e\n", level->time, ArealRadius[i]);
   
       fclose(fp1);
       fclose(fp2);
@@ -1027,6 +1046,7 @@ void compute_energy(tL *level, int n0,int nr, double *rlist, char *outdir)
       fclose(fp10);
 
       fclose(fp_AverageLapse);
+      fclose(fp_ArealRadius);
   
       if (!rotant) {
           double px = Px[i]/4;
@@ -1054,6 +1074,8 @@ void compute_energy(tL *level, int n0,int nr, double *rlist, char *outdir)
     PtrDisable(level, "integrand_dPydt");
     PtrDisable(level, "integrand_dPzdt");
     PtrDisable(level, "integrand_dJzdt");
+    PtrDisable(level, "integrand_One");
+    PtrDisable(level, "integrand_dA");
         
     PtrDisable(level, "dint_rpsi4dphi");
     PtrDisable(level, "dint_ipsi4dphi");
