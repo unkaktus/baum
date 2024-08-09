@@ -88,7 +88,6 @@ void bam_Invariants()
   AddVar("integrand_dPydt","","integrand of dPydt");
   AddVar("integrand_dPzdt","","integrand of dPzdt");
   AddVar("integrand_dJzdt","","integrand of dJzdt");
-  AddVar("integrand_One","","integrand for sphere norm"); // XXX quite hacky, not nice
   AddVar("integrand_dA","","integrand of dA, surface area element");
 
   /* variables for E, P, J computation */

@@ -691,7 +691,6 @@ void compute_energy(tL *level, int n0,int nr, double *rlist, char *outdir)
   double *integrand_dPydt = PtrEnable(level, "integrand_dPydt");
   double *integrand_dPzdt = PtrEnable(level, "integrand_dPzdt");
   double *integrand_dJzdt = PtrEnable(level, "integrand_dJzdt");
-  double *integrand_One = PtrEnable(level, "integrand_One");
   double *dint_rpsi4dphi = PtrEnable(level, "dint_rpsi4dphi");
   double *dint_ipsi4dphi = PtrEnable(level, "dint_ipsi4dphi");
   double *dint2_rpsi4dphi = PtrEnable(level, "dint2_rpsi4dphi");
@@ -926,8 +925,6 @@ void compute_energy(tL *level, int n0,int nr, double *rlist, char *outdir)
     integrand_dPzdt[ijk] = costheta*integrand_dEdt[ijk];
     
     integrand_dJzdt[ijk] = (dint2_rpsi4dphi[ijk]*int_rpsi4[ijk] + dint2_ipsi4dphi[ijk]*int_ipsi4[ijk]);
-    
-    integrand_One[ijk] = 1.0;  // For calculating averages
 
     double rad_xy = sqrt(x*x + y*y);
     double gamma_thetattheta = pow(rad_xy,-2) * (pow(x,2)*pow(z,2)*adm_gxx[ijk] +2*x*y*pow(z,2)*adm_gxy[ijk] - 2*x*z*pow(rad_xy,2)*adm_gxz[ijk] + pow(y,2)*pow(z,2)*adm_gyy[ijk] - 2*y*z*pow(rad_xy,2)*adm_gyz[ijk] + pow(rad_xy,4)*adm_gzz[ijk]);
@@ -960,12 +957,8 @@ void compute_energy(tL *level, int n0,int nr, double *rlist, char *outdir)
     dPzdt = r*r/(16.*PI)*integral_over_sphere(level, X0, Y0, Z0, ntheta, nphi, r, Ind("integrand_dPzdt"), order);
     dJzdt = r*r/(16.*PI)*integral_over_sphere(level, X0, Y0, Z0, ntheta, nphi, r, Ind("integrand_dJzdt"), order);
 
-    double avg_lapse = integral_over_sphere(level, X0, Y0, Z0, ntheta, nphi, r, Ind("alpha"), order);
-    double sphere_norm = integral_over_sphere(level, X0, Y0, Z0, ntheta, nphi, r, Ind("integrand_One"), order);
-    AverageLapse[i] = avg_lapse/sphere_norm;
-
-    double sphere_surface_area = integral_over_sphere(level, X0, Y0, Z0, ntheta, nphi, r, Ind("integrand_dA"), order);
-    ArealRadius[i] = sqrt(sphere_surface_area/(4.*PI));
+    AverageLapse[i] = 1./(4.*PI) * integral_over_sphere(level, X0, Y0, Z0, ntheta, nphi, r, Ind("alpha"), order);
+    ArealRadius[i] = sqrt(1./(4.*PI) * integral_over_sphere(level, X0, Y0, Z0, ntheta, nphi, r, Ind("integrand_dA"), order) );
     
     Energy[i] += dt/2.0*(dEdt_p[i]  + dEdt); 
     Px[i]     += dt/2.0*(dPxdt_p[i] + dPxdt); 
@@ -1074,7 +1067,6 @@ void compute_energy(tL *level, int n0,int nr, double *rlist, char *outdir)
     PtrDisable(level, "integrand_dPydt");
     PtrDisable(level, "integrand_dPzdt");
     PtrDisable(level, "integrand_dJzdt");
-    PtrDisable(level, "integrand_One");
     PtrDisable(level, "integrand_dA");
         
     PtrDisable(level, "dint_rpsi4dphi");
